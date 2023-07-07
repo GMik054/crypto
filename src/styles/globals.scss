@@ -20,14 +20,14 @@ h3 {
   font-size: 48px !important;
   color: white !important;
   margin-bottom: 0 !important;
-  font-weight: 700!important;
+  font-weight: 700 !important;
   text-align: left;
   letter-spacing: 1px;
 }
 
 h4 {
-  color: white!important;
-  font-weight: 700!important;
+  color: white !important;
+  font-weight: 700 !important;
   font-size: 28px !important;
   margin-bottom: 0 !important;
   letter-spacing: 1px;
@@ -45,4 +45,8 @@ p {
   color: $light-white;
   text-align: left;
   letter-spacing: 1px;
+}
+
+a {
+  text-decoration: none!important;
 }

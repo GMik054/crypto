@@ -1,15 +1,12 @@
-// import type {NextPage} from 'next'
-import Head from 'next/head'
-
-// import Counter from '../features/counter/Counter'
-// import styles from '../styles/home.scss';
-import Layout from '../../Components/Layout/Layout'
+import React from 'react';
+import Head from "next/head";
+import Layout from "../../Components/Layout/Layout";
 import MainCalculationSection from "../../Components/MainCalculationSection/MainCalculationSection";
 import ExchangeSteps from "../../Components/ExchangeSteps/ExchangeSteps";
 import HomeFaq from "../../Components/HomeFaq/HomeFaq";
-import Partners from "../../Components/Partners/Partners";
+import PartnersSinglePage from "../../Components/Partners/PartnersSinglePage";
 
-export default function IndexPage() {
+const Partners = () => {
     return (
         < >
             <Head>
@@ -17,12 +14,10 @@ export default function IndexPage() {
                 <link rel="icon" href="/favicon.ico"/>
             </Head>
             <Layout mainMenu={["1", '12']}>
-                <MainCalculationSection/>
-                <ExchangeSteps/>
-                <HomeFaq/>
-                <Partners/>
+                <PartnersSinglePage/>
             </Layout>
         </>
-    )
-}
+    );
+};
 
+export default Partners;

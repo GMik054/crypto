@@ -1,68 +1,99 @@
 import React, {useState} from 'react';
-import {Col, Container, Row} from "reactstrap";
+import {Col, Container, Input, Row} from "reactstrap";
 import Select from 'react-select';
+import {FiSearch} from "@react-icons/all-files/fi/FiSearch";
+import IconsSection from "./IconsSection";
+import Backdrop from '@mui/material/Backdrop';
+import Box from '@mui/material/Box';
+import Modal from '@mui/material/Modal';
+import Fade from '@mui/material/Fade';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import {CloseIcon} from "next/dist/client/components/react-dev-overlay/internal/icons/CloseIcon";
+import ModalExchange from "./ModalExchange";
 
 const options = [
-    {value: 'chocolate', label: 'Chocolate'},
-    {value: 'strawberry', label: 'Strawberry'},
-    {value: 'vanilla', label: 'Vanilla'},
+    {value: 'chocolate', label: 'Chocolate', photo: '/assets/CustomerService/Fast.svg'},
+    {value: 'strawberry', label: 'Strawberry', photo: '/assets/CustomerService/Fast.svg'},
+    {value: 'vanilla', label: 'Vanilla', photo: '/assets/CustomerService/Fast.svg'},
 ];
+
+
 const MainCalculationSection = () => {
+    const [m, setM] = useState(false);
+
     const customStyles = {
 
         indicatorsContainer: (provided) => ({
             ...provided,
-            display: "none"// Customize the color of the dropdown indicator
+            // display: "none"// Customize the color of the dropdown indicator
         }),
         dropdownIndicator: (provided) => ({
             ...provided,
-            display: 'none',
+            // display: 'none',
         }),
         clearIndicator: (provided) => ({
             ...provided,
-            display: 'none',
+            // display: 'none',
         }),
         container: (provided) => ({
             ...provided,
-            maxWidth: "380px",
-            width: "100%"
+            // maxWidth: "380px",
+            // width: "100%",
+            // display:"flex",
+
         }),
 
         control: (provided, state) => ({
             ...provided,
-            backgroundColor: state.isFocused ? "#282828" : "#282828",
+            backgroundColor: state.isFocused ? "#282828" : "transparent",
             borderRadius: state.menuIsOpen ? '16px 16px 0 0' : '16px',
             border: "none",
             textAlign: 'left',
-            padding: "calc(2px + 4 * (100vw - 320px) / 1600) calc(8px + 8 * (100vw - 320px) / 1600)",
+            padding: "0",
             boxShadow: state.isFocused ? 'none' : 'none',
-            '&:hover': {
-                // borderColor: '#007bff',
-
-            },
+            width: state.isFocused ? '454px' : '120px',
+            // '&:select': {
+            //     backgroundColor: "red"
+            // },
         }),
+
         menu: (provided) => ({
             ...provided,
             backgroundColor: '#3F3F3F',
             borderRadius: '0 0 16px 16px',
             marginTop: '0px',
             transition: 'opacity 0.2s ease-in-out',
+            overflow: "hidden"
 
         }),
         option: (provided, state) => ({
             ...provided,
             backgroundColor: state.isSelected ? '#4F4F4F' : '#3F3F3F',
             color: state.isSelected ? 'white' : 'white',
-            textAlign: 'left',
-            borderRadius: '16px',
+            // textAlign: 'left',
+            // paddingLeft: "60px",
+            // borderRadius: '16px',
+            fontFamily: 'Montserrat',
+            fontSize: "18px",
+            letterSpacing: "0.18px",
+            // paddingLeft:"30px",
             '&:hover': {
                 backgroundColor: state.isSelected ? '#4F4F4F' : '#4F4F4F',
-                color: state.isSelected ? 'white' : 'gray',
+                color: state.isSelected ? 'white' : 'rgba(244, 244, 244, 0.8)',
+                borderRadius: '0',
             },
+
+        }),
+        valueContainer: (provided, state) => ({
+            ...provided,
+            padding: m? "0 18px" : "0 "
+            // alignItems:"start"
         }),
         placeholder: (provided, state) => ({
             ...provided,
-            color: state.isSelected ? 'white' : 'white',
+            color: state.isSelected ? 'rgba(244, 244, 244, 0.8)' : 'rgba(244, 244, 244, 0.8)',
+
         }),
         input: (provided, state) => ({
             ...provided,
@@ -71,39 +102,22 @@ const MainCalculationSection = () => {
         singleValue: (provided, state) => ({
             ...provided,
             color: 'white',
+            // paddingLeft: "56px",
         }),
     };
     let state = ["BTC", "YYUPS", "JPS"]
-    const customerService = [
-        {
-            id: 1,
-            svg: <img src='/assets/CustomerService/Fast.svg' style={{marginRight: "14px"}}></img>,
-            title: 'We are Fast',
-            subtitle: 'It will take you less than 5 min to use our services.'
-        },
-        {
-            id: 2,
-            svg: <img src='/assets/CustomerService/Trusted.svg' style={{marginRight: "14px"}}></img>,
-            title: 'We are Trusted',
-            subtitle: 'We have been providing high-quality cryptocurrency exchange services for over 2 years.'
-        },
-        {
-            id: 3,
-            svg: <img src='/assets/CustomerService/Rates.svg' style={{marginRight: "14px"}}></img>,
-            title: 'Best Rates',
-            subtitle: 'We guarantee to offer best price in the international market along with superior customer services.'
-        },
-        {
-            id: 4,
-            svg: <img src='/assets/CustomerService/Global.svg' style={{marginRight: "14px"}}></img>,
-            title: 'We are Global',
-            subtitle: 'We provide cryptocurrency exchange services worldwide.'
-        },
-    ]
 
-    const [selectedOption, setSelectedOption] = useState(null);
-    const [m, setM] = useState(false);
-    console.log(m,"mmmmmmm")
+
+    const customOption = ({innerProps, label, data}) => (
+        <div {...innerProps}>
+            <img src={data.photo} alt={label} style={{marginRight: '8px', maxWidth: "40px"}}/>
+            {label}
+        </div>
+    );
+
+    const [selectedOption, setSelectedOption] = useState(options[0]);
+
+    console.log(selectedOption, 'selectedOption')
     return (
         <section className="calculation-section">
             <Container>
@@ -136,18 +150,48 @@ const MainCalculationSection = () => {
                                             Min 5000 RUB
                                         </label>
                                         <div className='form-main'>
+                                            {!m && <input type='number' className='form-control form-control-custom'
+                                                          placeholder='Send Qiwi(RUB)' name='billing-company'/>}
                                             <Select
                                                 id={options.value} // Add a static id value here
-
                                                 defaultValue={selectedOption}
-                                                onChange={setSelectedOption}
-                                                // openMenuOnClick={e => setM(e)}
+                                                onChange={(selectedOption, dd) => {
+
+                                                    setSelectedOption(selectedOption);
+                                                    // setM(false);
+                                                }}
+                                                onFocus={() => setM(true)}
+                                                onBlur={() => setM(false)} // Add onBlur event handler
+                                                // components={{ Option: customOption }}
                                                 options={options}
-                                                placeholder={'Search'}
+                                                formatOptionLabel={options => (
+                                                    <div className="country-option"
+                                                         style={{
+                                                             display: "flex",
+                                                             justifyContent: `${m ? "start" : "end"}`,
+                                                             alignItems: "center",
+                                                             minHeight: `${m ? "32px" : "46px"}`,
+                                                             padding: `${m ? "8px 10px" : "0"}`
+                                                         }}>
+                                                        <img src={options.photo}
+                                                             style={{
+                                                                 maxWidth: `${m ? "32px" : "46px"}`,
+                                                                 maxHeight: `${m ? "32px" : "46px"}`,
+                                                                 // marginLeft: "10px",
+                                                                 marginRight: `${m ? "10px" : "0"}`,
+                                                                 // padding:`${m ?"0px 8px":"0"}`,
+                                                                 position: "relative"
+                                                             }}
+                                                             alt="country-image"/>
+                                                        <p>{m && options.label}</p>
+                                                    </div>
+                                                )}
+                                                // placeholder={m ? <div style={{display: 'flex'}}><FiSearch/> Search
+                                                // </div> : "Send Qiwi(RUB)"}
+                                                menuIsOpen={m}
                                                 styles={customStyles}
                                             />
-                                            {/*<input type='text' className='form-control form-control-custom'*/}
-                                            {/*       placeholder='Send Qiwi(RUB)' name='billing-company'/>*/}
+
 
                                             {/*<select*/}
                                             {/*    className='form-select checkout-form'*/}
@@ -170,7 +214,7 @@ const MainCalculationSection = () => {
                                             Min 0.0021547430 BTC
                                         </label>
                                         <div className='form-main'>
-                                            <input type='text' className='form-control form-control-custom'
+                                            <input type='number' className='form-control form-control-custom'
                                                    placeholder='Receive Bitcoin(BTC)' name='billing-company'/>
 
                                             {/*<select*/}
@@ -188,17 +232,10 @@ const MainCalculationSection = () => {
                                     </div>
                                 </Col>
                             </Row>
-
-                            <div className="custom-single-button">
-                                <div className="button-area">
-                                    <h5 className="text">EXCHANGE</h5>
-                                </div>
-                            </div>
-
+                            <ModalExchange/>
                         </div>
-
                     </Col>
-                    <Col lg='5'>
+                    <Col lg='4'>
                         <div className="crypto-title-section">
                             <h2>Buy, Sell and Trade with <span>Crypto.am</span></h2>
                             <h5>The main value we have is our reputation and the trust of our customers, which is
@@ -207,23 +244,7 @@ const MainCalculationSection = () => {
                     </Col>
                 </Row>
             </Container>
-            <Container>
-                <Row className="icons-info">
-                    {customerService.map((elem) => {
-                        return (
-                            <Col xl='3' sm='6' key={elem.id}>
-                                <div className='service-wrap'>
-                                    <div className='service-icon'>{elem.svg}</div>
-                                    <div className='service-content'>
-                                        <h4 className='mb-2 mt-2'>{elem.title}</h4>
-                                        <p className='font-light'>{elem.subtitle}</p>
-                                    </div>
-                                </div>
-                            </Col>
-                        );
-                    })}
-                </Row>
-            </Container>
+            <IconsSection/>
         </section>
     );
 };
