@@ -34,7 +34,7 @@ const Header = () => {
         }),
         container: (provided) => ({
             ...provided,
-            // maxWidth: "120px",
+            // maxWidth: "124px",
             width: "100%"
         }),
 
@@ -46,7 +46,7 @@ const Header = () => {
             textAlign: 'left',
             justifyContent: "center",
             // justifyContent: 'end',
-            padding: "calc(2px + 4 * (100vw - 320px) / 1600) calc(8px + 8 * (100vw - 320px) / 1600)",
+            // padding: "calc(2px + 4 * (100vw - 320px) / 1600) calc(8px + 8 * (100vw - 320px) / 1600)",
             boxShadow: state.isFocused ? 'none' : 'none',
             '&:hover': {},
         }),
@@ -86,7 +86,7 @@ const Header = () => {
         },
         optionLabelP: {
             color: 'black',
-            marginLeft: '10px',
+            marginLeft: '4px',
             fontSize: "16px",
             fontWeight: "500"
         },
@@ -136,7 +136,7 @@ const Header = () => {
                             </Col>
                             <Col lg="5">
                                 <Row className="justify-content-end">
-                                    <Col lg="4">
+                                    <Col lg="3">
                                         <div className="language-section">
                                             <Select
                                                 id={options.value} // Add a static id value here
