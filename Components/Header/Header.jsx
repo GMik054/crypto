@@ -143,7 +143,7 @@ const Header = () => {
                                                 defaultValue={selectedOption}
                                                 onChange={setSelectedOption}
                                                 options={options}
-                                                menuIsOpen={true}
+                                                // menuIsOpen={true}
                                                 formatOptionLabel={options => (
                                                     <div className="country-option" style={customStyles.optionLabel}>
                                                         <div style={{width:"36px",overflow:"hidden",borderRadius:"10px"}}>
