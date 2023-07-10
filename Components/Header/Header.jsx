@@ -7,8 +7,8 @@ import Link from "next/link";
 
 const options = [
     {value: 'eng', label: 'Eng', photo: '/assets/images/eng.png'},
-    {value: 'arm', label: 'Arm', photo: '/assets/CustomerService/Fast.svg'},
-    {value: 'rus', label: 'Rus', photo: '/assets/CustomerService/Fast.svg'},
+    {value: 'arm', label: 'Arm', photo: '/assets/images/arm.jpg'},
+    {value: 'rus', label: 'Rus', photo: '/assets/images/rus.png'},
 ];
 const Header = () => {
     const [selectedOption, setSelectedOption] = useState(options[0]);
@@ -66,7 +66,7 @@ const Header = () => {
             letterSpacing: "0.18px",
             // paddingLeft:"30px",
             '&:hover': {
-                backgroundColor: state.isSelected ? 'lightgray' : 'darkgray',
+                backgroundColor: state.isSelected ? 'lightgray' : 'lightgray',
 
             },
 
@@ -74,15 +74,20 @@ const Header = () => {
         optionLabel: {
             display: "flex",
             justifyContent: "flex-start",
-            alignItems: "center"
+            alignItems: "center",
+            minHeight: "36px"
         },
         optionLabelImg: {
             // maxWidth: "36px",
-            maxHeight: "36px"
+            maxHeight: "36px",
+            // maxWidth: "36px",
+            // width: "100%"
         },
         optionLabelP: {
             color: 'black',
             marginLeft: '10px',
+            fontSize: "16px",
+            fontWeight: "500"
         },
         placeholder: (provided, state) => ({
             ...provided,
@@ -106,7 +111,7 @@ const Header = () => {
                         <Row className="header-row">
                             <Col lg="2">
                                 <Link href={`/`}>
-                                <img src="/assets/images/logoHeader.png"/>
+                                    <img src="/assets/images/logoHeader.png"/>
                                 </Link>
                             </Col>
                             <Col lg="5">
@@ -123,9 +128,6 @@ const Header = () => {
                                     <Link href={`/gallery`}>
                                         <p>Gallery</p>
                                     </Link>
-                                    <Link href={`/`}>
-                                        <p>Rules</p>
-                                    </Link>
                                     <Link href={`/contact-us`}>
                                         <p>Contacts</p>
                                     </Link>
@@ -140,10 +142,14 @@ const Header = () => {
                                                 defaultValue={selectedOption}
                                                 onChange={setSelectedOption}
                                                 options={options}
+                                                menuIsOpen={true}
                                                 formatOptionLabel={options => (
                                                     <div className="country-option" style={customStyles.optionLabel}>
-                                                        <img src={options.photo} style={customStyles.optionLabelImg}
-                                                             alt="country-image"/>
+                                                        <div style={{width:"36px",overflow:"hidden",borderRadius:"10px"}}>
+                                                            <img src={options.photo} style={customStyles.optionLabelImg}
+                                                                 alt="country-image"/>
+                                                        </div>
+
                                                         <p style={customStyles.optionLabelP}
                                                         >{options.label}</p>
                                                     </div>

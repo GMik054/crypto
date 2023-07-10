@@ -177,9 +177,7 @@ const MainCalculationSection = () => {
                                                              style={{
                                                                  maxWidth: `${m ? "32px" : "46px"}`,
                                                                  maxHeight: `${m ? "32px" : "46px"}`,
-                                                                 // marginLeft: "10px",
                                                                  marginRight: `${m ? "10px" : "0"}`,
-                                                                 // padding:`${m ?"0px 8px":"0"}`,
                                                                  position: "relative"
                                                              }}
                                                              alt="country-image"/>
