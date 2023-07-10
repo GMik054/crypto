@@ -34,7 +34,7 @@ const Header = () => {
         }),
         container: (provided) => ({
             ...provided,
-            maxWidth: "120px",
+            // maxWidth: "120px",
             width: "100%"
         }),
 
@@ -65,6 +65,7 @@ const Header = () => {
             fontSize: "18px",
             letterSpacing: "0.18px",
             // paddingLeft:"30px",
+            cursor:"pointer",
             '&:hover': {
                 backgroundColor: state.isSelected ? 'lightgray' : 'lightgray',
 
@@ -134,8 +135,8 @@ const Header = () => {
                                 </div>
                             </Col>
                             <Col lg="5">
-                                <Row>
-                                    <Col lg="6">
+                                <Row className="justify-content-end">
+                                    <Col lg="4">
                                         <div className="language-section">
                                             <Select
                                                 id={options.value} // Add a static id value here

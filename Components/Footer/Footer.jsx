@@ -1,5 +1,6 @@
 import React from 'react';
 import {Col, Container, Row} from "reactstrap";
+import Link from "next/link";
 
 const Footer = () => {
     return (
@@ -11,7 +12,10 @@ const Footer = () => {
 
                             <Col lg="4">
                                 <div className="footer-logos-section">
-                                    <img src="/assets/images/footerlogo.png"/>
+
+                                    <Link href={`/`}>
+                                        <img src="/assets/images/footerlogo.png"/>
+                                    </Link>
                                     <Row className="">
                                         <Col lg="3">
                                             <img src="/assets/social/fb.svg"/>
@@ -29,11 +33,21 @@ const Footer = () => {
 
                             <Col lg="3">
                                 <div className="info-pages">
-                                    <p>Home</p>
-                                    <p>Partners</p>
-                                    <p>FAQ</p>
-                                    <p>Rules</p>
-                                    <p>Contacts</p>
+                                    <Link href={`/`}>
+                                        <p>Home</p>
+                                    </Link>
+                                    <Link href={`/partners`}>
+                                        <p>Partners</p>
+                                    </Link>
+                                    <Link href={`/faq`}>
+                                        <p>FAQ</p>
+                                    </Link>
+                                    <Link href={`/gallery`}>
+                                        <p>Gallery</p>
+                                    </Link>
+                                    <Link href={`/contact-us`}>
+                                        <p>Contacts</p>
+                                    </Link>
                                 </div>
 
                             </Col>
@@ -42,7 +56,8 @@ const Footer = () => {
 
                                     <h4>Contact Us</h4>
                                     <div>
-                                        <p>105/1 Teryan street, 0005, Yerevan, Armenia <span>(Citadel Business Center)</span></p>
+                                        <p>105/1 Teryan street, 0005, Yerevan,
+                                            Armenia <span>(Citadel Business Center)</span></p>
                                         <div className="email-phone">
                                             <a href="mailto:info@crypto.am">info@crypto.am</a> | <a
                                             href={`tel:+374 77 12 22 23`}>+374 77 122223</a>
