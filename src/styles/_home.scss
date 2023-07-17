@@ -94,7 +94,7 @@ $light-white: rgba(244, 244, 244, 0.8);
     .buttons {
       display: flex;
       position: relative;
-      left: 48px;
+      left: 45px;
       top: 4px;
 
       .center-div {
@@ -103,9 +103,9 @@ $light-white: rgba(244, 244, 244, 0.8);
       }
 
       .custom-button {
-        max-width: 104px;
+        max-width: 106px;
         width: 100%;
-        height: 32px;
+        height: 36px;
         overflow: hidden;
         position: relative;
 
@@ -143,17 +143,18 @@ $light-white: rgba(244, 244, 244, 0.8);
           align-items: center;
           display: flex;
           justify-content: center;
-
-          &:hover {
-            background-color: $yellow-project;
-          }
-
-
+          //&:hover {
+          //  background-color: $yellow-project;
+          //}
           p {
             font-weight: 700;
             color: black;
           }
 
+        }
+
+        .selected {
+          background-color: $yellow-project;
         }
       }
     }
@@ -201,6 +202,7 @@ $light-white: rgba(244, 244, 244, 0.8);
             background-color: #282828;
             border-radius: 16px;
             border: none;
+            box-shadow: none;
             padding: calc(8px + 4 * (100vw - 320px) / 1600) calc(12px + 12 * (100vw - 320px) / 1600);
 
             &::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
@@ -239,7 +241,8 @@ $light-white: rgba(244, 244, 244, 0.8);
       right: 2.5%;
 
       .button-area {
-        background-color: $yellow-project;
+        background-color: #454545;
+
         position: absolute;
         overflow: hidden;
         cursor: pointer;
@@ -254,8 +257,17 @@ $light-white: rgba(244, 244, 244, 0.8);
           transform: skewX(45deg);
           font-weight: 700;
           font-family: "Titillium Web";
-          color: black !important;
+          color: white;
           font-size: 18px !important;
+        }
+      }
+
+      .active {
+        background-color: $yellow-project;
+        color: black;
+
+        h5 {
+          color: black !important;
         }
       }
     }
@@ -316,7 +328,7 @@ $light-white: rgba(244, 244, 244, 0.8);
   max-width: 648px;
   width: 100%;
   background-color: #3F3F3F;
-  border: 2px solid #000;
+  //border: 2px solid #000;
   padding: 40px;
   border-radius: 16px;
 
@@ -334,11 +346,11 @@ $light-white: rgba(244, 244, 244, 0.8);
     }
   }
 
-  h4 {
-    font-family: "Montserrat";
+  h5 {
+    //font-family: "Montserrat";
     font-weight: 700 !important;
     line-height: normal;
-    letter-spacing: 0.28px;
+    letter-spacing: 0.24px;
     padding-bottom: 16px;
     border-bottom: 1px solid $yellow-project;
     margin-bottom: 16px !important;
@@ -346,17 +358,17 @@ $light-white: rgba(244, 244, 244, 0.8);
 
   .modal-desc {
     //padding-bottom: 48px;
-    font-size: 14px;
+    font-size: 12px;
     font-family: "Montserrat";
     font-weight: 500;
     line-height: normal;
-    letter-spacing: 0.14px;
+    letter-spacing: 0.12px;
     color: #D3D3D3;
   }
 
   .modal-exchange-button {
     width: 100%;
-    padding: 12px 24px;
+    padding: 10px 24px;
     border-radius: 16px;
     background-color: #292929;
     //background-color: $yellow-project;
@@ -376,17 +388,20 @@ $light-white: rgba(244, 244, 244, 0.8);
   }
 
   .form {
-    padding: 24px 0;
+    padding: 20px 0;
 
     .form-row {
       gap: 10px 0;
 
       label {
         color: #D3D3D3 !important;
+        font-size: 14px;
+        line-height: normal;
+        letter-spacing: 0.14px;
       }
 
       .modal-input {
-        padding: 12px 24px;
+        padding: 10px 24px;
         border-radius: 16px;
         background-color: #292929;
         color: #D3D3D3;
@@ -580,11 +595,11 @@ $light-white: rgba(244, 244, 244, 0.8);
 
 .partners-section {
   background-image: url(/assets/images/2.png);
-  background-size: cover;
+  background-size: 100%;
   //background-position: center;
   background-repeat: no-repeat;
   display: block;
-  padding: 100px 0;
+  padding: calc(22px + (260 - 120) * ((100vw - 320px) / (1920 - 320))) 0;
   background-color: $black-project;
 
   h3 {
@@ -763,11 +778,13 @@ $light-white: rgba(244, 244, 244, 0.8);
 
   .css-aoxytf-singleValue {
     .country-option {
-      justify-content: end!important;
+      justify-content: end !important;
+
       p {
         display: none;
       }
-      img{
+
+      img {
         //width: 100%;
       }
     }
@@ -821,7 +838,7 @@ $light-white: rgba(244, 244, 244, 0.8);
       color: white;
 
       &:hover {
-        color:$yellow-project;
+        color: $yellow-project;
       }
     }
   }
@@ -882,4 +899,355 @@ $light-white: rgba(244, 244, 244, 0.8);
   background-repeat: no-repeat;
   display: block;
   padding: 92px 0 130px 0;
+}
+
+@media screen and (max-width: 1399px) {
+  .calculation-section {
+    .calculation-banner {
+      .buttons {
+        left: 39px;
+        top: 3px;
+
+        .custom-button {
+          max-width: 91px;
+          height: 30px;
+
+          .button-area {
+            p {
+              font-size: 14px;
+            }
+          }
+        }
+      }
+
+      .custom-row-form {
+        padding: 20px 50px;
+        gap: 24px;
+
+        .form-section {
+          .form-label {
+            font-size: 14px;
+          }
+
+          .form-main {
+            input {
+              font-size: 14px;
+
+              &::placeholder {
+                font-size: 14px;
+              }
+            }
+          }
+        }
+      }
+
+      .custom-single-button {
+        top: 263px;
+        max-width: 217px;
+        height: 34px;
+
+        .button-area {
+          h5 {
+            font-size: 16px;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+@media screen and (max-width: 1199px) {
+  .calculation-section {
+    .calculation-banner {
+      .buttons {
+        .custom-button {
+          max-width: 89px;
+          height: 29px;
+
+        }
+      }
+
+      .custom-single-button {
+        top: 258px;
+        max-width: 212px;
+        height: 32px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 991px) {
+  .calculation-section {
+    .cart {
+      order: 2; /* Change the order of the column (move it to the first position) */
+      .calculation-banner {
+        .buttons {
+          left: 46px;
+
+          .custom-button {
+            max-width: 108px;
+            height: 36px;
+
+            .button-area {
+              p {
+                font-size: 18px;
+              }
+            }
+          }
+        }
+
+        .custom-row-form {
+          padding: 30px 60px;
+          gap: 32px;
+
+          .form-section {
+            .form-label {
+              font-size: 18px;
+            }
+
+            .form-main {
+              input {
+                font-size: 18px;
+
+                &::placeholder {
+                  font-size: 18px;
+                }
+              }
+            }
+          }
+        }
+
+        .custom-single-button {
+          right: 9%;
+          max-width: 258px;
+          height: 38px;
+          top: 312px;
+
+          .button-area {
+            h5 {
+              font-size: 18px;
+            }
+          }
+        }
+      }
+
+    }
+
+    .info {
+      padding-bottom: 30px;
+      order: 1; /* Change the order of the column (move it to the second position) */
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .calculation-section {
+    .cart {
+      order: 2; /* Change the order of the column (move it to the first position) */
+      .calculation-banner {
+        .buttons {
+          left: 35px;
+
+          .custom-button {
+            max-width: 87px;
+            height: 30px;
+
+            .button-area {
+              p {
+                font-size: 14px;
+              }
+            }
+          }
+        }
+
+        .custom-row-form {
+          padding: 20px 50px;
+          gap: 24px;
+
+          .form-section {
+            .form-label {
+              font-size: 14px;
+            }
+
+            .form-main {
+              input {
+                font-size: 14px!important;
+
+                &::placeholder {
+                  font-size: 14px!important;
+                }
+              }
+            }
+          }
+        }
+
+        .custom-single-button {
+          right: 3%;
+          max-width: 202px;
+          height: 30px;
+          top: 249px;
+
+          .button-area {
+            h5 {
+              font-size: 16px!important;
+            }
+          }
+        }
+      }
+
+    }
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .calculation-section {
+    .cart {
+      order: 2; /* Change the order of the column (move it to the first position) */
+      .calculation-banner {
+        .buttons {
+          left: 37px;
+
+          .custom-button {
+            max-width: 93px;
+            height: 33px;
+          }
+        }
+
+        .custom-single-button {
+          max-width: 216px;
+          height: 34px;
+          top: 265px;
+        }
+      }
+
+    }
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .calculation-section {
+    .cart {
+      order: 2; /* Change the order of the column (move it to the first position) */
+      .calculation-banner {
+        margin: 0 auto;
+        max-width: 480px;
+        img {
+          position: absolute;
+          max-width: 100%;
+        }
+        .buttons {
+          left: 34px;
+
+          .custom-button {
+            max-width: 80px;
+            height: 27px;
+
+            .button-area {
+              p {
+                font-size: 12px;
+              }
+            }
+          }
+        }
+
+        .custom-row-form {
+          padding: 14px 40px;
+          gap: 22px;
+
+          .form-section {
+            .form-label {
+              font-size: 12px;
+            }
+
+            .form-main {
+              input {
+                font-size: 12px!important;
+
+                &::placeholder {
+                  font-size: 12px!important;
+                }
+              }
+            }
+          }
+        }
+
+        .custom-single-button {
+          max-width: 187px;
+          height: 28px;
+          top: 231px;
+          .button-area {
+            h5 {
+              font-size: 14px!important;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .calculation-section {
+    .cart {
+      order: 2; /* Change the order of the column (move it to the first position) */
+      .calculation-banner {
+        margin: 0 auto;
+        max-width: 360px;
+        img {
+          position: absolute;
+          max-width: 100%;
+        }
+        .buttons {
+          top: 2px;
+          left: 26px;
+
+          .custom-button {
+            max-width: 60px;
+            height: 20px;
+
+            .button-area {
+              p {
+                font-size: 10px;
+              }
+            }
+          }
+        }
+
+        .custom-row-form {
+          padding: 10px 26px;
+          gap: 16px;
+
+          .form-section {
+            .form-label {
+              font-size: 10px;
+              margin-bottom: 2px;
+
+            }
+
+            .form-main {
+              input {
+                font-size: 10px!important;
+
+                &::placeholder {
+                  font-size: 10px!important;
+                }
+              }
+            }
+          }
+        }
+
+        .custom-single-button {
+          max-width: 140px;
+          height: 20px;
+          top: 174px;
+          .button-area {
+            h5 {
+              font-size: 12px!important;
+            }
+          }
+        }
+      }
+    }
+  }
 }

@@ -10,6 +10,7 @@ $yellow-project: #FFE500;
 $light-white: rgba(244, 244, 244, 0.8);
 
 h2 {
+//calc(22px + (28 - 22) * ((100vw - 320px) / (1920 - 320)));
   font-size: 54px !important;
   color: white !important;
   text-align: left;

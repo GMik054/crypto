@@ -1,16 +1,13 @@
-import '../styles/globals.scss'
-// import '../styles/home.scss'
 import "@fontsource/montserrat";
-import "@fontsource/montserrat/400.css"; // Specify weight
-import "@fontsource/montserrat/400-italic.css"; // Specif
-import "@fontsource/titillium-web"; // Defaults to weight 400
-import "@fontsource/titillium-web/400.css"; // Specify weight
-import "@fontsource/titillium-web/400-italic.css"; // Spe
-
+import "@fontsource/montserrat/400.css";
+import "@fontsource/montserrat/400-italic.css";
+import "@fontsource/titillium-web";
+import "@fontsource/titillium-web/400.css";
+import "@fontsource/titillium-web/400-italic.css";
+import 'bootstrap/dist/css/bootstrap.css';
 import '../styles/app.scss'
 import {Provider} from 'react-redux'
 // import type { AppProps } from 'next/app'
-import 'bootstrap/dist/css/bootstrap.css';
 import store from '../store'
 import Head from "next/head";
 

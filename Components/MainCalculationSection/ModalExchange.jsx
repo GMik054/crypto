@@ -37,7 +37,12 @@ import {useFormik} from "formik";
 //     width: '100%',
 //
 // };
-const ModalExchange = () => {
+const ModalExchange = ({valueCurrency1,  minValue1, maxValue1}) => {
+
+    // console.log(valueCurrency1, "valueCurrency1")
+    // console.log(minValue1, "minValue1")
+    // console.log(maxValue1, "maxValue1")
+
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -80,7 +85,9 @@ const ModalExchange = () => {
             {/*    <h5 className="text">EXCHANGE</h5>*/}
             {/*</div>*/}
 
-            <Button onClick={handleOpen} className="button-area"><h5
+            <Button onClick={handleOpen}
+                    disabled={Number(valueCurrency1) < minValue1 || Number(valueCurrency1) > maxValue1}
+                    className={`button-area ${Number(valueCurrency1) < minValue1 || Number(valueCurrency1) > maxValue1 ?"": "active"}`}><h5
                 className="text">EXCHANGE</h5></Button>
             <Modal
                 aria-labelledby="transition-modal-title"
@@ -100,16 +107,14 @@ const ModalExchange = () => {
                         <Button onClick={handleClose} className="close-button">
                             <CloseIcon/>
                         </Button>
-                        <h4>Fill in data for exchange</h4>
+                        <h5>Fill in data for exchange</h5>
                         <p className="modal-desc">Lorem Ipsum is simply dummy text of the printing and typesetting
                             industry. Lorem Ipsum has
                             been the industry's standard.</p>
                         <Form className="form">
                             <Row className="form-row">
                                 <Col lg="12">
-                                    <Label>
-                                        <p>Name</p>
-                                    </Label>
+                                    <Label>Name</Label>
                                     <Input type="text" className="modal-input" name="name"
                                            value={ltrim(formik.values.name)}
                                            onChange={formik.handleChange}
@@ -119,9 +124,7 @@ const ModalExchange = () => {
                                     )}
                                 </Col>
                                 <Col lg="12">
-                                    <Label>
-                                        <p>Surname</p>
-                                    </Label>
+                                    <Label>Surname                                    </Label>
                                     <Input type="text" className="modal-input" name="surName"
                                            value={ltrim(formik.values.surName)}
                                            onChange={formik.handleChange}
@@ -131,9 +134,7 @@ const ModalExchange = () => {
                                     )}
                                 </Col>
                                 <Col lg="12">
-                                    <Label>
-                                        <p>E-mail</p>
-                                    </Label>
+                                    <Label>E-mail                                    </Label>
                                     <Input type="email" className="modal-input" name="email"
                                            value={formik.values.email}
                                            onChange={formik.handleChange}
@@ -145,8 +146,7 @@ const ModalExchange = () => {
                                     )}
                                 </Col>
                                 <Col lg="12">
-                                    <Label>
-                                        <p>Phone Number</p>
+                                    <Label>Phone Number
                                     </Label>
                                     <Input type="phone" className="modal-input" name="phone"
                                            value={formik.values.phone}

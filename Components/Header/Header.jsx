@@ -65,7 +65,7 @@ const Header = () => {
             fontSize: "18px",
             letterSpacing: "0.18px",
             // paddingLeft:"30px",
-            cursor:"pointer",
+            cursor: "pointer",
             '&:hover': {
                 backgroundColor: state.isSelected ? 'lightgray' : 'lightgray',
 
@@ -146,7 +146,11 @@ const Header = () => {
                                                 // menuIsOpen={true}
                                                 formatOptionLabel={options => (
                                                     <div className="country-option" style={customStyles.optionLabel}>
-                                                        <div style={{width:"36px",overflow:"hidden",borderRadius:"10px"}}>
+                                                        <div style={{
+                                                            width: "36px",
+                                                            overflow: "hidden",
+                                                            borderRadius: "10px"
+                                                        }}>
                                                             <img src={options.photo} style={customStyles.optionLabelImg}
                                                                  alt="country-image"/>
                                                         </div>
@@ -176,7 +180,6 @@ const Header = () => {
                         </Row>
                     </Col>
                 </Row>
-
             </Container>
 
         </header>
