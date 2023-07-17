@@ -12,6 +12,7 @@
     "@emotion/styled": "^11.11.0",
     "@fontsource/montserrat": "^5.0.3",
     "@fontsource/titillium-web": "^5.0.3",
+    "@fortawesome/fontawesome-free": "^6.4.0",
     "@mui/material": "^5.13.6",
     "@mui/styled-engine-sc": "^5.12.0",
     "@react-icons/all-files": "^4.1.0",
@@ -30,6 +31,7 @@
     "reactstrap": "^9.2.0",
     "redux-persist": "^6.0.0",
     "sass": "^1.63.4",
+    "slick-carousel": "^1.8.1",
     "styled-components": "^5.3.11",
     "yup": "^1.2.0"
   },

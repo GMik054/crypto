@@ -51,3 +51,28 @@ p {
 a {
   text-decoration: none!important;
 }
+
+@media screen and (max-width: 767px) {
+  h2{
+    font-size: 38px!important;
+  }
+  h3{
+    font-size: 32px!important;
+  }
+  h4{
+    font-size: 28px!important;
+  }
+
+}
+@media screen and (max-width: 500px) {
+  h2{
+    font-size: 28px!important;
+  }
+  h3{
+    font-size: 24px!important;
+  }
+  h4{
+    font-size: 22px!important;
+  }
+
+}

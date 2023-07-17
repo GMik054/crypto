@@ -1,9 +1,17 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Col, Container, Row} from "reactstrap";
 import Select from "react-select";
 import {FiSearch} from "@react-icons/all-files/fi/FiSearch";
 import Button from "@mui/material/Button";
 import Link from "next/link";
+import ModalRegister from "./ModalRegister";
+import ModalLogin from "./ModalLogin";
+import {PersistGate} from "redux-persist/integration/react";
+import {persistor} from "../../src/store";
+import {useDispatch, useSelector} from "react-redux";
+import {selectAuth, selectAuthUser, selectLoginToken, signOut} from "../../src/features/Slices/LoginSlice";
+import ModalTransactions from "./ModalTransactions";
+import {APICallUrl} from "../../halpers/useWindowDimensions";
 
 const options = [
     {value: 'eng', label: 'Eng', photo: '/assets/images/eng.png'},
@@ -12,7 +20,28 @@ const options = [
 ];
 const Header = () => {
     const [selectedOption, setSelectedOption] = useState(options[0]);
-    const [m, setM] = useState(false);
+    let dispatch = useDispatch();
+    let auth = useSelector(selectAuth);
+    let authUser = useSelector(selectAuthUser);
+    let loginToken = useSelector(selectLoginToken);
+    console.log(auth, "auth")
+    // console.log(authUser, "authUser")
+    console.log(loginToken, "loginToken")
+    useEffect(() => {
+        if (!auth) {
+            fetch(`${APICallUrl}/api/v1/transactions`, {
+                headers: {
+                    "Content-Type": "application/json;charset=UTF-8",
+                    Authorization: `Bearer ${loginToken.token}`
+                },
+            })
+                .then(res => res.json().then(res => {
+                        console.log(res,"RES")
+                    }
+                ));
+        }
+    }, [auth])
+
     const customStyles = {
         indicatorsContainer: (provided) => ({
             ...provided,
@@ -163,17 +192,36 @@ const Header = () => {
                                             />
                                         </div>
                                     </Col>
-                                    <Col lg="2">
-                                        <div className="header-buttons">
-                                            <Button className="login">Login</Button>
-                                        </div>
+                                    <PersistGate loading={null} persistor={persistor}>
 
-                                    </Col>
-                                    <Col lg="4">
-                                        <div className="header-buttons">
-                                            <Button className="register">Register</Button>
-                                        </div>
-                                    </Col>
+                                        {
+                                            auth ?
+                                                <>
+                                                    <Col lg="2">
+                                                        {/*<div className="header-buttons">*/}
+                                                        {/*    <Button className="login">Login</Button>*/}
+                                                        {/*</div>*/}
+                                                        <ModalLogin/>
+                                                    </Col>
+                                                    <Col lg="4">
+                                                        <ModalRegister/>
+                                                    </Col>
+                                                </> :
+                                                <>
+                                                    <Col lg="4">
+                                                        <ModalTransactions/>
+                                                    </Col>
+                                                    <Col lg="4">
+                                                        <div className="header-buttons">
+                                                            <Button className="login"
+                                                                    onClick={() => dispatch(signOut())}>Sign
+                                                                Out</Button>
+                                                        </div>
+                                                    </Col>
+                                                </>
+                                        }
+                                    </PersistGate>
+
                                 </Row>
 
                             </Col>

@@ -76,7 +76,7 @@ $light-white: rgba(244, 244, 244, 0.8);
   //background-position: center;
   background-repeat: no-repeat;
   display: block;
-  padding-top: 98px;
+  padding-top: calc(20px + (220 - 120) * ((100vw - 320px) / (1920 - 320)));
   background-color: $black-project;
   //height: 800px;
 
@@ -177,6 +177,7 @@ $light-white: rgba(244, 244, 244, 0.8);
 
         .form-main {
           display: flex;
+          //overflow: hidden;
 
           svg {
             font-size: 20px;
@@ -290,10 +291,10 @@ $light-white: rgba(244, 244, 244, 0.8);
       }
     }
 
-    h5 {
+    p {
       color: $light-white !important;
       text-align: left;
-      font-size: 18px !important;
+      font-size: 18px;
       font-style: normal;
       font-weight: 400;
       line-height: 120%;
@@ -303,7 +304,7 @@ $light-white: rgba(244, 244, 244, 0.8);
 
   .icons-info {
     margin-top: 100px;
-    padding: 80px 0;
+    padding: calc(24px + (200 - 120) * ((100vw - 320px) / (1920 - 320))) 0;
 
     h4 {
       font-family: Titillium Web;
@@ -316,6 +317,11 @@ $light-white: rgba(244, 244, 244, 0.8);
       line-height: 20px;
       margin: 0 auto;
       max-width: 276px;
+    }
+
+    img {
+      max-width: 100px;
+      max-height: 100px;
     }
   }
 }
@@ -393,6 +399,17 @@ $light-white: rgba(244, 244, 244, 0.8);
     .form-row {
       gap: 10px 0;
 
+      .password-input-container {
+        position: relative;
+
+        .password-toggle-icon {
+          position: absolute;
+          color: #D3D3D3 !important;
+          top: 25%;
+          right: 10%;
+        }
+      }
+
       label {
         color: #D3D3D3 !important;
         font-size: 14px;
@@ -406,6 +423,7 @@ $light-white: rgba(244, 244, 244, 0.8);
         background-color: #292929;
         color: #D3D3D3;
         border: none;
+        width: 100%;
 
         &:focus {
           box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.1);
@@ -478,13 +496,14 @@ $light-white: rgba(244, 244, 244, 0.8);
 
   .line-text-section {
     display: flex;
-    //justify-content: center;
-    padding: 30px 52px;
+    justify-content: center;
+    //padding: 30px 52px;
 
     .line-text {
       display: flex;
-      max-width: 392px;
+      max-width: 398px;
       width: 100%;
+      position: relative;
 
       .dot {
         height: 25px;
@@ -506,6 +525,7 @@ $light-white: rgba(244, 244, 244, 0.8);
     flex-direction: column;
     align-items: center;
 
+
     img {
       max-width: 80px;
       width: 100%;
@@ -517,25 +537,12 @@ $light-white: rgba(244, 244, 244, 0.8);
     }
   }
 
-  .slick-prev:before {
-    content: '<' !important;
-    font-family: monospace;
-    font-size: 30px;
-    color: $yellow-project;
-  }
-
-  .slick-next:before {
-    content: '>' !important;
-    font-family: monospace;
-    font-size: 30px;
-    color: $yellow-project;
-  }
 
   .simply {
     h3 {
       font-family: "Montserrat Alternates";
       font-weight: 700 !important;
-      margin-bottom: 72px !important;
+      margin-bottom: calc(16px + (180 - 100) * ((100vw - 320px) / (1920 - 320))) !important;
 
       span {
         color: $yellow-project;
@@ -544,9 +551,23 @@ $light-white: rgba(244, 244, 244, 0.8);
   }
 }
 
+.slick-prev:before {
+  content: '<' !important;
+  font-family: monospace;
+  font-size: 30px;
+  color: $yellow-project;
+}
+
+.slick-next:before {
+  content: '>' !important;
+  font-family: monospace;
+  font-size: 30px;
+  color: $yellow-project;
+}
+
 .faq-section {
   background-color: $black-project;
-  padding-bottom: 80px;
+  padding-bottom: calc(31px + (190 - 120) * ((100vw - 320px) / (1920 - 320)));
 
   .accordion-item {
     background-color: transparent;
@@ -611,6 +632,10 @@ $light-white: rgba(244, 244, 244, 0.8);
   }
 
   .slider-partners {
+    display: flex !important;
+    align-items: center;
+    height: 100%;
+
     img {
       margin: 0 auto;
     }
@@ -627,6 +652,7 @@ $light-white: rgba(244, 244, 244, 0.8);
     align-items: flex-start;
     justify-content: space-between;
     height: 100%;
+    gap: 20px;
   }
 
   .info-pages {
@@ -636,7 +662,6 @@ $light-white: rgba(244, 244, 244, 0.8);
     height: 100%;
 
     p {
-      font-size: 18px;
       line-height: 174%;
       letter-spacing: 0.2px;
     }
@@ -648,10 +673,13 @@ $light-white: rgba(244, 244, 244, 0.8);
     justify-content: space-between;
     height: 100%;
 
-    h4 {
+    h3 {
       font-size: 36px !important;
       text-align: left;
-      color: $yellow-project !important;
+      //color: $yellow-project !important;
+      span {
+        color: #E8BA4E;
+      }
     }
 
     p {
@@ -662,7 +690,7 @@ $light-white: rgba(244, 244, 244, 0.8);
       margin-bottom: 4px !important;
 
       span {
-        color: $yellow-project;
+        color: #E8BA4E;
       }
     }
 
@@ -678,7 +706,7 @@ $light-white: rgba(244, 244, 244, 0.8);
         text-decoration: none !important;
 
         &:hover {
-          color: $yellow-project;
+          color: #E8BA4E;
         }
       }
     }
@@ -691,7 +719,7 @@ $light-white: rgba(244, 244, 244, 0.8);
   //background-position: center;
   background-repeat: no-repeat;
   display: block;
-  padding-top: 60px;
+  padding-top: calc(20px + (220 - 120) * ((100vw - 320px) / (1920 - 320)));
   background-color: $black-project;
 
   .partners-main-div {
@@ -738,11 +766,11 @@ $light-white: rgba(244, 244, 244, 0.8);
 
 .gallery-section {
   background-image: url(/assets/images/1.png);
-  background-size: contain;
+  background-size: cover;
   //background-position: center;
   background-repeat: no-repeat;
   display: block;
-  padding: 92px 0 130px 0;
+  padding: calc(20px + (220 - 120) * ((100vw - 320px) / (1920 - 320))) 0 calc(32px + (260 - 120) * ((100vw - 320px) / (1920 - 320))) 0;
   background-color: $black-project;
 
   h3 {
@@ -768,7 +796,7 @@ $light-white: rgba(244, 244, 244, 0.8);
   background-repeat: no-repeat;
   display: block;
   background-color: $black-project;
-  padding-bottom: 130px;
+  padding-bottom: calc(32px + (260 - 120) * ((100vw - 320px) / (1920 - 320)));
 }
 
 .language-section {
@@ -813,8 +841,9 @@ $light-white: rgba(244, 244, 244, 0.8);
   background-size: 100%;
   //background-position: center;
   background-repeat: no-repeat;
+  background-color: $black-project;
   display: block;
-  padding-top: 92px;
+  padding-top: calc(20px + (220 - 120) * ((100vw - 320px) / (1920 - 320)));
 
   h3 {
     color: $yellow-project !important;
@@ -898,7 +927,7 @@ $light-white: rgba(244, 244, 244, 0.8);
   //background-position: center;
   background-repeat: no-repeat;
   display: block;
-  padding: 92px 0 130px 0;
+  padding: calc(20px + (220 - 120) * ((100vw - 320px) / (1920 - 320))) 0 calc(32px + (260 - 120) * ((100vw - 320px) / (1920 - 320))) 0;
 }
 
 @media screen and (max-width: 1399px) {
@@ -925,6 +954,7 @@ $light-white: rgba(244, 244, 244, 0.8);
         gap: 24px;
 
         .form-section {
+          //overflow: hidden;
           .form-label {
             font-size: 14px;
           }
@@ -958,6 +988,8 @@ $light-white: rgba(244, 244, 244, 0.8);
 
 
 @media screen and (max-width: 1199px) {
+
+
   .calculation-section {
     .calculation-banner {
       .buttons {
@@ -978,7 +1010,12 @@ $light-white: rgba(244, 244, 244, 0.8);
 }
 
 @media screen and (max-width: 991px) {
+  .single-partners-section {
+    background-size: cover;
+  }
   .calculation-section {
+    background-size: cover;
+    background-position: center; /* Shifting 20 pixels to the right */
     .cart {
       order: 2; /* Change the order of the column (move it to the first position) */
       .calculation-banner {
@@ -1043,6 +1080,12 @@ $light-white: rgba(244, 244, 244, 0.8);
 
 @media screen and (max-width: 767px) {
   .calculation-section {
+    .crypto-title-section {
+      p {
+        font-size: 16px;
+      }
+    }
+
     .cart {
       order: 2; /* Change the order of the column (move it to the first position) */
       .calculation-banner {
@@ -1072,10 +1115,10 @@ $light-white: rgba(244, 244, 244, 0.8);
 
             .form-main {
               input {
-                font-size: 14px!important;
+                font-size: 14px !important;
 
                 &::placeholder {
-                  font-size: 14px!important;
+                  font-size: 14px !important;
                 }
               }
             }
@@ -1090,7 +1133,7 @@ $light-white: rgba(244, 244, 244, 0.8);
 
           .button-area {
             h5 {
-              font-size: 16px!important;
+              font-size: 16px !important;
             }
           }
         }
@@ -1098,31 +1141,77 @@ $light-white: rgba(244, 244, 244, 0.8);
 
     }
   }
+
+  .exchange-steps-section {
+
+    h3 {
+      line-height: 40px;
+    }
+  }
+  .gallery-section {
+
+
+    .gallery-img {
+      min-height: auto;
+
+      //img {
+      //  max-height: 460px;
+      //  width: 100%;
+      //}
+    }
+  }
+  .contact-us-section {
+
+    .contact-form {
+      .contact-col {
+
+        p {
+          font-size: 18px;
+        }
+
+        input {
+          font-size: 16px;
+        }
+      }
+    }
+
+    .contact-button {
+
+
+      button {
+        font-size: 18px;
+        padding: 10px 0;
+      }
+    }
+  }
+
 }
 
 @media screen and (max-width: 575px) {
-  .calculation-section {
-    .cart {
-      order: 2; /* Change the order of the column (move it to the first position) */
-      .calculation-banner {
-        .buttons {
-          left: 37px;
+  //.calculation-section {
+    //.cart {
+      //order: 2; /* Change the order of the column (move it to the first position) */
+      //.calculation-banner {
+      //  .buttons {
+      //    left: 37px;
+      //
+      //    .custom-button {
+      //      max-width: 93px;
+      //      height: 33px;
+      //    }
+      //  }
+      //
+      //  .custom-single-button {
+      //    max-width: 216px;
+      //    height: 34px;
+      //    top: 265px;
+      //  }
+      //}
 
-          .custom-button {
-            max-width: 93px;
-            height: 33px;
-          }
-        }
+    //}
+  //}
 
-        .custom-single-button {
-          max-width: 216px;
-          height: 34px;
-          top: 265px;
-        }
-      }
 
-    }
-  }
 }
 
 @media screen and (max-width: 575px) {
@@ -1132,10 +1221,12 @@ $light-white: rgba(244, 244, 244, 0.8);
       .calculation-banner {
         margin: 0 auto;
         max-width: 480px;
+
         img {
           position: absolute;
           max-width: 100%;
         }
+
         .buttons {
           left: 34px;
 
@@ -1162,10 +1253,10 @@ $light-white: rgba(244, 244, 244, 0.8);
 
             .form-main {
               input {
-                font-size: 12px!important;
+                font-size: 12px !important;
 
                 &::placeholder {
-                  font-size: 12px!important;
+                  font-size: 12px !important;
                 }
               }
             }
@@ -1176,12 +1267,38 @@ $light-white: rgba(244, 244, 244, 0.8);
           max-width: 187px;
           height: 28px;
           top: 231px;
+
           .button-area {
             h5 {
-              font-size: 14px!important;
+              font-size: 14px !important;
             }
           }
         }
+      }
+    }
+  }
+  .icons-info {
+    p {
+      font-size: 12px !important;
+    }
+
+    img {
+      max-width: 80px !important;
+      max-height: 80px !important;
+    }
+  }
+  .footer {
+    .information {
+      h3 {
+        font-size: 30px !important;
+      }
+
+      p {
+        font-size: 16px;
+      }
+
+      .email-phone {
+        font-size: 16px;
       }
     }
   }
@@ -1189,15 +1306,24 @@ $light-white: rgba(244, 244, 244, 0.8);
 
 @media screen and (max-width: 500px) {
   .calculation-section {
+
+    .crypto-title-section {
+      p {
+        //font-size: 14px;
+      }
+    }
+
     .cart {
       order: 2; /* Change the order of the column (move it to the first position) */
       .calculation-banner {
         margin: 0 auto;
         max-width: 360px;
+
         img {
           position: absolute;
           max-width: 100%;
         }
+
         .buttons {
           top: 2px;
           left: 26px;
@@ -1227,10 +1353,18 @@ $light-white: rgba(244, 244, 244, 0.8);
 
             .form-main {
               input {
-                font-size: 10px!important;
+                font-size: 10px !important;
 
                 &::placeholder {
-                  font-size: 10px!important;
+                  font-size: 10px !important;
+                }
+              }
+
+              .country-option {
+                min-height: 32px !important;
+
+                img {
+                  max-height: 32px !important;
                 }
               }
             }
@@ -1241,12 +1375,166 @@ $light-white: rgba(244, 244, 244, 0.8);
           max-width: 140px;
           height: 20px;
           top: 174px;
+
           .button-area {
             h5 {
-              font-size: 12px!important;
+              font-size: 12px !important;
             }
           }
         }
+      }
+    }
+  }
+  .exchange-steps-section {
+
+    .simply {
+      p {
+        //font-size: 14px !important;
+      }
+    }
+
+    .line-text-section {
+
+      .line-text {
+        .dot {
+          height: 20px;
+          max-width: 20px;
+          font-size: 13px !important;
+          margin-right: 4px;
+        }
+
+        p {
+          //font-size: 14px !important;
+        }
+
+      }
+    }
+  }
+  .faq-section {
+
+    .accordion-item {
+
+
+      .accordion-button {
+
+
+        h5 {
+          font-size: 18px !important;
+        }
+      }
+    }
+  }
+  .footer {
+    .info-pages {
+      p {
+        //font-size: 14px;
+      }
+    }
+
+    .information {
+      h3 {
+        font-size: 22px !important;
+      }
+
+      p {
+        //font-size: 14px;
+      }
+
+      .email-phone {
+        //font-size: 14px;
+      }
+    }
+  }
+  .contact-us-section {
+    .contact-form {
+      .contact-col {
+        p {
+          font-size: 16px;
+        }
+      }
+    }
+
+  }
+}
+
+@media screen and (max-width: 384px) {
+  .calculation-section {
+    .cart {
+      order: 2; /* Change the order of the column (move it to the first position) */
+      .calculation-banner {
+        margin: 0 auto;
+        max-width: 300px;
+
+        img {
+          position: absolute;
+          max-width: 100%;
+        }
+
+        .buttons {
+          top: 2px;
+          left: 22px;
+
+          .custom-button {
+            max-width: 50px;
+            height: 17px;
+
+            .button-area {
+              p {
+                font-size: 8px;
+              }
+            }
+          }
+        }
+
+        .custom-row-form {
+          padding: 6px 20px;
+          gap: 10px;
+
+          .form-section {
+            .form-label {
+              font-size: 8px;
+              margin-bottom: 2px;
+
+            }
+
+            .form-main {
+              input {
+                font-size: 8px !important;
+
+                &::placeholder {
+                  font-size: 8px !important;
+                }
+              }
+            }
+          }
+        }
+
+        .custom-single-button {
+          max-width: 117px;
+          height: 17px;
+          top: 144px;
+
+          .button-area {
+            h5 {
+              font-size: 10px !important;
+            }
+          }
+        }
+      }
+    }
+  }
+  .exchange-steps-section {
+
+
+    .line-text-section {
+
+      .line-text {
+
+
+        p {
+          font-size: 12px !important;
+        }
+
       }
     }
   }

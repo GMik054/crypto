@@ -6,16 +6,46 @@ const Partners = () => {
     const settings = {
         dots: false,
         infinite: true,
+        arrows:true,
         speed: 500,
         slidesToShow: 5,
         slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 5000
+        // autoplay: true,
+        autoplaySpeed: 5000,
+
+        responsive: [
+            {
+                breakpoint: 1200,
+                settings: {
+                    slidesToShow: 3,
+                },
+            },
+            {
+                breakpoint: 740,
+                settings: {
+                    slidesToShow: 2,
+                },
+            },
+            {
+                breakpoint: 585,
+                settings: {
+                    slidesToShow: 2,
+                    arrows:false,
+                },
+            },
+            {
+                breakpoint: 420,
+                settings: {
+                    slidesToShow: 1,
+                    arrows:false,
+                },
+            },
+        ],
     };
     return (
         <section className="partners-section">
             <Container>
-                <Row className="g-5">
+                <Row>
                     <Col lg="12">
                         <Row className="justify-content-md-center d-flex">
                             <Col lg="11">

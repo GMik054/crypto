@@ -8,30 +8,30 @@ const Footer = () => {
             <Container>
                 <Row className="justify-content-md-center d-flex">
                     <Col lg="11">
-                        <Row>
+                        <Row className="g-4">
 
-                            <Col lg="4">
+                            <Col lg="4" md="4">
                                 <div className="footer-logos-section">
 
                                     <Link href={`/`}>
                                         <img src="/assets/images/footerlogo.png"/>
                                     </Link>
-                                    <Row className="">
-                                        <Col lg="3">
+                                    <Row>
+                                        <Col lg="3" xs="3">
                                             <img src="/assets/social/fb.svg"/>
                                         </Col>
-                                        <Col lg="3">
+                                        <Col lg="3" xs="3">
                                             <img src="/assets/social/insta.svg"/>
                                         </Col>
-                                        <Col lg="3"><img src="/assets/social/twitter.svg"/>
+                                        <Col lg="3" xs="3"><img src="/assets/social/twitter.svg"/>
                                         </Col>
-                                        <Col lg="3"><img src="/assets/social/tube.svg"/>
+                                        <Col lg="3" xs="3"><img src="/assets/social/tube.svg"/>
                                         </Col>
                                     </Row>
                                 </div>
                             </Col>
 
-                            <Col lg="3">
+                            <Col lg="3" md="3">
                                 <div className="info-pages">
                                     <Link href={`/`}>
                                         <p>Home</p>
@@ -51,10 +51,10 @@ const Footer = () => {
                                 </div>
 
                             </Col>
-                            <Col lg="5">
+                            <Col lg="5" md="5">
                                 <div className="information">
 
-                                    <h4>Contact Us</h4>
+                                    <h3><span>Contact</span> Us</h3>
                                     <div>
                                         <p>105/1 Teryan street, 0005, Yerevan,
                                             Armenia <span>(Citadel Business Center)</span></p>

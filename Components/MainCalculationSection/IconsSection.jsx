@@ -33,11 +33,11 @@ const IconsSection = ({background}) => {
         <Container >
             <Row className="icons-info justify-content-center">
                 <Col lg="11">
-                    <Row className="justify-content-center">
+                    <Row className="justify-content-center g-4">
 
                 {customerService.map((elem) => {
                     return (
-                        <Col xl='3' sm='6' key={elem.id}>
+                        <Col xl='3' sm='6' xs='6' key={elem.id}>
                             <div className='service-wrap'>
                                 <div className='service-icon'>{elem.svg}</div>
                                 <div className='service-content'>

@@ -1,15 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {Col, Container, Input, Row} from "reactstrap";
+import {Col, Container,  Row} from "reactstrap";
 import Select from 'react-select';
-import {FiSearch} from "@react-icons/all-files/fi/FiSearch";
 import IconsSection from "./IconsSection";
-import Backdrop from '@mui/material/Backdrop';
-import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
-import Fade from '@mui/material/Fade';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import {CloseIcon} from "next/dist/client/components/react-dev-overlay/internal/icons/CloseIcon";
 import ModalExchange from "./ModalExchange";
 import useWindowDimensions, from "../../halpers/useWindowDimensions";
 
@@ -28,19 +20,16 @@ const MainCalculationSection = ({currencies, rates}) => {
     const [currenciesData, setCurrenciesData] = useState([]);
 
 
-    // console.log(currencies.data[0],"currencies.data[0]")
 
     useEffect(() => {
-        // setM(false)
         const filteredRates = rates.data.filter((el) => el.from === currency1.id);
-        // console.log(filteredRates, "filteredRates")
         setRateData(filteredRates)
         const filteredCurrencies = currencies.data.filter((currency) =>
             filteredRates.some((el) => el.to === currency.id)
         );
         setCurrency2(filteredCurrencies[0])
         setCurrenciesData(filteredCurrencies);
-        // console.log(m)
+
     }, [currency1])
 
     const customStyles = {
@@ -74,7 +63,7 @@ const MainCalculationSection = ({currencies, rates}) => {
             padding: "0",
             boxShadow: state.isFocused ? 'none' : 'none',
             minHeight: width<575? '36px': '38px',
-            width: state.isFocused ? width>575?'454px':"300px" : '120px',
+            width: state.isFocused ? width>767?'454px': width<500?"200px":"300px" : '120px',
             // '&:select': {
             //     backgroundColor: "red"
             // },
@@ -108,11 +97,15 @@ const MainCalculationSection = ({currencies, rates}) => {
             },
 
         }),
-        valueContainer: (provided, state) => ({
-            ...provided,
-            padding: isSelectOpen || isSelectOpen2 ? "0 18px" : "0"
-            // alignItems:"start"
-        }),
+        valueContainer: (provided, state) => {
+            const isSelected = state.hasValue && state.selectProps.menuIsOpen;
+            const shouldApplyPadding = (isSelectOpen || isSelectOpen2) && isSelected;
+
+            return {
+                ...provided,
+                padding: shouldApplyPadding ? "0 12px" : "0",
+            };
+        },
         placeholder: (provided, state) => ({
             ...provided,
             color: state.isSelected ? 'rgba(244, 244, 244, 0.8)' : 'rgba(244, 244, 244, 0.8)',
@@ -163,7 +156,7 @@ const MainCalculationSection = ({currencies, rates}) => {
         setValueCurrency2(Number(e) * filteredRate1.rate)
 
     }
-    console.log(rateData, "rateData")
+    // console.log(rateData, "rateData")
     // console.log(maxValue1, "maxValue1")
     // console.log(maxValue2, "maxValue2")
     let changeInverse = (e) => {
@@ -179,7 +172,7 @@ const MainCalculationSection = ({currencies, rates}) => {
 
     let [selected, setSelected] = useState(1);
 
-    console.log(width,"Widt")
+    console.log(width,"width")
     return (
         <section className="calculation-section">
             <Container>
@@ -232,7 +225,7 @@ const MainCalculationSection = ({currencies, rates}) => {
                                                    value={valueCurrency1} // Use defaultValue instead of value
                                                    onChange={(e) => change(e.target.value)} // Add onChange to update the state
                                                    min={minValue1}
-                                                   className={`form-control form-control-custom ${isSelectOpen ? "opacity-0 position-absolute" : ""}`}
+                                                   className={`form-control form-control-custom ${isSelectOpen ? "opacity-0 position-absolute w-25" : ""}`}
                                                    id='some-id' placeholder='Send Qiwi(RUB)' name='billing-company'/>
                                             <Select
                                                 id="1"
@@ -252,14 +245,14 @@ const MainCalculationSection = ({currencies, rates}) => {
                                                              display: "flex",
                                                              justifyContent: `${isSelectOpen ? "start" : "end"}`,
                                                              alignItems: "center",
-                                                             minHeight: `${isSelectOpen ? "32px" : `${width <= 1399 && width >500? "40px" : width <=500?"32px":"46px"}`}`,
+                                                             minHeight: `${isSelectOpen ? "32px" : `${width <= 1399 && width >500? "40px" : "46px"}`}`,
                                                              padding: `${isSelectOpen ? "8px" : "0"}`
                                                          }}>
                                                         <img src={options?.image} title={options?.code}
                                                              alt={options?.code}
                                                              style={{
                                                                  maxWidth: `${isSelectOpen ? "32px" : "46px"}`,
-                                                                 maxHeight: `${isSelectOpen ? "32px" : `${width <= 1399 && width >500? "40px" : width <=500?"32px":"46px"}`}`,
+                                                                 maxHeight: `${isSelectOpen ? "32px" : `${width <= 1399 && width >500? "40px" : "46px"}`}`,
                                                                  marginRight: `${isSelectOpen ? "10px" : "0"}`,
                                                                  width: "auto",
                                                                  position: "relative"
@@ -294,7 +287,7 @@ const MainCalculationSection = ({currencies, rates}) => {
                                                    min={minValue2}
                                                    onChange={(e) => changeInverse(e.target.value)} // Add onChange to update the state
 
-                                                   className={`form-control form-control-custom  ${isSelectOpen2 ? "opacity-0 position-absolute" : ""}`}
+                                                   className={`form-control form-control-custom  ${isSelectOpen2 ? "opacity-0 position-absolute w-25" : ""}`}
                                                    id="some-id-2" placeholder='Receive Bitcoin(BTC)'
                                                    name='billing-company'/>
                                             <Select
@@ -315,14 +308,14 @@ const MainCalculationSection = ({currencies, rates}) => {
                                                              display: "flex",
                                                              justifyContent: `${isSelectOpen2 ? "start" : "end"}`,
                                                              alignItems: "center",
-                                                             minHeight: `${isSelectOpen2 ? "32px" : `${width <= 1399 && width >500? "40px" : width <=500?"32px":"46px"}`}`,
+                                                             minHeight: `${isSelectOpen2 ? "32px" : `${width <= 1399 && width >500? "40px" : "46px"}`}`,
                                                              padding: `${isSelectOpen2 ? "8px" : "0"}`
                                                          }}>
                                                         <img src={options?.image} title={options?.code}
                                                              alt={options?.code}
                                                              style={{
                                                                  maxWidth: `${isSelectOpen2 ? "32px" : "46px"}`,
-                                                                 maxHeight: `${isSelectOpen2 ? "32px" : `${width <= 1399 && width >500? "40px" : width <=500?"32px":"46px"}`}`,
+                                                                 maxHeight: `${isSelectOpen2 ? "32px" : `${width <= 1399 && width >500? "40px" : "46px"}`}`,
                                                                  marginRight: `${isSelectOpen2 ? "10px" : "0"}`,
                                                                  width: "auto",
                                                                  position: "relative"
@@ -345,8 +338,8 @@ const MainCalculationSection = ({currencies, rates}) => {
                     <Col xl="4" lg='5' md="12" sm="12" xs="12" className="info">
                         <div className="crypto-title-section">
                             <h2>Buy, Sell and Trade with <span>Crypto.am</span></h2>
-                            <h5>The main value we have is our reputation and the trust of our customers, which is
-                                confirmed by more than 2000 of positive reviews.</h5>
+                            <p>The main value we have is our reputation and the trust of our customers, which is
+                                confirmed by more than 2000 of positive reviews.</p>
                         </div>
                     </Col>
                 </Row>
