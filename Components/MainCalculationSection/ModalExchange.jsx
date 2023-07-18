@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import Button from "@mui/material/Button";
 import Backdrop from "@mui/material/Backdrop";
 import Fade from "@mui/material/Fade";
@@ -11,12 +11,15 @@ import {useFormik} from "formik";
 import {APICallUrl} from "../../halpers/useWindowDimensions";
 import {selectLoginToken, setAuth, setLoginToken, setUser} from "../../src/features/Slices/LoginSlice";
 import {useSelector} from "react-redux";
+import {FaCheckCircle} from "react-icons/fa";
 
-const ModalExchange = ({valueCurrency1, valueCurrency2,minValue1, maxValue1, currency1, currency2, rateData}) => {
+const ModalExchange = ({valueCurrency1, valueCurrency2, minValue1, maxValue1, currency1, currency2, rateData}) => {
 
     // console.log(currency1,"currency1")
 
     const [open, setOpen] = React.useState(false);
+    const loginToken = useSelector(selectLoginToken);
+
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
@@ -42,10 +45,8 @@ const ModalExchange = ({valueCurrency1, valueCurrency2,minValue1, maxValue1, cur
         validationSchema,
     })
 
-    let loginToken = useSelector(selectLoginToken);
+    console.log(loginToken,"logintoken")
 
-    // console.log(authUser, "authUser")
-    // console.log(loginToken, "loginToken")
     function ltrim(str) {
         if (!str) return str;
         return str.replace(/^\s+/g, '');
@@ -55,6 +56,8 @@ const ModalExchange = ({valueCurrency1, valueCurrency2,minValue1, maxValue1, cur
         formik.validateForm();
     }, [])
 
+    let [err, setErr] = useState("")
+    const [showModal, setShowModal] = useState(false); // State variable to control modal visibility
     let exchange = () => {
         let info = {
             name: `${formik.values.first_name} ${formik.values.last_name}`,
@@ -63,17 +66,24 @@ const ModalExchange = ({valueCurrency1, valueCurrency2,minValue1, maxValue1, cur
             content: `To ${valueCurrency1} ${currency1.name} from ${valueCurrency2} ${currency2.name} / Rate ${rateData.find((el) => el.to === currency2.id).rate}`
 
         }
-        // console.log(info,"inf")
-        fetch(`${APICallUrl}/v1/contact/send`, {
+        fetch(`${APICallUrl}/api/v1/contact/send`, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json;charset=UTF-8",
+                Authorization: `Bearer ${loginToken.token}`
             },
             body: JSON.stringify(info),
         })
             .then((res) => res.json()).then((res) => {
             console.log(res, "RES")
-
+            if (res.error === false) {
+                setShowModal(true);
+                handleClose();
+                formik.resetForm();
+                setErr("");
+            } else {
+                setErr(res.message)
+            }
 
         })
             .catch((error) => {
@@ -82,119 +92,147 @@ const ModalExchange = ({valueCurrency1, valueCurrency2,minValue1, maxValue1, cur
             });
     }
     return (
-        <div className="custom-single-button">
+        <>
+            <div className="custom-single-button">
 
-            <Button onClick={handleOpen}
-                    disabled={Number(valueCurrency1) < Number(minValue1) || Number(valueCurrency1) > Number(maxValue1)}
-                    className={`button-area ${Number(valueCurrency1) <  Number(minValue1) || Number(valueCurrency1) > Number(maxValue1) ? "" : "active"}`}>
-                <h5
-                    className="text">EXCHANGE</h5></Button>
+                <Button onClick={handleOpen}
+                        disabled={Number(valueCurrency1) < Number(minValue1) || Number(valueCurrency1) > Number(maxValue1)}
+                        className={`button-area ${Number(valueCurrency1) < Number(minValue1) || Number(valueCurrency1) > Number(maxValue1) ? "" : "active"}`}>
+                    <h5
+                        className="text">EXCHANGE</h5></Button>
+                <Modal
+                    aria-labelledby="transition-modal-title"
+                    aria-describedby="transition-modal-description"
+                    open={open}
+                    onClose={handleClose}
+                    closeAfterTransition
+                    slots={{backdrop: Backdrop}}
+                    slotProps={{
+                        backdrop: {
+                            timeout: 500,
+                        },
+                    }}
+                >
+                    <Fade in={open}>
+                        <Box className="modal-box">
+                            <Button onClick={handleClose} className="close-button">
+                                <CloseIcon/>
+                            </Button>
+                            <h5>Fill in data for exchange</h5>
+                            <p className="modal-desc">Lorem Ipsum is simply dummy text of the printing and typesetting
+                                industry. Lorem Ipsum has
+                                been the industry's standard.</p>
+                            <Form className="form">
+                                <Row className="form-row">
+                                    <Col lg="12">
+                                        <Label>Name</Label>
+                                        <Input type="text" className="modal-input" name="first_name"
+                                               style={formik.touched.first_name && formik.errors.first_name ? {border: "1px solid #F00"} : {border: "none"}}
+                                               value={ltrim(formik.values.first_name)}
+                                               onChange={formik.handleChange}
+                                               onBlur={formik.handleBlur}/>
+                                        {formik.touched.first_name && formik.errors.first_name && (
+                                            <span style={{
+                                                color: '#F00',
+                                                fontSize: "12px",
+                                                fontWeight: "700"
+                                            }}>{formik.errors.first_name}</span>
+                                        )}
+                                    </Col>
+                                    <Col lg="12">
+                                        <Label>Surname </Label>
+                                        <Input type="text" className="modal-input" name="last_name"
+                                               style={formik.touched.last_name && formik.errors.last_name ? {border: "1px solid #F00"} : {border: "none"}}
+                                               value={ltrim(formik.values.last_name)}
+                                               onChange={formik.handleChange}
+                                               onBlur={formik.handleBlur}/>
+                                        {formik.touched.last_name && formik.errors.last_name && (
+                                            <span style={{
+                                                color: '#F00',
+                                                fontSize: "12px",
+                                                fontWeight: "700"
+                                            }}>{formik.errors.last_name}</span>
+                                        )}
+                                    </Col>
+                                    <Col lg="12">
+                                        <Label>E-mail </Label>
+                                        <Input type="email" className="modal-input" name="email"
+                                               style={formik.touched.email && formik.errors.email ? {border: "1px solid #F00"} : {border: "none"}}
+
+                                               value={formik.values.email}
+                                               onChange={formik.handleChange}
+                                               onBlur={formik.handleBlur}
+
+                                        />
+                                        {formik.touched.email && formik.errors.email && (
+                                            <span style={{
+                                                color: '#F00',
+                                                fontSize: "12px",
+                                                fontWeight: "700"
+                                            }}>{formik.errors.email}</span>
+                                        )}
+                                    </Col>
+                                    <Col lg="12">
+                                        <Label>Phone Number
+                                        </Label>
+                                        <Input type="phone" className="modal-input" name="phone"
+                                               style={formik.touched.phone && formik.errors.phone ? {border: "1px solid #F00"} : {border: "none"}}
+                                               value={formik.values.phone}
+                                               onChange={(e) => {
+                                                   const phoneNumber = e.target.value.replace(/[^0-9+()-]/g, ''); // Remove non-numeric characters except 0-9, +, ()
+                                                   formik.setFieldValue('phone', phoneNumber);
+                                               }}
+                                               onBlur={formik.handleBlur}
+                                        />
+                                        {formik.touched.phone && formik.errors.phone &&
+                                            <span style={{
+                                                color: '#F00',
+                                                fontSize: "12px",
+                                                fontWeight: "700"
+                                            }}>{formik.errors.phone}</span>}
+
+                                    </Col>
+                                </Row>
+                            </Form>
+                            <p className="modal-desc" style={{paddingBottom: "24px", textAlign: "center"}}>Lorem Ipsum
+                                is
+                                simply dummy text of the printing and typesetting
+                                industry.</p>
+                            <Button
+                                onClick={exchange}
+                                className={`modal-exchange-button ${Object.keys(formik.errors).length !== 0 ? "" : "active"}`}
+                                disabled={Object.keys(formik.errors).length !== 0}>EXCHANGE</Button>
+                            {
+                                err.length > 0 &&
+                                <div className="d-flex justify-content-center">
+                                <span style={{
+                                    marginTop: "10px",
+                                    color: '#F00',
+                                    fontSize: "12px",
+                                    fontWeight: "700"
+                                }}>{err}</span>
+                                </div>
+                            }
+                        </Box>
+                    </Fade>
+                </Modal>
+            </div>
             <Modal
-                aria-labelledby="transition-modal-title"
-                aria-describedby="transition-modal-description"
-                open={open}
-                onClose={handleClose}
-                closeAfterTransition
-                slots={{backdrop: Backdrop}}
-                slotProps={{
-                    backdrop: {
-                        timeout: 500,
-                    },
-                }}
-            >
-                <Fade in={open}>
-                    <Box className="modal-box">
-                        <Button onClick={handleClose} className="close-button">
-                            <CloseIcon/>
-                        </Button>
-                        <h5>Fill in data for exchange</h5>
-                        <p className="modal-desc">Lorem Ipsum is simply dummy text of the printing and typesetting
-                            industry. Lorem Ipsum has
-                            been the industry's standard.</p>
-                        <Form className="form">
-                            <Row className="form-row">
-                                <Col lg="12">
-                                    <Label>Name</Label>
-                                    <Input type="text" className="modal-input" name="first_name"
-                                           style={formik.touched.first_name && formik.errors.first_name ? {border: "1px solid #F00"} : {border: "none"}}
-                                           value={ltrim(formik.values.first_name)}
-                                           onChange={formik.handleChange}
-                                           onBlur={formik.handleBlur}/>
-                                    {formik.touched.first_name && formik.errors.first_name && (
-                                        <span style={{
-                                            color: '#F00',
-                                            fontSize: "12px",
-                                            fontWeight: "700"
-                                        }}>{formik.errors.first_name}</span>
-                                    )}
-                                </Col>
-                                <Col lg="12">
-                                    <Label>Surname </Label>
-                                    <Input type="text" className="modal-input" name="last_name"
-                                           style={formik.touched.last_name && formik.errors.last_name ? {border: "1px solid #F00"} : {border: "none"}}
-                                           value={ltrim(formik.values.last_name)}
-                                           onChange={formik.handleChange}
-                                           onBlur={formik.handleBlur}/>
-                                    {formik.touched.last_name && formik.errors.last_name && (
-                                        <span style={{
-                                            color: '#F00',
-                                            fontSize: "12px",
-                                            fontWeight: "700"
-                                        }}>{formik.errors.last_name}</span>
-                                    )}
-                                </Col>
-                                <Col lg="12">
-                                    <Label>E-mail </Label>
-                                    <Input type="email" className="modal-input" name="email"
-                                           style={formik.touched.email && formik.errors.email ? {border: "1px solid #F00"} : {border: "none"}}
-
-                                           value={formik.values.email}
-                                           onChange={formik.handleChange}
-                                           onBlur={formik.handleBlur}
-
-                                    />
-                                    {formik.touched.email && formik.errors.email && (
-                                        <span style={{
-                                            color: '#F00',
-                                            fontSize: "12px",
-                                            fontWeight: "700"
-                                        }}>{formik.errors.email}</span>
-                                    )}
-                                </Col>
-                                <Col lg="12">
-                                    <Label>Phone Number
-                                    </Label>
-                                    <Input type="phone" className="modal-input" name="phone"
-                                           style={formik.touched.phone && formik.errors.phone ? {border: "1px solid #F00"} : {border: "none"}}
-                                           value={formik.values.phone}
-                                           onChange={(e) => {
-                                               const phoneNumber = e.target.value.replace(/[^0-9+()-]/g, ''); // Remove non-numeric characters except 0-9, +, ()
-                                               formik.setFieldValue('phone', phoneNumber);
-                                           }}
-                                           onBlur={formik.handleBlur}
-                                    />
-                                    {formik.touched.phone && formik.errors.phone &&
-                                        <span style={{
-                                            color: '#F00',
-                                            fontSize: "12px",
-                                            fontWeight: "700"
-                                        }}>{formik.errors.phone}</span>}
-
-                                </Col>
-                            </Row>
-                        </Form>
-                        <p className="modal-desc" style={{paddingBottom: "24px", textAlign: "center"}}>Lorem Ipsum is
-                            simply dummy text of the printing and typesetting
-                            industry.</p>
-                        <Button
-                            onClick={exchange}
-                            className={`modal-exchange-button ${Object.keys(formik.errors).length !== 0 ? "" : "active"}`}
-                            disabled={Object.keys(formik.errors).length !== 0}>EXCHANGE</Button>
-
-                    </Box>
-                </Fade>
+                open={showModal}>
+                <Box className="modal-box">
+                    <Button onClick={() => setShowModal(false)} className="close-button">
+                        <CloseIcon/>
+                    </Button>
+                    <div className="text-center modal-success">
+                        <h2>Thank you!</h2>
+                        <h5 style={{textAlign: "left"}}>Message sent successfully!</h5>
+                        <p>We emailed</p><p
+                        style={{fontWeight: "500", paddingBottom: "30px"}}>Please check your inbox.</p>
+                        <FaCheckCircle color="#FFE500" size={100}/>
+                    </div>
+                </Box>
             </Modal>
-        </div>
+        </>
     );
 };
 

@@ -209,6 +209,7 @@ $light-white: rgba(244, 244, 244, 0.8);
         .form-main {
           display: flex;
           //overflow: hidden;
+          align-items: center;
 
           svg {
             font-size: 20px;
@@ -233,8 +234,10 @@ $light-white: rgba(244, 244, 244, 0.8);
             width: 100%;
             background-color: #282828;
             border-radius: 16px;
+
             border: none;
             box-shadow: none;
+            height: fit-content;
             padding: calc(8px + 4 * (100vw - 320px) / 1600) calc(12px + 12 * (100vw - 320px) / 1600);
 
             &::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
@@ -825,8 +828,8 @@ $light-white: rgba(244, 244, 244, 0.8);
 }
 
 .icons-gallery {
-  background-image: url(/assets/images/2.png);
-  background-size: cover;
+  //background-image: url(/assets/images/2.png);
+  //background-size: contain;
   //background-position: center;
   background-repeat: no-repeat;
   display: block;
@@ -1079,7 +1082,7 @@ $light-white: rgba(244, 244, 244, 0.8);
         display: inline-block;
         position: fixed;
         background-color: white;
-        width: 300px;
+        width: 280px;
         height: 100vh;
         border-radius: 0;
         top: 0;
@@ -1431,6 +1434,7 @@ $light-white: rgba(244, 244, 244, 0.8);
 
             .form-main {
               input {
+                border-radius: 8px;
                 font-size: 10px !important;
 
                 &::placeholder {
@@ -1580,16 +1584,24 @@ $light-white: rgba(244, 244, 244, 0.8);
           .form-section {
             .form-label {
               font-size: 8px;
-              margin-bottom: 2px;
+              margin-bottom: 0;
 
             }
 
             .form-main {
               input {
-                font-size: 8px !important;
+                //font-size: 8px !important;
+                padding: calc(6px + 4 * (100vw - 320px) / 1600) calc(12px + 12 * (100vw - 320px) / 1600);
 
                 &::placeholder {
-                  font-size: 8px !important;
+                  //font-size: 8px !important;
+                }
+              }
+              .country-option {
+                min-height: 28px !important;
+
+                img {
+                  max-height: 28px !important;
                 }
               }
             }

@@ -63,7 +63,7 @@ const MainCalculationSection = ({currencies, rates}) => {
             padding: "0",
             boxShadow: state.isFocused ? 'none' : 'none',
             minHeight: width<575? '36px': '38px',
-            width: state.isFocused ? width>767?'454px': width<500?"200px":"300px" : '120px',
+            width: state.isFocused ? width>767?'454px': width<500?"200px":"300px" : width<500? '100px':"120px",
             // '&:select': {
             //     backgroundColor: "red"
             // },

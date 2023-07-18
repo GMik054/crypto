@@ -23,6 +23,7 @@ const options = [
 const Header = () => {
     const [selectedOption, setSelectedOption] = useState(options[0]);
     const [toggle, setToggle] = useState(false);
+    const [user, setUser] = useState({})
     let dispatch = useDispatch();
     const divRef = useRef();
     let auth = useSelector(selectAuth);
@@ -45,6 +46,8 @@ const Header = () => {
                         console.log(res, "transactions")
                     }
                 ));
+        } else {
+            setUser({})
         }
     }, [auth])
 
@@ -150,7 +153,6 @@ const Header = () => {
     }, [toggle]);
 
     useEffect(() => {
-        dispatch({type: 'TOPMENUTOGGLE', payload: false});
         const handleOutsideClick = (event) => {
             if (divRef.current && !divRef.current.contains(event.target)) {
                 setToggle(false)
@@ -176,7 +178,7 @@ const Header = () => {
                             </Col>
                             <Col xl="5" lg="6" md="6" xs="2" className={`menu ${toggle ? 'nav-menu-overlay' : ''}`}>
                                 <div className="header-menu">
-                                    <ThreeBarToggle setToggle={setToggle} />
+                                    <ThreeBarToggle setToggle={setToggle}/>
                                     <ul className={`nav-menu `}
                                         style={{right: toggle ? '0px' : '-410px'}} ref={divRef}
                                     >
@@ -292,7 +294,8 @@ const Header = () => {
                                                                     style={{fontSize: "15px"}}
                                                                     onClick={() => dispatch(signOut())}>Sign
                                                                 Out</Button>
-                                                            <FaSignOutAlt onClick={() => dispatch(signOut())} style={{color:"#2B2B2B"}}
+                                                            <FaSignOutAlt onClick={() => dispatch(signOut())}
+                                                                          style={{color: "#2B2B2B"}}
                                                                           className="d-lg-none" size={26}/>
                                                         </div>
                                                     </Col>
