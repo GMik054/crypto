@@ -8,9 +8,13 @@ import Modal from "@mui/material/Modal";
 import {Col, Form, Input, Label, Row} from "reactstrap";
 import * as Yup from 'yup'
 import {useFormik} from "formik";
+import {APICallUrl} from "../../halpers/useWindowDimensions";
+import {selectLoginToken, setAuth, setLoginToken, setUser} from "../../src/features/Slices/LoginSlice";
+import {useSelector} from "react-redux";
 
-const ModalExchange = ({valueCurrency1, minValue1, maxValue1}) => {
+const ModalExchange = ({valueCurrency1, valueCurrency2,minValue1, maxValue1, currency1, currency2, rateData}) => {
 
+    // console.log(currency1,"currency1")
 
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
@@ -38,6 +42,10 @@ const ModalExchange = ({valueCurrency1, minValue1, maxValue1}) => {
         validationSchema,
     })
 
+    let loginToken = useSelector(selectLoginToken);
+
+    // console.log(authUser, "authUser")
+    // console.log(loginToken, "loginToken")
     function ltrim(str) {
         if (!str) return str;
         return str.replace(/^\s+/g, '');
@@ -46,12 +54,39 @@ const ModalExchange = ({valueCurrency1, minValue1, maxValue1}) => {
     useEffect(() => {
         formik.validateForm();
     }, [])
+
+    let exchange = () => {
+        let info = {
+            name: `${formik.values.first_name} ${formik.values.last_name}`,
+            phone: formik.values.phone,
+            email: formik.values.email,
+            content: `To ${valueCurrency1} ${currency1.name} from ${valueCurrency2} ${currency2.name} / Rate ${rateData.find((el) => el.to === currency2.id).rate}`
+
+        }
+        // console.log(info,"inf")
+        fetch(`${APICallUrl}/v1/contact/send`, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json;charset=UTF-8",
+            },
+            body: JSON.stringify(info),
+        })
+            .then((res) => res.json()).then((res) => {
+            console.log(res, "RES")
+
+
+        })
+            .catch((error) => {
+                // Handle general fetch error
+                console.error('Failed to Exchange:', error);
+            });
+    }
     return (
         <div className="custom-single-button">
 
             <Button onClick={handleOpen}
-                    disabled={Number(valueCurrency1) < minValue1 || Number(valueCurrency1) > maxValue1}
-                    className={`button-area ${Number(valueCurrency1) < minValue1 || Number(valueCurrency1) > maxValue1 ? "" : "active"}`}>
+                    disabled={Number(valueCurrency1) < Number(minValue1) || Number(valueCurrency1) > Number(maxValue1)}
+                    className={`button-area ${Number(valueCurrency1) <  Number(minValue1) || Number(valueCurrency1) > Number(maxValue1) ? "" : "active"}`}>
                 <h5
                     className="text">EXCHANGE</h5></Button>
             <Modal
@@ -152,6 +187,7 @@ const ModalExchange = ({valueCurrency1, minValue1, maxValue1}) => {
                             simply dummy text of the printing and typesetting
                             industry.</p>
                         <Button
+                            onClick={exchange}
                             className={`modal-exchange-button ${Object.keys(formik.errors).length !== 0 ? "" : "active"}`}
                             disabled={Object.keys(formik.errors).length !== 0}>EXCHANGE</Button>
 

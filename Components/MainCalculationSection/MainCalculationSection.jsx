@@ -173,6 +173,7 @@ const MainCalculationSection = ({currencies, rates}) => {
     let [selected, setSelected] = useState(1);
 
     console.log(width,"width")
+
     return (
         <section className="calculation-section">
             <Container>
@@ -332,7 +333,8 @@ const MainCalculationSection = ({currencies, rates}) => {
                                     </div>
                                 </Col>
                             </Row>
-                            <ModalExchange valueCurrency1={valueCurrency1} minValue1={minValue1} maxValue1={maxValue1}/>
+                            <ModalExchange valueCurrency1={valueCurrency1} valueCurrency2={valueCurrency2}  minValue1={minValue1} maxValue1={maxValue1}
+                                           currency1={currency1} currency2={currency2} rateData={rateData}/>
                         </div>
                     </Col>
                     <Col xl="4" lg='5' md="12" sm="12" xs="12" className="info">

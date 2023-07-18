@@ -10,11 +10,42 @@ $light-white: rgba(244, 244, 244, 0.8);
 .header-row {
   .header-menu {
     display: flex;
-    justify-content: space-between;
+    //justify-content: space-between;
     align-items: center;
     height: 100%;
 
-    p {
+    .nav-menu {
+      display: flex;
+      justify-content: space-between;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      line-height: normal;
+      direction: ltr;
+      text-align: left;
+      vertical-align: middle;
+      width: 100%;
+
+
+      .close-btn {
+        padding: 20px;
+        font-size: 16px;
+        color: black;
+        font-weight: 700;
+        text-transform: uppercase;
+        border-bottom: 1px solid #ced4da;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+      }
+
+
+    }
+
+
+    a {
       color: #59595B;
       //font-size: 16px;
       font-style: normal;
@@ -303,7 +334,7 @@ $light-white: rgba(244, 244, 244, 0.8);
   }
 
   .icons-info {
-    margin-top: 100px;
+    margin-top: calc(40px + (200 - 120) * ((100vw - 320px) / (1920 - 320)));
     padding: calc(24px + (200 - 120) * ((100vw - 320px) / (1920 - 320))) 0;
 
     h4 {
@@ -378,7 +409,7 @@ $light-white: rgba(244, 244, 244, 0.8);
     border-radius: 16px;
     background-color: #292929;
     //background-color: $yellow-project;
-    color: #C9C9C9;
+    color: #C9C9C9 !important;
     font-size: 20px;
     font-family: "Montserrat";
     font-style: normal;
@@ -390,7 +421,7 @@ $light-white: rgba(244, 244, 244, 0.8);
 
   .active {
     background-color: $yellow-project;
-    color: black;
+    color: black !important;
   }
 
   .form {
@@ -428,6 +459,10 @@ $light-white: rgba(244, 244, 244, 0.8);
         &:focus {
           box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.1);
         }
+
+        //&:focus-visible {
+        //  box-shadow:none!important;
+        //}
 
         &::placeholder {
           color: #D3D3D3;
@@ -930,6 +965,13 @@ $light-white: rgba(244, 244, 244, 0.8);
   padding: calc(20px + (220 - 120) * ((100vw - 320px) / (1920 - 320))) 0 calc(32px + (260 - 120) * ((100vw - 320px) / (1920 - 320))) 0;
 }
 
+@media (min-width: 992px) {
+  .toggle-nav {
+    display: none;
+  }
+
+}
+
 @media screen and (max-width: 1399px) {
   .calculation-section {
     .calculation-banner {
@@ -988,7 +1030,28 @@ $light-white: rgba(244, 244, 244, 0.8);
 
 
 @media screen and (max-width: 1199px) {
+  .header-row {
+    .nav-menu-overlay {
+      &::before {
+        content: "";
+        background-color: rgba(0, 0, 0, 0.5); /* Adjust the background color and opacity as needed */
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 10; /* Adjust the z-index value as needed */
+      }
+    }
 
+    .menu {
+      order: 3;
+    }
+
+    .buttons {
+      order: 4;
+    }
+  }
 
   .calculation-section {
     .calculation-banner {
@@ -1010,6 +1073,41 @@ $light-white: rgba(244, 244, 244, 0.8);
 }
 
 @media screen and (max-width: 991px) {
+  .header-row {
+    .header-menu {
+      .nav-menu {
+        display: inline-block;
+        position: fixed;
+        background-color: white;
+        width: 300px;
+        height: 100vh;
+        border-radius: 0;
+        top: 0;
+        right: -300px;
+        z-index: 99;
+        transition: all 0.3s ease;
+        overflow-y: scroll;
+        overflow-x: hidden;
+
+        > li {
+          &:not(:first-child) {
+            border-bottom: 1px solid rgba(221, 221, 221, 0.5);
+            //margin-bottom: 10px;
+            padding: 16px 20px;
+          }
+
+          a {
+            //padding: 10px 15px;
+            //position: relative;
+          }
+        }
+      }
+    }
+
+    .out-button {
+      display: none;
+    }
+  }
   .single-partners-section {
     background-size: cover;
   }
@@ -1074,6 +1172,10 @@ $light-white: rgba(244, 244, 244, 0.8);
     .info {
       padding-bottom: 30px;
       order: 1; /* Change the order of the column (move it to the second position) */
+    }
+
+    .icons-info {
+      margin-top: 120px;
     }
   }
 }
@@ -1187,32 +1289,6 @@ $light-white: rgba(244, 244, 244, 0.8);
 
 }
 
-@media screen and (max-width: 575px) {
-  //.calculation-section {
-    //.cart {
-      //order: 2; /* Change the order of the column (move it to the first position) */
-      //.calculation-banner {
-      //  .buttons {
-      //    left: 37px;
-      //
-      //    .custom-button {
-      //      max-width: 93px;
-      //      height: 33px;
-      //    }
-      //  }
-      //
-      //  .custom-single-button {
-      //    max-width: 216px;
-      //    height: 34px;
-      //    top: 265px;
-      //  }
-      //}
-
-    //}
-  //}
-
-
-}
 
 @media screen and (max-width: 575px) {
   .calculation-section {
@@ -1276,17 +1352,19 @@ $light-white: rgba(244, 244, 244, 0.8);
         }
       }
     }
-  }
-  .icons-info {
-    p {
-      font-size: 12px !important;
-    }
 
-    img {
-      max-width: 80px !important;
-      max-height: 80px !important;
+    .icons-info {
+      p {
+        font-size: 12px !important;
+      }
+
+      img {
+        max-width: 80px;
+        max-height: 80px;
+      }
     }
   }
+
   .footer {
     .information {
       h3 {
@@ -1382,6 +1460,15 @@ $light-white: rgba(244, 244, 244, 0.8);
             }
           }
         }
+      }
+    }
+
+    .icons-info {
+      margin-top: calc(80px + (240 - 120) * ((100vw - 320px) / (1920 - 320)));
+
+      img {
+        max-width: 60px;
+        max-height: 60px;
       }
     }
   }

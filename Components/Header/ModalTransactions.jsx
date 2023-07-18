@@ -4,12 +4,9 @@ import {
     selectAuth,
     selectAuthUser,
     selectLoginToken,
-    setAuth,
-    setLoginToken, setUser
 } from "../../src/features/Slices/LoginSlice";
 import * as Yup from "yup";
 import {useFormik} from "formik";
-import {APICallUrl} from "../../halpers/useWindowDimensions";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import Backdrop from "@mui/material/Backdrop";
@@ -59,61 +56,9 @@ const ModalTransactions = () => {
     }, [])
 
     const [showPassword, setShowPassword] = useState(false);
-    let [err, setErr] = useState("")
-    const [showModal, setShowModal] = useState(false); // State variable to control modal visibility
-
-    // const login = () => {
-    //     fetch(`${APICallUrl}/api/v1/login`, {
-    //         method: 'POST',
-    //         headers: {
-    //             "Content-Type": "application/json;charset=UTF-8",
-    //         },
-    //         body: JSON.stringify({
-    //             email: formik.values.email,
-    //             password: formik.values.password
-    //         }),
-    //     })
-    //         .then((res) => res.json()).then((res) => {
-    //         // console.log(res, "RES 1")
-    //
-    //         if (res.error === false) {
-    //             dispatch(setLoginToken(res.data));
-    //             dispatch(setAuth(res.error));
-    //
-    //             fetch(`${APICallUrl}/api/v1/me`, {
-    //                 method: 'GET',
-    //                 headers: {
-    //                     "Content-Type": "application/json;charset=UTF-8",
-    //                     Authorization: `Bearer ${res.data.token}`
-    //                 }
-    //             })
-    //                 .then((res) => res.json()).then((res) => {
-    //                 // console.log(res, "RES 2")
-    //                 dispatch(setUser(res));
-    //                 setOpen(false)
-    //                 // setIsCartOpen(false);
-    //             })
-    //                 .catch((error) => {
-    //                     // Handle error if the second fetch fails
-    //                     console.error('Failed to fetch user data:', error);
-    //                 });
-    //         } else {
-    //             // Handle error if the first fetch returns an error
-    //             console.error('Login failed:', res.message);
-    //             setErr(res.message)
-    //
-    //
-    //         }
-    //     })
-    //         .catch((error) => {
-    //             // Handle general fetch error
-    //             console.error('Failed to login:', error);
-    //         });
-    // }
-
 
     return (
-        <div className="header-buttons">
+        <div className="header-buttons" style={{justifyContent:"end"}}>
             <Button className="register" onClick={handleOpen}>Transactions</Button>
 
             <Modal
@@ -191,21 +136,10 @@ const ModalTransactions = () => {
                             </Row>
                         </Form>
                         <Button
-                            className={`modal-exchange-button ${Object.keys(formik.errors).length !== 0 ? "" : "active"}`}
-                            disabled={Object.keys(formik.errors).length !== 0}
-                            // onClick={login}
-                        >LOGIN</Button>
-                        {
-                            err.length > 0 &&
-                            <div className="d-flex justify-content-center">
-                                <span style={{
-                                    marginTop: "10px",
-                                    color: '#F00',
-                                    fontSize: "12px",
-                                    fontWeight: "700"
-                                }}>{err}</span>
-                            </div>
-                        }
+                            className={`modal-exchange-button active`}
+                            onClick={handleClose}
+                        >Close</Button>
+
                     </Box>
                 </Fade>
             </Modal>
