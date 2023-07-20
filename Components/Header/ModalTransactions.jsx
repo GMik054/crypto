@@ -15,7 +15,7 @@ import Box from "@mui/material/Box";
 import {CloseIcon} from "next/dist/client/components/react-dev-overlay/internal/icons/CloseIcon";
 import {Col, Form, Input, Label, Row} from "reactstrap";
 
-const ModalTransactions = () => {
+const ModalTransactions = ({user}) => {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -30,9 +30,8 @@ const ModalTransactions = () => {
     // console.log(loginToken, "loginToken")
 
 
-
     return (
-        <div className="header-buttons" style={{justifyContent:"end"}}>
+        <div className="header-buttons" style={{justifyContent: "end"}}>
             <Button className="register" onClick={handleOpen}>Transactions</Button>
 
             <Modal
@@ -53,9 +52,28 @@ const ModalTransactions = () => {
                         <Button onClick={handleClose} className="close-button">
                             <CloseIcon/>
                         </Button>
-                        <h5>My Transactions</h5>
+                        <h5>Transactions</h5>
 
-                        <p className="modal-desc">Use Your email address & password to login</p>
+                        <Row className="g-2 mb-4">
+
+                            {
+                                user?.exchange_history?.map((el, i) => {
+                                    return (
+                                        <Col lg="12" xs="12" key={i}>
+                                            <div className="single-transaction">
+                                                <p># <span>{el.id}</span></p>
+                                                <p>Date: <span>{el.created_at}</span></p>
+                                                <p>Name: <span>{el.name}</span></p>
+                                                <p>Exchange: <span>{el.content}</span></p>
+                                                <p>Phone Number: <span>{el.phone}</span></p>
+                                                <p>Email: <span>{el.email}</span></p>
+                                            </div>
+                                        </Col>
+
+                                    )
+                                })
+                            }
+                        </Row>
 
                         <Button
                             className={`modal-exchange-button active`}
@@ -69,6 +87,7 @@ const ModalTransactions = () => {
 
 
     );
-};
+}
+    ;
 
-export default ModalTransactions;
+    export default ModalTransactions;

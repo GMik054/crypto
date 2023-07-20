@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import Button from "@mui/material/Button";
 import Backdrop from "@mui/material/Backdrop";
 import Fade from "@mui/material/Fade";
@@ -9,8 +9,8 @@ import {Col, Form, Input, Label, Row} from "reactstrap";
 import * as Yup from 'yup'
 import {useFormik} from "formik";
 import {APICallUrl} from "../../halpers/useWindowDimensions";
-import {selectLoginToken, setAuth, setLoginToken, setUser} from "../../src/features/Slices/LoginSlice";
-import {useSelector} from "react-redux";
+import {selectAuth, selectLoginToken, setAuth, setLoginToken, setUser} from "../../src/features/Slices/LoginSlice";
+import {useDispatch, useSelector} from "react-redux";
 import {FaCheckCircle} from "react-icons/fa";
 
 const ModalExchange = ({valueCurrency1, valueCurrency2, minValue1, maxValue1, currency1, currency2, rateData}) => {
@@ -18,7 +18,11 @@ const ModalExchange = ({valueCurrency1, valueCurrency2, minValue1, maxValue1, cu
     // console.log(currency1,"currency1")
 
     const [open, setOpen] = React.useState(false);
+
+    const dispatch = useDispatch();
+
     const loginToken = useSelector(selectLoginToken);
+    const auth = useSelector(selectAuth);
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -45,7 +49,7 @@ const ModalExchange = ({valueCurrency1, valueCurrency2, minValue1, maxValue1, cu
         validationSchema,
     })
 
-    console.log(loginToken,"logintoken")
+    // console.log(loginToken,"logintoken")
 
     function ltrim(str) {
         if (!str) return str;
@@ -75,12 +79,13 @@ const ModalExchange = ({valueCurrency1, valueCurrency2, minValue1, maxValue1, cu
             body: JSON.stringify(info),
         })
             .then((res) => res.json()).then((res) => {
-            console.log(res, "RES")
+            // console.log(res, "RES")
             if (res.error === false) {
                 setShowModal(true);
                 handleClose();
                 formik.resetForm();
                 setErr("");
+                // dispatch(setAuth(auth));
             } else {
                 setErr(res.message)
             }
