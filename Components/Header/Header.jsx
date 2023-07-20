@@ -22,9 +22,9 @@ import {CloseIcon} from "next/dist/client/components/react-dev-overlay/internal/
 import {useRouter} from "next/router";
 
 const options = [
-    {value: 'eng', label: 'Eng', photo: '/assets/images/eng.png'},
-    {value: 'arm', label: 'Arm', photo: '/assets/images/arm.jpg'},
-    {value: 'rus', label: 'Rus', photo: '/assets/images/rus.png'},
+    {value: 'eng', label: 'Eng', photo: '/assets/countries/eng.png'},
+    {value: 'arm', label: 'Arm', photo: '/assets/countries/arm.jpg'},
+    {value: 'rus', label: 'Rus', photo: '/assets/countries/rus.png'},
 ];
 
 
@@ -90,7 +90,7 @@ const Header = ({links}) => {
                 maxWidth: "100px",
                 width: "100%",
                 display: "flex",
-                justifyContent:"center"
+                justifyContent: "center"
             }),
 
             control: (provided, state) => ({
@@ -183,6 +183,9 @@ const Header = ({links}) => {
         }, []);
 
 
+
+
+
         return (
             <header>
                 <Container>
@@ -256,7 +259,7 @@ const Header = ({links}) => {
                                                         borderRadius: "10px"
                                                     }}>
                                                         <img src={options.photo} style={customStyles.optionLabelImg}
-                                                             alt="country-image"/>
+                                                             alt={options.label} title={options.label}/>
                                                     </div>
 
                                                     <p style={customStyles.optionLabelP}
@@ -290,15 +293,14 @@ const Header = ({links}) => {
                                                                         style={{fontSize: "15px"}}
                                                                         onClick={() => dispatch(signOut())}>Sign
                                                                     Out</Button>
-                                                                <FaSignOutAlt onClick={() => dispatch(signOut())}
-                                                                              style={{color: "#2B2B2B"}}
-                                                                              className="d-xl-none" size={26}/>
+                                                                <img src="/assets/images/logout.svg"
+                                                                     onClick={() => dispatch(signOut())}
+                                                                     className="d-xl-none"/>
                                                             </div>
                                                         </Col>
                                                     </>
                                             }
                                         </PersistGate>
-
                                     </Row>
 
                                 </Col>

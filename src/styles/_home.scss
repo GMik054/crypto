@@ -411,7 +411,8 @@ $light-white: rgba(244, 244, 244, 0.8);
   padding: 40px;
   border-radius: 16px;
   overflow-y: auto;
-  height: auto;
+  max-height: 100%;
+  //height: auto;
 
   .single-transaction {
     background-color: #292929;
@@ -1463,7 +1464,6 @@ $light-white: rgba(244, 244, 244, 0.8);
         //font-size: 14px;
       }
     }
-
     .cart {
       order: 2; /* Change the order of the column (move it to the first position) */
       .calculation-banner {
@@ -1572,13 +1572,8 @@ $light-white: rgba(244, 244, 244, 0.8);
     }
   }
   .faq-section {
-
     .accordion-item {
-
-
       .accordion-button {
-
-
         h5 {
           font-size: 18px !important;
         }
@@ -1711,11 +1706,9 @@ $light-white: rgba(244, 244, 244, 0.8);
 
       .line-text {
 
-
         p {
           font-size: 12px !important;
         }
-
       }
     }
   }

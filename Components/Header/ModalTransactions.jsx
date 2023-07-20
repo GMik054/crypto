@@ -43,7 +43,7 @@ const ModalTransactions = () => {
                     }}
                 >
                     <Fade in={open}>
-                        <Box className="modal-box" style={{height:"640px"}}>
+                        <Box className="modal-box">
                             <Button onClick={handleClose} className="close-button">
                                 <CloseIcon/>
                             </Button>
