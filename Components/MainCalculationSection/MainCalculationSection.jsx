@@ -8,10 +8,12 @@ import useWindowDimensions, from "../../halpers/useWindowDimensions";
 
 const MainCalculationSection = ({currencies, rates}) => {
 
+    const [selected, setSelected] = useState(1);
+    const {width} = useWindowDimensions();
+
     const [isSelectOpen, setIsSelectOpen] = useState(false);
     const [isSelectOpen2, setIsSelectOpen2] = useState(false);
 
-    const {width} = useWindowDimensions();
 
     const [currency1, setCurrency1] = useState(currencies.data[0]);
     const [currency2, setCurrency2] = useState({});
@@ -19,18 +21,15 @@ const MainCalculationSection = ({currencies, rates}) => {
     const [rateData, setRateData] = useState([]);
     const [currenciesData, setCurrenciesData] = useState([]);
 
+    const [minValue1, setMinValue1] = useState(0);
+    const [minValue2, setMinValue2] = useState(0);
+    const [maxValue1, setMaxValue1] = useState(0);
+    const [maxValue2, setMaxValue2] = useState(0);
+
+    const [valueCurrency1, setValueCurrency1] = useState(0);
+    const [valueCurrency2, setValueCurrency2] = useState(0);
 
 
-    useEffect(() => {
-        const filteredRates = rates.data.filter((el) => el.from === currency1.id);
-        setRateData(filteredRates)
-        const filteredCurrencies = currencies.data.filter((currency) =>
-            filteredRates.some((el) => el.to === currency.id)
-        );
-        setCurrency2(filteredCurrencies[0])
-        setCurrenciesData(filteredCurrencies);
-
-    }, [currency1])
 
     const customStyles = {
 
@@ -122,17 +121,23 @@ const MainCalculationSection = ({currencies, rates}) => {
         }),
     };
 
+    useEffect(() => {
+        const filteredRates = rates.data.filter((el) => el.from === currency1.id);
+        setRateData(filteredRates)
+        const filteredCurrencies = currencies.data.filter((currency) =>
+            filteredRates.some((el) => el.to === currency.id)
+        );
+        setCurrency2(filteredCurrencies[0])
+        setCurrenciesData(filteredCurrencies);
+
+    }, [currency1])
+
+
     const customFilter = (option, searchText) => {
         return option.data.name.toLowerCase().includes(searchText.toLowerCase()) || option.data.code.toLowerCase().includes(searchText.toLowerCase());
     };
 
-    const [valueCurrency1, setValueCurrency1] = useState(0);
-    const [valueCurrency2, setValueCurrency2] = useState(0);
 
-    const [minValue1, setMinValue1] = useState(0);
-    const [minValue2, setMinValue2] = useState(0);
-    const [maxValue1, setMaxValue1] = useState(0);
-    const [maxValue2, setMaxValue2] = useState(0);
 
     useEffect(() => {
         const filteredRate1 = rateData.find((el) => el.to === currency2.id);
@@ -156,9 +161,7 @@ const MainCalculationSection = ({currencies, rates}) => {
         setValueCurrency2(Number(e) * filteredRate1.rate)
 
     }
-    // console.log(rateData, "rateData")
-    // console.log(maxValue1, "maxValue1")
-    // console.log(maxValue2, "maxValue2")
+
     let changeInverse = (e) => {
         setValueCurrency2(e);
         const filteredRate1 = rateData.find((el) => el.to === currency2.id);
@@ -170,9 +173,7 @@ const MainCalculationSection = ({currencies, rates}) => {
     };
 
 
-    let [selected, setSelected] = useState(1);
-
-    console.log(width,"width")
+    // console.log(width,"width")
 
     return (
         <section className="calculation-section">
@@ -223,8 +224,8 @@ const MainCalculationSection = ({currencies, rates}) => {
                                         <div className='form-main'>
                                             <input type='number'
                                                    style={Number(valueCurrency1) < minValue1 || Number(valueCurrency1) > maxValue1 ? {border: "1px solid #F00"} : {border: "none"}}
-                                                   value={valueCurrency1} // Use defaultValue instead of value
-                                                   onChange={(e) => change(e.target.value)} // Add onChange to update the state
+                                                   value={valueCurrency1}
+                                                   onChange={(e) => change(e.target.value)}
                                                    min={minValue1}
                                                    className={`form-control form-control-custom ${isSelectOpen ? "opacity-0 position-absolute w-25" : ""}`}
                                                    id='some-id' placeholder='Send Qiwi(RUB)' name='billing-company'/>
@@ -286,13 +287,13 @@ const MainCalculationSection = ({currencies, rates}) => {
                                                    style={Number(valueCurrency1) < minValue1 || Number(valueCurrency1) > maxValue1 ? {border: "1px solid #F00"} : {border: "none"}}
                                                    value={valueCurrency2}
                                                    min={minValue2}
-                                                   onChange={(e) => changeInverse(e.target.value)} // Add onChange to update the state
+                                                   onChange={(e) => changeInverse(e.target.value)}
 
                                                    className={`form-control form-control-custom  ${isSelectOpen2 ? "opacity-0 position-absolute w-25" : ""}`}
                                                    id="some-id-2" placeholder='Receive Bitcoin(BTC)'
                                                    name='billing-company'/>
                                             <Select
-                                                id="2"// Add a static id value here
+                                                id="2"
                                                 defaultValue={currency2}
                                                 value={currency2}
                                                 onChange={(currency2) => {

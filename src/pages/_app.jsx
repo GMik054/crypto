@@ -1,14 +1,5 @@
-// import "@fontsource/montserrat";
-// import "@fontsource/montserrat/400.css";
-// import "@fontsource/montserrat/400-italic.css";
-// import "@fontsource/titillium-web";
-// import "@fontsource/titillium-web/400.css";
-// import "@fontsource/titillium-web/400-italic.css";
-// import '@fortawesome/fontawesome-free/css/all.min.css';
-// import 'bootstrap/dist/css/bootstrap.css';
 import '../styles/app.scss'
 import {Provider} from 'react-redux'
-// import type { AppProps } from 'next/app'
 import store from '../store'
 import Head from "next/head";
 
@@ -32,8 +23,6 @@ export default function MyApp({Component, pageProps}) {
                         <link
                             href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;700&family=Montserrat:wght@400;600;700&family=Titillium+Web&display=swap"
                             rel="stylesheet"/>
-
-
             </Head>
             <Provider store={store}>
                 <Component {...pageProps} />

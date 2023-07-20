@@ -9,13 +9,15 @@ import {Col, Form, Input, Label, Row} from "reactstrap";
 import * as Yup from 'yup'
 import {useFormik} from "formik";
 import {APICallUrl} from "../../halpers/useWindowDimensions";
-import {selectAuth, selectLoginToken, setAuth, setLoginToken, setUser} from "../../src/features/Slices/LoginSlice";
+import {
+    selectAuth,
+    selectLoginToken,
+    setIsLoading,
+} from "../../src/features/Slices/LoginSlice";
 import {useDispatch, useSelector} from "react-redux";
 import {FaCheckCircle} from "react-icons/fa";
 
 const ModalExchange = ({valueCurrency1, valueCurrency2, minValue1, maxValue1, currency1, currency2, rateData}) => {
-
-    // console.log(currency1,"currency1")
 
     const [open, setOpen] = React.useState(false);
 
@@ -49,8 +51,6 @@ const ModalExchange = ({valueCurrency1, valueCurrency2, minValue1, maxValue1, cu
         validationSchema,
     })
 
-    // console.log(loginToken,"logintoken")
-
     function ltrim(str) {
         if (!str) return str;
         return str.replace(/^\s+/g, '');
@@ -63,6 +63,8 @@ const ModalExchange = ({valueCurrency1, valueCurrency2, minValue1, maxValue1, cu
     let [err, setErr] = useState("")
     const [showModal, setShowModal] = useState(false); // State variable to control modal visibility
     let exchange = () => {
+
+        dispatch(setIsLoading(true));
         let info = {
             name: `${formik.values.first_name} ${formik.values.last_name}`,
             phone: formik.values.phone,
@@ -85,14 +87,16 @@ const ModalExchange = ({valueCurrency1, valueCurrency2, minValue1, maxValue1, cu
                 handleClose();
                 formik.resetForm();
                 setErr("");
-                // dispatch(setAuth(auth));
+                dispatch(setIsLoading(false));
+
             } else {
-                setErr(res.message)
+                setErr(res.message);
+                dispatch(setIsLoading(false));
             }
 
         })
             .catch((error) => {
-                // Handle general fetch error
+                dispatch(setIsLoading(false));
                 console.error('Failed to Exchange:', error);
             });
     }
@@ -119,7 +123,7 @@ const ModalExchange = ({valueCurrency1, valueCurrency2, minValue1, maxValue1, cu
                     }}
                 >
                     <Fade in={open}>
-                        <Box className="modal-box">
+                        <Box className="modal-box" >
                             <Button onClick={handleClose} className="close-button">
                                 <CloseIcon/>
                             </Button>
@@ -199,7 +203,7 @@ const ModalExchange = ({valueCurrency1, valueCurrency2, minValue1, maxValue1, cu
                                     </Col>
                                 </Row>
                             </Form>
-                            <p className="modal-desc" style={{paddingBottom: "24px", textAlign: "center"}}>Lorem Ipsum
+                            <p className="modal-desc" style={{textAlign: "center"}}>Lorem Ipsum
                                 is
                                 simply dummy text of the printing and typesetting
                                 industry.</p>

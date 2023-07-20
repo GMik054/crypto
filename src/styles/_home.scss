@@ -90,6 +90,9 @@ $light-white: rgba(244, 244, 244, 0.8);
       letter-spacing: 0.16px;
     }
 
+    .active-link {
+      color: #E8BA4E;
+    }
 
   }
 
@@ -407,17 +410,21 @@ $light-white: rgba(244, 244, 244, 0.8);
   //border: 2px solid #000;
   padding: 40px;
   border-radius: 16px;
+  overflow-y: auto;
+  height: auto;
 
   .single-transaction {
     background-color: #292929;
     padding: 12px;
     display: grid;
     gap: 12px;
-    p{
+
+    p {
       font-size: 14px;
       line-height: normal;
       letter-spacing: 0.14px;
-      span{
+
+      span {
         color: white;
         font-weight: 500;
       }
@@ -471,6 +478,7 @@ $light-white: rgba(244, 244, 244, 0.8);
     font-weight: 700;
     line-height: normal;
     letter-spacing: 0.2px;
+    margin-top: 26px;
     //color: black;
   }
 
@@ -757,6 +765,10 @@ $light-white: rgba(244, 244, 244, 0.8);
     justify-content: space-evenly;
     height: 100%;
 
+    .active-link {
+      color: #E8BA4E;
+    }
+
     p {
       line-height: 174%;
       letter-spacing: 0.2px;
@@ -876,7 +888,7 @@ $light-white: rgba(244, 244, 244, 0.8);
   }
 
   .gallery-img {
-    min-height: 460px;
+    min-height: auto;
 
     img {
       max-height: 460px;
@@ -1147,6 +1159,10 @@ $light-white: rgba(244, 244, 244, 0.8);
             //padding: 10px 15px;
             //position: relative;
           }
+
+          .active-link {
+            color: white;
+          }
         }
       }
     }
@@ -1317,18 +1333,6 @@ $light-white: rgba(244, 244, 244, 0.8);
 
     h3 {
       line-height: 40px;
-    }
-  }
-  .gallery-section {
-
-
-    .gallery-img {
-      min-height: auto;
-
-      //img {
-      //  max-height: 460px;
-      //  width: 100%;
-      //}
     }
   }
   .contact-us-section {

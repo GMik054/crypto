@@ -1,18 +1,31 @@
 import React from 'react';
 import Head from "next/head";
 import Layout from "../../Components/Layout/Layout";
-import GallerySection from "../../Components/Gallery/GallerySection";
 import Contact from "../../Components/Contact/Contact";
+import {Backdrop, CircularProgress} from "@mui/material";
+import {useSelector} from "react-redux";
+import {selectIsLoading} from "../features/Slices/LoginSlice";
 
 const ContactUs = () => {
+    const isLoading = useSelector(selectIsLoading);
+
     return (
-        < >
+        <>
             <Head>
-                <title>Redux Toolkit</title>
+                <title>Contact Us</title>
                 <link rel="icon" href="/favicon.ico"/>
             </Head>
-            <Layout mainMenu={["1", '12']}>
+            <Layout>
                 <Contact/>
+                {isLoading && (
+                    <Backdrop sx={{
+                        color: '#fff',
+                        zIndex: (theme) => theme.zIndex.drawer + 1000,
+                        backgroundColor: "rgba(255, 255, 255, 0.3)",
+                    }} open>
+                        <CircularProgress style={{color: '#E8BA4E'}}/>
+                    </Backdrop>
+                )}
             </Layout>
         </>
     );

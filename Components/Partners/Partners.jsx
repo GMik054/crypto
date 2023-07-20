@@ -3,6 +3,7 @@ import {Col, Container, Row} from "reactstrap";
 import Slider from "react-slick";
 
 const Partners = () => {
+
     const settings = {
         dots: false,
         infinite: true,
@@ -42,6 +43,7 @@ const Partners = () => {
             },
         ],
     };
+
     return (
         <section className="partners-section">
             <Container>

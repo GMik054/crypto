@@ -1,18 +1,20 @@
-import React from 'react';
+import React,{Fragment} from 'react';
 import {Col, Container, Row} from "reactstrap";
 import Link from "next/link";
+import {useRouter} from "next/router";
 
-const Footer = () => {
+const Footer = ({links}) => {
+
+    const router = useRouter();
+
     return (
         <footer className="footer">
             <Container>
                 <Row className="justify-content-md-center d-flex">
                     <Col lg="11">
                         <Row className="g-4">
-
                             <Col lg="4" md="4">
                                 <div className="footer-logos-section">
-
                                     <Link href={`/`}>
                                         <img src="/assets/images/footerlogo.png"/>
                                     </Link>
@@ -30,24 +32,19 @@ const Footer = () => {
                                     </Row>
                                 </div>
                             </Col>
-
                             <Col lg="3" md="3">
                                 <div className="info-pages">
-                                    <Link href={`/`}>
-                                        <p>Home</p>
-                                    </Link>
-                                    <Link href={`/partners`}>
-                                        <p>Partners</p>
-                                    </Link>
-                                    <Link href={`/faq`}>
-                                        <p>FAQ</p>
-                                    </Link>
-                                    <Link href={`/gallery`}>
-                                        <p>Gallery</p>
-                                    </Link>
-                                    <Link href={`/contact-us`}>
-                                        <p>Contacts</p>
-                                    </Link>
+                                    {
+                                        links?.map((el, i) => {
+                                            return (
+                                                <Fragment>
+                                                        <Link href={`/${el?.value}`}>
+                                                            <p  className={`${router.asPath === `/${el.value}` ? "active-link" : ""}`}> {el?.label}</p>
+                                                        </Link>
+                                                </Fragment>
+                                            )
+                                        })
+                                    }
                                 </div>
 
                             </Col>
@@ -64,7 +61,6 @@ const Footer = () => {
                                         </div>
                                     </div>
                                 </div>
-
                             </Col>
                         </Row>
 

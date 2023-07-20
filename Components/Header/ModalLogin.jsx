@@ -9,15 +9,10 @@ import Fade from "@mui/material/Fade";
 import Box from "@mui/material/Box";
 import {CloseIcon} from "next/dist/client/components/react-dev-overlay/internal/icons/CloseIcon";
 import {Col, Form, Input, Label, Row} from "reactstrap";
-import {FaCheckCircle} from "react-icons/fa";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {
-    selectAuth,
-    selectAuthUser,
-    selectLoginToken,
-    setAuth,
+    setAuth, setIsLoading,
     setLoginToken,
-    setUser
 } from "../../src/features/Slices/LoginSlice";
 
 const ModalLogin = () => {
@@ -26,8 +21,6 @@ const ModalLogin = () => {
     const handleClose = () => setOpen(false);
 
     let dispatch = useDispatch();
-
-
 
     const initialValues = {
         email: "",
@@ -56,10 +49,12 @@ const ModalLogin = () => {
     }, [])
 
     const [showPassword, setShowPassword] = useState(false);
-    let [err, setErr] = useState("")
-    const [showModal, setShowModal] = useState(false); // State variable to control modal visibility
+    let [err, setErr] = useState("");
 
     const login = () => {
+
+        dispatch(setIsLoading(true));
+
         fetch(`${APICallUrl}/api/v1/login`, {
             method: 'POST',
             headers: {
@@ -71,11 +66,11 @@ const ModalLogin = () => {
             }),
         })
             .then((res) => res.json()).then((res) => {
-            // console.log(res, "RES 1")
-
             if (res.error === false) {
                 dispatch(setLoginToken(res.data));
                 dispatch(setAuth(res.error));
+                setOpen(false);
+                dispatch(setIsLoading(false));
 
                 fetch(`${APICallUrl}/api/v1/me`, {
                     method: 'GET',
@@ -85,26 +80,26 @@ const ModalLogin = () => {
                     }
                 })
                     .then((res) => res.json()).then((res) => {
-                    // console.log(res, "RES 2")
-                    dispatch(setUser(res));
-                    setOpen(false)
-                    // setIsCartOpen(false);
+                    // dispatch(setUser(res));
+                    setOpen(false);
+                    dispatch(setIsLoading(false));
                 })
                     .catch((error) => {
                         // Handle error if the second fetch fails
                         console.error('Failed to fetch user data:', error);
+                        dispatch(setIsLoading(false));
                     });
             } else {
                 // Handle error if the first fetch returns an error
                 console.error('Login failed:', res.message);
                 setErr(res.message)
-
-
+                dispatch(setIsLoading(false));
             }
         })
             .catch((error) => {
                 // Handle general fetch error
                 console.error('Failed to login:', error);
+                dispatch(setIsLoading(false));
             });
     }
 

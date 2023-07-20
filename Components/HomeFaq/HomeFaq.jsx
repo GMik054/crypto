@@ -1,12 +1,18 @@
 import React from 'react';
 import {Accordion} from "react-bootstrap";
 import {Col, Container, Row} from "reactstrap";
-import Button from "react-bootstrap/Button";
 
 const HomeFaq = ({background}) => {
-    const info_2 = [{text: "How to make an exchange on your service?"}, {text: "How long does the exchange take?"}, {text: "How long to wait for Cashin replenishment?"}, {text: "Why was my order rejected?"}]
+
+    const info_2 = [
+        {text: "How to make an exchange on your service?"},
+        {text: "How long does the exchange take?"},
+        {text: "How long to wait for Cashin replenishment?"},
+        {text: "Why was my order rejected?"}
+    ]
+
     return (
-        <section className={`faq-section ${background?"faq-single":""}`}>
+        <section className={`faq-section ${background ? "faq-single" : ""}`}>
             <Container>
                 <Row className="justify-content-md-center d-flex">
                     <Col lg="11">
@@ -18,7 +24,6 @@ const HomeFaq = ({background}) => {
                                         <Accordion.Item key={i} eventKey={i} className="card card-div">
                                             <Accordion.Header><h5>{el.text}</h5></Accordion.Header>
                                             <Accordion.Body>
-                                                asdasdasd
                                                 {/*<p className="text-accardion-part">{decodeEntities(el.text3_eng)}</p>*/}
                                             </Accordion.Body>
                                         </Accordion.Item>
@@ -29,7 +34,6 @@ const HomeFaq = ({background}) => {
                     </Col>
                 </Row>
             </Container>
-
         </section>
     );
 };

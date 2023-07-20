@@ -1,7 +1,6 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {Fragment, useEffect, useRef, useState} from 'react';
 import {Col, Container, Row} from "reactstrap";
 import Select from "react-select";
-// import {FiSearch} from "@react-icons/all-files/fi/FiSearch";
 import Button from "@mui/material/Button";
 import Link from "next/link";
 import ModalRegister from "./ModalRegister";
@@ -9,34 +8,48 @@ import ModalLogin from "./ModalLogin";
 import {PersistGate} from "redux-persist/integration/react";
 import {persistor} from "../../src/store";
 import {useDispatch, useSelector} from "react-redux";
-import {selectAuth, selectAuthUser, selectLoginToken, signOut} from "../../src/features/Slices/LoginSlice";
+import {
+    selectAuth,
+    selectIsLoading,
+    selectLoginToken, setUser,
+    signOut
+} from "../../src/features/Slices/LoginSlice";
 import ModalTransactions from "./ModalTransactions";
 import {APICallUrl} from "../../halpers/useWindowDimensions";
 import ThreeBarToggle from "./ThreeBarToggle";
 import {FaSignOutAlt} from "@react-icons/all-files/fa/FaSignOutAlt";
 import {CloseIcon} from "next/dist/client/components/react-dev-overlay/internal/icons/CloseIcon";
+import {useRouter} from "next/router";
 
 const options = [
     {value: 'eng', label: 'Eng', photo: '/assets/images/eng.png'},
     {value: 'arm', label: 'Arm', photo: '/assets/images/arm.jpg'},
     {value: 'rus', label: 'Rus', photo: '/assets/images/rus.png'},
 ];
-const Header = () => {
+
+
+const Header = ({links}) => {
+
         const [selectedOption, setSelectedOption] = useState(options[0]);
         const [toggle, setToggle] = useState(false);
-        const [user, setUser] = useState({})
-        let dispatch = useDispatch();
+
+        const router = useRouter();
+
         const divRef = useRef();
-        let auth = useSelector(selectAuth);
-        let authUser = useSelector(selectAuthUser);
-        let loginToken = useSelector(selectLoginToken);
+
+        const dispatch = useDispatch();
+
+        const auth = useSelector(selectAuth);
+        const loginToken = useSelector(selectLoginToken);
+        const isLoading = useSelector(selectIsLoading);
+
         // console.log(auth, "toggle")
-        // console.log(selectedOption, "selectedOption")
         // console.log(loginToken, "loginToken")
 
 
         useEffect(() => {
             if (!auth) {
+
                 fetch(`${APICallUrl}/api/v1/transactions`, {
                     headers: {
                         "Content-Type": "application/json;charset=UTF-8",
@@ -45,13 +58,13 @@ const Header = () => {
                 })
                     .then(res => res.json().then(res => {
                             console.log(res, "transactions")
-                            setUser(res)
+                            dispatch(setUser(res))
                         }
                     ));
             } else {
                 setUser({})
             }
-        }, [auth])
+        }, [auth, isLoading])
 
         const customStyles = {
             indicatorsContainer: (provided) => ({
@@ -74,8 +87,10 @@ const Header = () => {
             }),
             container: (provided) => ({
                 ...provided,
-                // maxWidth: "124px",
-                width: "100%"
+                maxWidth: "100px",
+                width: "100%",
+                display: "flex",
+                justifyContent:"center"
             }),
 
             control: (provided, state) => ({
@@ -148,9 +163,9 @@ const Header = () => {
 
         useEffect(() => {
             if (toggle) {
-                document.body.style.overflow = 'hidden'; // Prevent scrolling
+                document.body.style.overflow = 'hidden';
             } else {
-                document.body.style.overflow = 'auto'; // Allow scrolling
+                document.body.style.overflow = 'auto';
             }
         }, [toggle]);
 
@@ -166,6 +181,7 @@ const Header = () => {
                 document.removeEventListener('mousedown', handleOutsideClick);
             };
         }, []);
+
 
         return (
             <header>
@@ -190,15 +206,13 @@ const Header = () => {
                                                         {
                                                             options?.map((el, i) => {
                                                                 return (
-                                                                    <>
-                                                                        <p key={i}
-                                                                           onClick={() => setSelectedOption(el)}
+                                                                    <Fragment key={i}>
+                                                                        <p onClick={() => setSelectedOption(el)}
                                                                            className={`${selectedOption.value === el.value ? "active" : ""}`}>
                                                                             {el.label}
                                                                         </p>
                                                                         <div className="line"/>
-                                                                    </>
-
+                                                                    </Fragment>
                                                                 )
                                                             })
                                                         }
@@ -208,63 +222,31 @@ const Header = () => {
                                                         <CloseIcon/></Col>
                                                 </Row>
                                             </li>
-
-                                            <li className="dropdown">
-                                                <Link href={`/`}>
-                                                    Home
-                                                </Link>
-                                            </li>
-                                            <li className="dropdown">
-                                                <Link href={`/partners`}>
-                                                    Partners
-                                                </Link>
-                                            </li>
-                                            <li className="dropdown">
-                                                <Link href={`/faq`}>
-                                                    FAQ
-                                                </Link>
-
-                                            </li>
-                                            <li className="dropdown">
-
-                                                <Link href={`/gallery`}>
-                                                    Gallery
-                                                </Link>
-                                            </li>
-                                            <li className="dropdown">
-
-                                                <Link href={`/contact-us`}>
-                                                    Contacts
-                                                </Link>
-                                            </li>
-                                            {/*<Link href={`/`}>*/}
-                                            {/*    <p>Home</p>*/}
-                                            {/*</Link>*/}
-                                            {/*<Link href={`/partners`}>*/}
-                                            {/*    <p>Partners</p>*/}
-                                            {/*</Link>*/}
-                                            {/*<Link href={`/faq`}>*/}
-                                            {/*    <p>FAQ</p>*/}
-                                            {/*</Link>*/}
-                                            {/*<Link href={`/gallery`}>*/}
-                                            {/*    <p>Gallery</p>*/}
-                                            {/*</Link>*/}
-                                            {/*<Link href={`/contact-us`}>*/}
-                                            {/*    <p>Contacts</p>*/}
-                                            {/*</Link>*/}
-                                            {/*</div>*/}
-
+                                            {
+                                                links?.map((el, i) => {
+                                                    return (
+                                                        <Fragment>
+                                                            <li className="dropdown">
+                                                                <Link href={`/${el?.value}`}
+                                                                      className={`${router.asPath === `/${el.value}` ? "active-link" : ""}`}>
+                                                                    {el?.label}
+                                                                </Link>
+                                                            </li>
+                                                        </Fragment>
+                                                    )
+                                                })
+                                            }
                                         </ul>
-
                                     </div>
                                 </Col>
                                 <Col xl="2" lg="4" md="4" xs="4" className="country">
                                     <div className="language-section">
                                         <Select
-                                            id={options.value} // Add a static id value here
+                                            id={options.value}
                                             defaultValue={selectedOption}
                                             onChange={setSelectedOption}
                                             options={options}
+                                            isSearchable={false}
                                             // menuIsOpen={true}
                                             formatOptionLabel={options => (
                                                 <div className="country-option" style={customStyles.optionLabel}>
@@ -292,7 +274,6 @@ const Header = () => {
                                                 auth ?
                                                     <>
                                                         <Col lg="5" md="5" xs="5">
-
                                                             <ModalLogin/>
                                                         </Col>
                                                         <Col lg="7" md="7" xs="7">
@@ -301,7 +282,7 @@ const Header = () => {
                                                     </> :
                                                     <>
                                                         <Col xl="6" lg="9" md="8" xs="8">
-                                                            <ModalTransactions user={user}/>
+                                                            <ModalTransactions/>
                                                         </Col>
                                                         <Col xl="6" lg="3" md="2" xs="3">
                                                             <div className="header-buttons">

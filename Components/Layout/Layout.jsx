@@ -2,15 +2,19 @@ import React from 'react';
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 
-const Layout = ({children, mainMenu, data}) => {
-    const QuestionTab = true;
+const Layout = ({children, data}) => {
+    const links = [
+        {value: '', label: 'Home'},
+        {value: 'partners', label: 'Partners'},
+        {value: 'faq', label: 'FAQ'},
+        {value: 'gallery', label: 'Gallery'},
+        {value: 'contact-us', label: 'Contacts'},
+    ];
     return (
         <>
-            <Header/>
-            {/*<StarterLoader />*/}
-            {/*<Header mainMenu={mainMenu}/>*/}
+            <Header links={links}/>
             {children}
-            <Footer data={data}/>
+            <Footer links={links} data={data}/>
         </>
     );
 };

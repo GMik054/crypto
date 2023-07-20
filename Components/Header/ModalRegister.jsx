@@ -10,6 +10,8 @@ import {CloseIcon} from "next/dist/client/components/react-dev-overlay/internal/
 import {Col, Form, Input, Label, Row} from "reactstrap";
 import {APICallUrl} from "../../halpers/useWindowDimensions";
 import {FaCheckCircle} from "react-icons/fa";
+import {setIsLoading} from "../../src/features/Slices/LoginSlice";
+import {useDispatch} from "react-redux";
 
 
 const ModalRegister = () => {
@@ -17,6 +19,8 @@ const ModalRegister = () => {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    let dispatch = useDispatch();
 
     const initialValues = {
         first_name: "",
@@ -67,6 +71,9 @@ const ModalRegister = () => {
     const [showModal, setShowModal] = useState(false); // State variable to control modal visibility
 
     const register = () => {
+
+        dispatch(setIsLoading(true));
+
         fetch(`${APICallUrl}/api/v1/register`, {
             method: 'POST',
             headers: {
@@ -81,13 +88,16 @@ const ModalRegister = () => {
                 handleClose();
                 formik.resetForm();
                 setErr("");
+                dispatch(setIsLoading(false));
             } else {
                 setErr(res.message)
+                dispatch(setIsLoading(false));
             }
         })
             .catch((error) => {
                 // Handle general fetch error
                 console.error('Failed to login:', error);
+                dispatch(setIsLoading(false));
             });
     }
 
