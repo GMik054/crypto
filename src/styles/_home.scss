@@ -8,6 +8,10 @@ $yellow-project: #FFE500;
 $black-project: #2B2B2B;
 $light-white: rgba(244, 244, 244, 0.8);
 .header-row {
+  .logo-img {
+    max-width: 130px;
+    width: 100%;
+  }
   .header-menu {
     display: flex;
     //justify-content: space-between;
@@ -1613,10 +1617,11 @@ $light-white: rgba(244, 244, 244, 0.8);
   }
 }
 
-@media screen and (max-width: 384px) {
+@media screen and (max-width: 385px) {
   .header-row {
-    img {
-      max-width: 100px;
+    .logo-img {
+      max-width: 110px;
+      width: 100%;
     }
 
 

@@ -28,7 +28,7 @@ export default function IndexPage({data}) {
         <>
             <Head>
                 <title>Crypto Home</title>
-                <link rel="icon" href="/favicon.ico"/>
+                <link rel="icon" href="/favicon.png"/>
             </Head>
             <Layout  >
                 <MainCalculationSection currencies={data?.currencies} rates={data?.rates}/>

@@ -13,7 +13,7 @@ const Error = () => {
         < >
             <Head>
                 <title>404</title>
-                <link rel="icon" href="/favicon.ico"/>
+                <link rel="icon" href="/favicon.png"/>
             </Head>
             <Layout>
                 <Error404/>

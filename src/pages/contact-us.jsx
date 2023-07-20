@@ -13,7 +13,7 @@ const ContactUs = () => {
         <>
             <Head>
                 <title>Contact Us</title>
-                <link rel="icon" href="/favicon.ico"/>
+                <link rel="icon" href="/favicon.png"/>
             </Head>
             <Layout>
                 <Contact/>

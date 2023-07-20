@@ -13,7 +13,7 @@ const Faq = () => {
         < >
             <Head>
                 <title>Faqs</title>
-                <link rel="icon" href="/favicon.ico"/>
+                <link rel="icon" href="/favicon.png"/>
             </Head>
             <Layout >
                 <HomeFaq background={background}/>

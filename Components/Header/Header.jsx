@@ -17,7 +17,6 @@ import {
 import ModalTransactions from "./ModalTransactions";
 import {APICallUrl} from "../../halpers/useWindowDimensions";
 import ThreeBarToggle from "./ThreeBarToggle";
-import {FaSignOutAlt} from "@react-icons/all-files/fa/FaSignOutAlt";
 import {CloseIcon} from "next/dist/client/components/react-dev-overlay/internal/icons/CloseIcon";
 import {useRouter} from "next/router";
 
@@ -191,7 +190,7 @@ const Header = ({links}) => {
                             <Row className="header-row justify-content-between align-items-center g-3">
                                 <Col xl="2" lg="8" md="5" sm="4" xs={`${!auth ? "4" : "5"}`} className="logo">
                                     <Link href={`/`}>
-                                        <img src="/assets/images/logoHeader.png"/>
+                                        <img src="/assets/images/logoHeader.svg" className="logo-img" alt="crypto-logo" title="crypto-logo"/>
                                     </Link>
                                 </Col>
                                 <Col xl="5" lg="1" md="1" xs="1" className={`menu ${toggle ? 'nav-menu-overlay' : ''}`}>
@@ -282,7 +281,7 @@ const Header = ({links}) => {
                                                         </Col>
                                                     </> :
                                                     <>
-                                                        <Col xl="6" lg="9" md="8" xs="8">
+                                                        <Col xl="6" lg="9" md="8" xs="9">
                                                             <ModalTransactions/>
                                                         </Col>
                                                         <Col xl="6" lg="3" md="2" xs="3">
