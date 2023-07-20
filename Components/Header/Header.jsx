@@ -31,6 +31,7 @@ const options = [
 const Header = ({links}) => {
 
         const [selectedOption, setSelectedOption] = useState(options[0]);
+
         const [toggle, setToggle] = useState(false);
 
         const router = useRouter();
@@ -57,7 +58,7 @@ const Header = ({links}) => {
                     },
                 })
                     .then(res => res.json().then(res => {
-                            console.log(res, "transactions")
+                            // console.log(res, "transactions")
                             dispatch(setUser(res))
                         }
                     ));
@@ -182,10 +183,7 @@ const Header = ({links}) => {
             };
         }, []);
 
-
-
-
-
+        console.log(toggle)
         return (
             <header>
                 <Container>
@@ -231,6 +229,9 @@ const Header = ({links}) => {
                                                         <Fragment>
                                                             <li className="dropdown">
                                                                 <Link href={`/${el?.value}`}
+                                                                      onClick={() => setTimeout(() => {
+                                                                          setToggle(false)
+                                                                      }, 1000)}
                                                                       className={`${router.asPath === `/${el.value}` ? "active-link" : ""}`}>
                                                                     {el?.label}
                                                                 </Link>
