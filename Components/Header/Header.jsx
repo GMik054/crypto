@@ -183,7 +183,6 @@ const Header = ({links}) => {
             };
         }, []);
 
-        console.log(toggle)
         return (
             <header>
                 <Container>
@@ -229,9 +228,7 @@ const Header = ({links}) => {
                                                         <Fragment>
                                                             <li className="dropdown">
                                                                 <Link href={`/${el?.value}`}
-                                                                      onClick={() => setTimeout(() => {
-                                                                          setToggle(false)
-                                                                      }, 1000)}
+                                                                      onClick={() => router.asPath === `/${el.value}` ? setToggle(false) : ""}
                                                                       className={`${router.asPath === `/${el.value}` ? "active-link" : ""}`}>
                                                                     {el?.label}
                                                                 </Link>
