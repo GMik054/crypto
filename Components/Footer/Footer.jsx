@@ -1,4 +1,4 @@
-import React,{Fragment} from 'react';
+import React, {Fragment} from 'react';
 import {Col, Container, Row} from "reactstrap";
 import Link from "next/link";
 import {useRouter} from "next/router";
@@ -37,10 +37,10 @@ const Footer = ({links}) => {
                                     {
                                         links?.map((el, i) => {
                                             return (
-                                                <Fragment>
-                                                        <Link href={`/${el?.value}`}>
-                                                            <p  className={`${router.asPath === `/${el.value}` ? "active-link" : ""}`}> {el?.label}</p>
-                                                        </Link>
+                                                <Fragment key={i}>
+                                                    <Link href={`/${el?.value}`}>
+                                                        <p className={`${router.asPath === `/${el.value}` ? "active-link" : ""}`}> {el?.label}</p>
+                                                    </Link>
                                                 </Fragment>
                                             )
                                         })

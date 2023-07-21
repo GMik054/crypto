@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {Col, Container,  Row} from "reactstrap";
+import {Col, Container, Row} from "reactstrap";
 import Select from 'react-select';
 import IconsSection from "./IconsSection";
 import ModalExchange from "./ModalExchange";
-import useWindowDimensions, from "../../halpers/useWindowDimensions";
+import useWindowDimensions, {APICoinBase} from "../../halpers/useWindowDimensions";
 
 
 const MainCalculationSection = ({currencies, rates}) => {
@@ -14,9 +14,11 @@ const MainCalculationSection = ({currencies, rates}) => {
     const [isSelectOpen, setIsSelectOpen] = useState(false);
     const [isSelectOpen2, setIsSelectOpen2] = useState(false);
 
-
     const [currency1, setCurrency1] = useState(currencies.data[0]);
     const [currency2, setCurrency2] = useState({});
+
+    const [coinRate, setCoinRate] = useState(0);
+    const [changeCurrencies, setChangeCurrencies] = useState([]);
 
     const [rateData, setRateData] = useState([]);
     const [currenciesData, setCurrenciesData] = useState([]);
@@ -28,8 +30,6 @@ const MainCalculationSection = ({currencies, rates}) => {
 
     const [valueCurrency1, setValueCurrency1] = useState(0);
     const [valueCurrency2, setValueCurrency2] = useState(0);
-
-
 
     const customStyles = {
 
@@ -61,8 +61,8 @@ const MainCalculationSection = ({currencies, rates}) => {
             textAlign: 'left',
             padding: "0",
             boxShadow: state.isFocused ? 'none' : 'none',
-            minHeight: width<575? '36px': '38px',
-            width: state.isFocused ? width>767?'454px': width<500?"200px":"300px" : width<500? '100px':"120px",
+            minHeight: width < 575 ? '36px' : '38px',
+            width: state.isFocused ? width > 767 ? '454px' : width < 500 ? "200px" : "300px" : width < 500 ? '120px' : "120px",
             // '&:select': {
             //     backgroundColor: "red"
             // },
@@ -86,7 +86,7 @@ const MainCalculationSection = ({currencies, rates}) => {
             // borderRadius: '16px',
             cursor: "pointer",
             fontFamily: 'Montserrat',
-            fontSize: width>575?"14px":"18px",
+            fontSize: width > 575 ? "14px" : "18px",
             letterSpacing: "0.18px",
             // paddingLeft:"30px",
             '&:hover': {
@@ -125,55 +125,76 @@ const MainCalculationSection = ({currencies, rates}) => {
         const filteredRates = rates.data.filter((el) => el.from === currency1.id);
         setRateData(filteredRates)
         const filteredCurrencies = currencies.data.filter((currency) =>
-            filteredRates.some((el) => el.to === currency.id)
+            filteredRates.some((el) => Number(el.to) === Number(currency.id))
         );
-        setCurrency2(filteredCurrencies[0])
+        setCurrency2(filteredCurrencies[0]);
         setCurrenciesData(filteredCurrencies);
 
     }, [currency1])
 
 
-    const customFilter = (option, searchText) => {
-        return option.data.name.toLowerCase().includes(searchText.toLowerCase()) || option.data.code.toLowerCase().includes(searchText.toLowerCase());
-    };
-
-
-
     useEffect(() => {
-        const filteredRate1 = rateData.find((el) => el.to === currency2.id);
-        const filteredRate2 = rateData.find((el) => el.to === currency2.id);
-        // console.log(filteredRate1,"filteredRate1")
+        const filteredRate1 = rateData.find((el) => Number(el.to) === Number(currency2.id));
+        const filteredRate2 = rateData.find((el) => Number(el.to) === Number(currency2.id));
+        setChangeCurrencies(rates.data.filter(el => el.from === currency2.id && el.to === currency1.id));
+
         if (filteredRate1) {
-            setMinValue1(filteredRate1.min);
-            setMaxValue1(filteredRate1.max)
-            setValueCurrency1(filteredRate1.min)
+            setMinValue1(Number(filteredRate1.min));
+            setMaxValue1(Number(filteredRate1.max));
+            setValueCurrency1(Number(filteredRate1.min));
         }
         if (filteredRate2) {
-            setMinValue2(filteredRate2.min * filteredRate2.rate);
-            setMaxValue2(filteredRate2.max * filteredRate2.rate)
-            setValueCurrency2(filteredRate2.min * filteredRate2.rate)
+            fetch(`${APICoinBase}/v2/exchange-rates?currency=${currency1?.code}`, {
+                headers: {
+                    "Content-Type": "application/json;charset=UTF-8"
+                },
+            })
+                .then(res => res.json().then(res => {
+                        setCoinRate(Number(res?.data?.rates[`${currency2.code}`]))
+                        setMinValue2(Number(filteredRate2.min) * Number(res.data.rates[`${currency2.code}`]) + ((Number(filteredRate2.min) * Number(res.data.rates[`${currency2.code}`])) / 100 * Number(filteredRate2.rate)));
+                        setMaxValue2(Number(filteredRate2.max) * Number(res.data.rates[`${currency2.code}`]) + ((Number(filteredRate2.max) * Number(res.data.rates[`${currency2.code}`])) / 100 * Number(filteredRate2.rate)));
+                        setValueCurrency2(Number(filteredRate2.min) * Number(res.data.rates[`${currency2.code}`]) + ((Number(filteredRate2.min) * Number(res.data.rates[`${currency2.code}`])) / 100 * Number(filteredRate2.rate)));
+
+                    }
+                ));
+            // setMinValue2(Number(filteredRate2.min) * Number(filteredRate2.rate));
+            // setMaxValue2(Number(filteredRate2.max) * Number(filteredRate2.rate));
+            // setValueCurrency2(Number(filteredRate2.min) * Number(filteredRate2.rate));
         }
     }, [rateData, currency1, currency2]);
 
     let change = (e) => {
-        setValueCurrency1(e)
-        const filteredRate1 = rateData.find((el) => el.to === currency2.id);
-        setValueCurrency2(Number(e) * filteredRate1.rate)
-
+        setValueCurrency1(e);
+        const filteredRate1 = rateData.find((el) => Number(el.to) === Number(currency2.id));
+        setValueCurrency2(Number(e) * Number(coinRate) + ((Number(e) * Number(coinRate)) / 100 * Number(filteredRate1.rate)));
     }
 
     let changeInverse = (e) => {
         setValueCurrency2(e);
-        const filteredRate1 = rateData.find((el) => el.to === currency2.id);
-        // Calculate the corresponding value for valueCurrency1 based on the inverse rate
-        if (filteredRate1 && filteredRate1.rate !== 0) {
-            const inverseRate = 1 / filteredRate1.rate;
-            setValueCurrency1(Number(e) * inverseRate);
-        }
+        const filteredRate1 = rateData.find((el) => Number(el.to) === Number(currency2.id));
+        setValueCurrency1(Number(e) / (1 + Number(filteredRate1.rate) / 100) / Number(coinRate));
+        // setValueCurrency1((Number(e) - (Number(e) * inverseRate) / 100) / Number(coinRate));
     };
 
+    // let changeInverse = (e) => {
+    //     setValueCurrency2(Number(e));
+    //     const filteredRate1 = rateData.find((el) => Number(el.to) === Number(currency2.id));
+    //     console.log(filteredRate1,"filteredRate1")
+    //     if (filteredRate1 && filteredRate1.rate !== 0) {
+    //         const inverseRate = 1 / Number(filteredRate1.rate);
+    //         // setValueCurrency1(Number(e) * Number(coinRate) + ((Number(e) * Number(coinRate)) / 100 * Number(inverseRate)));
+    //         // setValueCurrency1(Number(e) * Number(inverseRate));
+    //     }
+    // };
+    const changeCurrency = () => {
+        // const tempCurrency = currency1;
+        setCurrency1(currency2);
+        // setCurrency2(tempCurrency);
+    }
+    const customFilter = (option, searchText) => {
+        return option.data.name.toLowerCase().includes(searchText.toLowerCase()) || option.data.code.toLowerCase().includes(searchText.toLowerCase());
+    };
 
-    // console.log(width,"width")
 
     return (
         <section className="calculation-section">
@@ -207,8 +228,13 @@ const MainCalculationSection = ({currencies, rates}) => {
 
                                 </div>
                             </div>
-
                             <Row className="custom-row-form">
+                                {
+                                    changeCurrencies.length > 0 ?
+                                        <img onClick={changeCurrency}
+                                             className="change-img" src="/assets/images/change.svg"/>
+                                        : ""
+                                }
                                 <Col lg="12">
                                     <div className="form-section">
                                         <label className='form-label'
@@ -225,13 +251,19 @@ const MainCalculationSection = ({currencies, rates}) => {
                                             <input type='number'
                                                    style={Number(valueCurrency1) < minValue1 || Number(valueCurrency1) > maxValue1 ? {border: "1px solid #F00"} : {border: "none"}}
                                                    value={valueCurrency1}
-                                                   onChange={(e) => change(e.target.value)}
-                                                   min={minValue1}
+                                                   onChange={(e) => {
+                                                       let value = e.target.value.replace(/^0+(?=\d)/, '');
+
+                                                       if (value.startsWith(".")) {
+                                                           value = "0" + value;
+                                                       }
+                                                       change(value)
+                                                   }}
                                                    className={`form-control form-control-custom ${isSelectOpen ? "opacity-0 position-absolute w-25" : ""}`}
                                                    id='some-id' placeholder='Send Qiwi(RUB)' name='billing-company'/>
                                             <Select
                                                 id="1"
-                                                defaultValue={currency1}
+                                                value={currency1}
                                                 onChange={(currency1) => {
                                                     setCurrency1(currency1);
                                                     setIsSelectOpen(false);
@@ -247,14 +279,14 @@ const MainCalculationSection = ({currencies, rates}) => {
                                                              display: "flex",
                                                              justifyContent: `${isSelectOpen ? "start" : "end"}`,
                                                              alignItems: "center",
-                                                             minHeight: `${isSelectOpen ? "32px" : `${width <= 1399 && width >500? "40px" : "46px"}`}`,
+                                                             minHeight: `${isSelectOpen ? "32px" : `${width <= 1399 && width > 500 ? "40px" : "46px"}`}`,
                                                              padding: `${isSelectOpen ? "8px" : "0"}`
                                                          }}>
                                                         <img src={options?.image} title={options?.code}
                                                              alt={options?.code}
                                                              style={{
                                                                  maxWidth: `${isSelectOpen ? "32px" : "46px"}`,
-                                                                 maxHeight: `${isSelectOpen ? "32px" : `${width <= 1399 && width >500? "40px" : "46px"}`}`,
+                                                                 maxHeight: `${isSelectOpen ? "32px" : `${width <= 1399 && width > 500 ? "40px" : "46px"}`}`,
                                                                  marginRight: `${isSelectOpen ? "10px" : "0"}`,
                                                                  width: "auto",
                                                                  position: "relative"
@@ -267,14 +299,13 @@ const MainCalculationSection = ({currencies, rates}) => {
                                                 menuIsOpen={isSelectOpen}
                                             />
                                         </div>
-
                                     </div>
                                 </Col>
                                 <Col lg="12">
                                     <div className="form-section">
                                         <label className='form-label'
                                                style={Number(valueCurrency1) < minValue1 || Number(valueCurrency1) > maxValue1 ? {color: "#F00"} : {color: "white"}}>
-                                            Min {minValue2} / Max {maxValue2} {
+                                            Min {minValue2.toFixed(2)} / Max {maxValue2.toFixed(2)} {
                                             rateData.map(el => {
                                                 if (el.to === currency2.id) {
                                                     return currency2.code
@@ -286,9 +317,14 @@ const MainCalculationSection = ({currencies, rates}) => {
                                             <input type='number'
                                                    style={Number(valueCurrency1) < minValue1 || Number(valueCurrency1) > maxValue1 ? {border: "1px solid #F00"} : {border: "none"}}
                                                    value={valueCurrency2}
-                                                   min={minValue2}
-                                                   onChange={(e) => changeInverse(e.target.value)}
+                                                   onChange={(e) => {
+                                                       let value = e.target.value.replace(/^0+(?=\d)/, '');
 
+                                                       if (value.startsWith(".")) {
+                                                           value = "0" + value;
+                                                       }
+                                                       changeInverse(value)
+                                                   }}
                                                    className={`form-control form-control-custom  ${isSelectOpen2 ? "opacity-0 position-absolute w-25" : ""}`}
                                                    id="some-id-2" placeholder='Receive Bitcoin(BTC)'
                                                    name='billing-company'/>
@@ -310,14 +346,14 @@ const MainCalculationSection = ({currencies, rates}) => {
                                                              display: "flex",
                                                              justifyContent: `${isSelectOpen2 ? "start" : "end"}`,
                                                              alignItems: "center",
-                                                             minHeight: `${isSelectOpen2 ? "32px" : `${width <= 1399 && width >500? "40px" : "46px"}`}`,
+                                                             minHeight: `${isSelectOpen2 ? "32px" : `${width <= 1399 && width > 500 ? "40px" : "46px"}`}`,
                                                              padding: `${isSelectOpen2 ? "8px" : "0"}`
                                                          }}>
                                                         <img src={options?.image} title={options?.code}
                                                              alt={options?.code}
                                                              style={{
                                                                  maxWidth: `${isSelectOpen2 ? "32px" : "46px"}`,
-                                                                 maxHeight: `${isSelectOpen2 ? "32px" : `${width <= 1399 && width >500? "40px" : "46px"}`}`,
+                                                                 maxHeight: `${isSelectOpen2 ? "32px" : `${width <= 1399 && width > 500 ? "40px" : "46px"}`}`,
                                                                  marginRight: `${isSelectOpen2 ? "10px" : "0"}`,
                                                                  width: "auto",
                                                                  position: "relative"
@@ -334,7 +370,8 @@ const MainCalculationSection = ({currencies, rates}) => {
                                     </div>
                                 </Col>
                             </Row>
-                            <ModalExchange valueCurrency1={valueCurrency1} valueCurrency2={valueCurrency2}  minValue1={minValue1} maxValue1={maxValue1}
+                            <ModalExchange valueCurrency1={valueCurrency1} valueCurrency2={valueCurrency2}
+                                           minValue1={minValue1} maxValue1={maxValue1}
                                            currency1={currency1} currency2={currency2} rateData={rateData}/>
                         </div>
                     </Col>

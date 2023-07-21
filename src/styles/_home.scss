@@ -12,6 +12,7 @@ $light-white: rgba(244, 244, 244, 0.8);
     max-width: 130px;
     width: 100%;
   }
+
   .header-menu {
     display: flex;
     //justify-content: space-between;
@@ -238,6 +239,13 @@ $light-white: rgba(244, 244, 244, 0.8);
       position: relative;
       display: grid;
       gap: 32px;
+
+      .change-img {
+        max-width: 56px;
+        left: auto;
+        right: 18%;
+        top: 52%;
+      }
 
       .form-section {
         .form-label {
@@ -1066,7 +1074,9 @@ $light-white: rgba(244, 244, 244, 0.8);
       .custom-row-form {
         padding: 20px 50px;
         gap: 24px;
-
+        .change-img {
+          right: 16%;
+        }
         .form-section {
           //overflow: hidden;
           .form-label {
@@ -1225,7 +1235,9 @@ $light-white: rgba(244, 244, 244, 0.8);
         .custom-row-form {
           padding: 30px 60px;
           gap: 32px;
-
+          .change-img {
+            right: 25%;
+          }
           .form-section {
             .form-label {
               font-size: 18px;
@@ -1299,7 +1311,10 @@ $light-white: rgba(244, 244, 244, 0.8);
         .custom-row-form {
           padding: 20px 50px;
           gap: 24px;
-
+          .change-img {
+            max-width: 52px;
+            right: 18%;
+          }
           .form-section {
             .form-label {
               font-size: 14px;
@@ -1399,7 +1414,9 @@ $light-white: rgba(244, 244, 244, 0.8);
         .custom-row-form {
           padding: 14px 40px;
           gap: 22px;
-
+          .change-img {
+            right: 17%;
+          }
           .form-section {
             .form-label {
               font-size: 12px;
@@ -1468,6 +1485,7 @@ $light-white: rgba(244, 244, 244, 0.8);
         //font-size: 14px;
       }
     }
+
     .cart {
       order: 2; /* Change the order of the column (move it to the first position) */
       .calculation-banner {
@@ -1496,9 +1514,15 @@ $light-white: rgba(244, 244, 244, 0.8);
         }
 
         .custom-row-form {
+
+
           padding: 10px 26px;
           gap: 16px;
-
+          .change-img {
+            top: 49%;
+            right: 10%;
+            max-width: 46px;
+          }
           .form-section {
             .form-label {
               font-size: 10px;
@@ -1507,6 +1531,9 @@ $light-white: rgba(244, 244, 244, 0.8);
             }
 
             .form-main {
+              .css-195jymh-control{
+                width: 100px;
+              }
               input {
                 border-radius: 8px;
                 font-size: 10px !important;
@@ -1661,7 +1688,10 @@ $light-white: rgba(244, 244, 244, 0.8);
         .custom-row-form {
           padding: 6px 20px;
           gap: 10px;
-
+          .change-img {
+            top: 48%;
+            max-width: 44px;
+          }
           .form-section {
             .form-label {
               font-size: 8px;

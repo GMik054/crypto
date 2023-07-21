@@ -24,3 +24,4 @@ export default function useWindowDimensions() {
 }
 
 export const APICallUrl = 'https://crypto.fast-cybers.com'
+export const APICoinBase = 'https://api.coinbase.com'

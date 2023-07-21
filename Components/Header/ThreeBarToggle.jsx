@@ -1,17 +1,11 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import {FaBars} from "@react-icons/all-files/fa/FaBars";
 
-const ThreeBarToggle = ({setToggle, customClass }) => {
-    // const dispatch = useDispatch();
-    const handleClick = () => {
-        // dispatch({ type: 'TOPMENUTOGGLE',payload:true });
-        // dispatch({ type: 'OVERLAY',payload:true  });
-    };
+const ThreeBarToggle = ({setToggle}) => {
     return (
-        <div className={`toggle-nav ${customClass ? customClass : ''}`}
-             onClick={() => setToggle(true)}
-        >
-            <i className='fa fa-bars sidebar-bar'></i>
+        <div className="toggle-nav"
+             onClick={() => setToggle(true)}>
+            <FaBars size={20}/>
         </div>
     );
 };

@@ -5,7 +5,7 @@ import Footer from "../Footer/Footer";
 const Layout = ({children, data}) => {
     const links = [
         {value: '', label: 'Home'},
-        {value: 'partners', label: 'Partners'},
+        // {value: 'partners', label: 'Partners'},
         {value: 'faq', label: 'FAQ'},
         {value: 'gallery', label: 'Gallery'},
         {value: 'contact-us', label: 'Contacts'},

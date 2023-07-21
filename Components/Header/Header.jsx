@@ -44,12 +44,11 @@ const Header = ({links}) => {
         const isLoading = useSelector(selectIsLoading);
 
         // console.log(auth, "toggle")
-        // console.log(loginToken, "loginToken")
+        console.log(loginToken, "loginToken")
 
 
         useEffect(() => {
             if (!auth) {
-
                 fetch(`${APICallUrl}/api/v1/transactions`, {
                     headers: {
                         "Content-Type": "application/json;charset=UTF-8",
@@ -57,7 +56,7 @@ const Header = ({links}) => {
                     },
                 })
                     .then(res => res.json().then(res => {
-                            // console.log(res, "transactions")
+                            console.log(res, "transactions")
                             dispatch(setUser(res))
                         }
                     ));
@@ -190,15 +189,14 @@ const Header = ({links}) => {
                             <Row className="header-row justify-content-between align-items-center g-3">
                                 <Col xl="2" lg="8" md="5" sm="4" xs={`${!auth ? "4" : "5"}`} className="logo">
                                     <Link href={`/`}>
-                                        <img src="/assets/images/logoHeader.svg" className="logo-img" alt="crypto-logo" title="crypto-logo"/>
+                                        <img src="/assets/images/logoHeader.svg" className="logo-img" alt="crypto-logo"
+                                             title="crypto-logo"/>
                                     </Link>
                                 </Col>
                                 <Col xl="5" lg="1" md="1" xs="1" className={`menu ${toggle ? 'nav-menu-overlay' : ''}`}>
                                     <div className="header-menu">
                                         <ThreeBarToggle setToggle={setToggle}/>
-                                        <ul className={`nav-menu `}
-                                            style={{right: toggle ? '0px' : '-410px'}} ref={divRef}
-                                        >
+                                        <ul className="nav-menu" style={{right: toggle ? '0px' : '-410px'}} ref={divRef}>
                                             <li className='back-btn d-xl-none'>
                                                 <Row className='close-btn justify-content-between'>
                                                     <Col lg="8" xs="8" className="language-mob">
@@ -224,7 +222,7 @@ const Header = ({links}) => {
                                             {
                                                 links?.map((el, i) => {
                                                     return (
-                                                        <Fragment>
+                                                        <Fragment key={i}>
                                                             <li className="dropdown">
                                                                 <Link href={`/${el?.value}`}
                                                                       onClick={() => router.asPath === `/${el.value}` ? setToggle(false) : ""}
