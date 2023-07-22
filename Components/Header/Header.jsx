@@ -46,14 +46,16 @@ const Header = ({links}) => {
         const loginToken = useSelector(selectLoginToken);
         const isLoading = useSelector(selectIsLoading);
 
-        console.log(language, "language")
+        console.log(language, "language1")
         // console.log(loginToken, "loginToken")
         const {t} = useTranslation('common');
 
         useEffect(() => {
-            // if (language !== undefined && Object.keys(language).length === 0) {
-            //     dispatch(setLanguage(options[0]))
-            // }
+            if (language) {
+                if(Object.keys(language).length === 0){
+                    dispatch(setLanguage(options[0]))
+                }
+            }
             // setSelectedOption()
         }, []);
 
@@ -265,7 +267,7 @@ const Header = ({links}) => {
                                         <div className="language-section">
                                             <Select
                                                 id={options.value}
-                                                value={selectedOption}
+                                                value={language}
                                                 onChange={(language) => {
                                                     dispatch(setLanguage(language))
                                                 }}
