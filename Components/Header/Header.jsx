@@ -12,7 +12,7 @@ import {
     selectAuth,
     selectIsLoading, selectLanguage,
     selectLoginToken, setUser,
-    signOut,setLanguage
+    signOut, setLanguage
 } from "../../src/features/Slices/LoginSlice";
 import ModalTransactions from "./ModalTransactions";
 import {APICallUrl} from "../../halpers/useWindowDimensions";
@@ -46,12 +46,12 @@ const Header = ({links}) => {
         const loginToken = useSelector(selectLoginToken);
         const isLoading = useSelector(selectIsLoading);
 
-        console.log(router, "router")
+        console.log(language, "language")
         // console.log(loginToken, "loginToken")
         const {t} = useTranslation('common');
 
         useEffect(() => {
-            if(Object.keys(language).length ===0){
+            if (language && Object.keys(language).length === 0) {
                 dispatch(setLanguage(options[0]))
             }
             // setSelectedOption()
@@ -210,88 +210,89 @@ const Header = ({links}) => {
                             <Row className="header-row justify-content-between align-items-center g-3">
                                 <PersistGate loading={null} persistor={persistor}>
 
-                                <Col xl="2" lg="8" md="5" sm="4" xs={`${!auth ? "4" : "5"}`} className="logo">
-                                    <Link href={`/`}>
-                                        <img src="/assets/images/logoHeader.svg" className="logo-img" alt="crypto-logo"
-                                             title="crypto-logo"/>
-                                    </Link>
-                                </Col>
-                                <Col xl="5" lg="1" md="1" xs="1" className={`menu ${toggle ? 'nav-menu-overlay' : ''}`}>
-                                    <div className="header-menu">
-                                        <ThreeBarToggle setToggle={setToggle}/>
-                                        <ul className="nav-menu" style={{right: toggle ? '0px' : '-410px'}} ref={divRef}>
-                                            <li className='back-btn d-xl-none'>
-                                                <Row className='close-btn justify-content-between'>
-                                                    <Col lg="8" xs="8" className="language-mob">
-                                                        {
-                                                            options?.map((el, i) => {
-                                                                return (
-                                                                    <Fragment key={i}>
-                                                                        <p onClick={() => setSelectedOption(el)}
-                                                                           className={`${selectedOption.value === el.value ? "active" : ""}`}>
-                                                                            {el.label}
-                                                                        </p>
-                                                                        <div className="line"/>
-                                                                    </Fragment>
-                                                                )
-                                                            })
-                                                        }
-                                                    </Col>
-                                                    <Col lg="2" xs="2" className='mobile-back'
-                                                         onClick={() => setToggle(false)}>
-                                                        <CloseIcon/></Col>
-                                                </Row>
-                                            </li>
-                                            {
-                                                links?.map((el, i) => {
-                                                    return (
-                                                        <Fragment key={i}>
-                                                            <li className="dropdown">
-                                                                <Link href={`/${el?.value}`}
-                                                                      onClick={() => router.asPath === `/${el.value}` ? setToggle(false) : ""}
-                                                                      className={`${router.asPath === `/${el.value}` ? "active-link" : ""}`}>
-                                                                    {el?.label}
-                                                                </Link>
-                                                            </li>
-                                                        </Fragment>
-                                                    )
-                                                })
-                                            }
-                                        </ul>
-                                    </div>
-                                </Col>
-                                <Col xl="2" lg="4" md="4" xs="4" className="country">
-                                    <div className="language-section">
-                                        <Select
-                                            id={options.value}
-                                            value={language}
-                                            onChange={(language)=>{
-                                                dispatch(setLanguage(language))
-                                            }}
-                                            options={options}
-                                            isSearchable={false}
-                                            // menuIsOpen={true}
-                                            formatOptionLabel={options => (
-                                                <div className="country-option" style={customStyles.optionLabel}>
-                                                    <div style={{
-                                                        width: "36px",
-                                                        overflow: "hidden",
-                                                        borderRadius: "10px"
-                                                    }}>
-                                                        <img src={options.photo} style={customStyles.optionLabelImg}
-                                                             alt={options.label} title={options.label}/>
-                                                    </div>
+                                    <Col xl="2" lg="8" md="5" sm="4" xs={`${!auth ? "4" : "5"}`} className="logo">
+                                        <Link href={`/`}>
+                                            <img src="/assets/images/logoHeader.svg" className="logo-img" alt="crypto-logo"
+                                                 title="crypto-logo"/>
+                                        </Link>
+                                    </Col>
+                                    <Col xl="5" lg="1" md="1" xs="1" className={`menu ${toggle ? 'nav-menu-overlay' : ''}`}>
+                                        <div className="header-menu">
+                                            <ThreeBarToggle setToggle={setToggle}/>
+                                            <ul className="nav-menu" style={{right: toggle ? '0px' : '-410px'}}
+                                                ref={divRef}>
+                                                <li className='back-btn d-xl-none'>
+                                                    <Row className='close-btn justify-content-between'>
+                                                        <Col lg="8" xs="8" className="language-mob">
+                                                            {
+                                                                options?.map((el, i) => {
+                                                                    return (
+                                                                        <Fragment key={i}>
+                                                                            <p onClick={() => setSelectedOption(el)}
+                                                                               className={`${selectedOption.value === el.value ? "active" : ""}`}>
+                                                                                {el.label}
+                                                                            </p>
+                                                                            <div className="line"/>
+                                                                        </Fragment>
+                                                                    )
+                                                                })
+                                                            }
+                                                        </Col>
+                                                        <Col lg="2" xs="2" className='mobile-back'
+                                                             onClick={() => setToggle(false)}>
+                                                            <CloseIcon/></Col>
+                                                    </Row>
+                                                </li>
+                                                {
+                                                    links?.map((el, i) => {
+                                                        return (
+                                                            <Fragment key={i}>
+                                                                <li className="dropdown">
+                                                                    <Link href={`/${el?.value}`}
+                                                                          onClick={() => router.asPath === `/${el.value}` ? setToggle(false) : ""}
+                                                                          className={`${router.asPath === `/${el.value}` ? "active-link" : ""}`}>
+                                                                        {el?.label}
+                                                                    </Link>
+                                                                </li>
+                                                            </Fragment>
+                                                        )
+                                                    })
+                                                }
+                                            </ul>
+                                        </div>
+                                    </Col>
+                                    <Col xl="2" lg="4" md="4" xs="4" className="country">
+                                        <div className="language-section">
+                                            <Select
+                                                id={options.value}
+                                                value={language}
+                                                onChange={(language) => {
+                                                    dispatch(setLanguage(language))
+                                                }}
+                                                options={options}
+                                                isSearchable={false}
+                                                // menuIsOpen={true}
+                                                formatOptionLabel={options => (
+                                                    <div className="country-option" style={customStyles.optionLabel}>
+                                                        <div style={{
+                                                            width: "36px",
+                                                            overflow: "hidden",
+                                                            borderRadius: "10px"
+                                                        }}>
+                                                            <img src={options.photo} style={customStyles.optionLabelImg}
+                                                                 alt={options.label} title={options.label}/>
+                                                        </div>
 
-                                                    <p style={customStyles.optionLabelP}
-                                                    >{options.label}</p>
-                                                </div>
-                                            )}
-                                            styles={customStyles}
-                                        />
-                                    </div>
-                                </Col>
-                                <Col xl="3" lg="3" md="6" sm="7" xs={`${!auth ? "7" : "6"}`} className="buttons">
-                                    <Row className="justify-content-end">
+                                                        <p style={customStyles.optionLabelP}
+                                                        >{options.label}</p>
+                                                    </div>
+                                                )}
+                                                styles={customStyles}
+                                            />
+                                        </div>
+                                    </Col>
+                                    <Col xl="3" lg="3" md="6" sm="7" xs={`${!auth ? "7" : "6"}`} className="buttons">
+                                        <Row className="justify-content-end">
                                             {
                                                 auth ?
                                                     <>
@@ -319,12 +320,12 @@ const Header = ({links}) => {
                                                         </Col>
                                                     </>
                                             }
-                                    </Row>
+                                        </Row>
 
-                                </Col>
-                            </PersistGate>
+                                    </Col>
+                                </PersistGate>
 
-                    </Row>
+                            </Row>
                         </Col>
                     </Row>
                 </Container>
