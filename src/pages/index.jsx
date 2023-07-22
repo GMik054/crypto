@@ -13,18 +13,47 @@ import setLanguage from "next-translate/setLanguage";
 import {useEffect} from "react";
 
 
-export async function getServerSideProps({locale}) {
-    const rates = await fetch(`${APICallUrl}/api/v1/rates`);
-    const currencies = await fetch(`${APICallUrl}/api/v1/currencies`);
-    const data = {
-        rates: await rates?.json(),
-        currencies: await currencies?.json(),
-        locale: locale
-    }
-    return {
-        props: {data, ...(await serverSideTranslations(locale, ['common']))}
+export async function getServerSideProps({ locale }) {
+    try {
+        const [ratesResponse, currenciesResponse] = await Promise.all([
+            fetch(`${APICallUrl}/api/v1/rates`),
+            fetch(`${APICallUrl}/api/v1/currencies`),
+        ]);
+
+        const rates = await ratesResponse.json();
+        const currencies = await currenciesResponse.json();
+
+        const data = {
+            rates,
+            currencies,
+        };
+
+        return {
+            props: {
+                ...await serverSideTranslations(locale, ['common']),
+                data,
+            },
+        };
+    } catch (error) {
+        console.error('Error fetching data:', error);
+
+        return {
+            notFound: true, // or handle the error in an appropriate way for your application
+        };
     }
 }
+// export async function getServerSideProps({locale}) {
+//     const rates = await fetch(`${APICallUrl}/api/v1/rates`);
+//     const currencies = await fetch(`${APICallUrl}/api/v1/currencies`);
+//     const data = {
+//         rates: await rates?.json(),
+//         currencies: await currencies?.json(),
+//         // locale: locale
+//     }
+//     return {
+//         props: {data, ...(await serverSideTranslations(locale, ['common']))}
+//     }
+// }
 
 export default function IndexPage({data}) {
     // console.log(data,"DATA")
