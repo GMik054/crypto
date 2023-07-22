@@ -51,9 +51,9 @@ const Header = ({links}) => {
         const {t} = useTranslation('common');
 
         useEffect(() => {
-            if (language !== undefined && Object.keys(language).length === 0) {
-                dispatch(setLanguage(options[0]))
-            }
+            // if (language !== undefined && Object.keys(language).length === 0) {
+            //     dispatch(setLanguage(options[0]))
+            // }
             // setSelectedOption()
         }, []);
 
