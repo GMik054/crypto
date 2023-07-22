@@ -265,7 +265,7 @@ const Header = ({links}) => {
                                         <div className="language-section">
                                             <Select
                                                 id={options.value}
-                                                value={language}
+                                                value={selectedOption}
                                                 onChange={(language) => {
                                                     dispatch(setLanguage(language))
                                                 }}
