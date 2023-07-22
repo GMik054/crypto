@@ -46,7 +46,7 @@ const Header = ({links}) => {
         const loginToken = useSelector(selectLoginToken);
         const isLoading = useSelector(selectIsLoading);
 
-        console.log(language, "language4")
+        console.log(language, "language")
         // console.log(loginToken, "loginToken")
         const {t} = useTranslation('common');
 
@@ -230,8 +230,8 @@ const Header = ({links}) => {
                                                                 options?.map((el, i) => {
                                                                     return (
                                                                         <Fragment key={i}>
-                                                                            <p onClick={() => setSelectedOption(el)}
-                                                                               className={`${selectedOption.value === el.value ? "active" : ""}`}>
+                                                                            <p onClick={() => dispatch(setLanguage(el))}
+                                                                               className={`${language?.value === el?.value ? "active" : ""}`}>
                                                                                 {el.label}
                                                                             </p>
                                                                             <div className="line"/>
