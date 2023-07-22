@@ -19,6 +19,7 @@ import {APICallUrl} from "../../halpers/useWindowDimensions";
 import ThreeBarToggle from "./ThreeBarToggle";
 import {CloseIcon} from "next/dist/client/components/react-dev-overlay/internal/icons/CloseIcon";
 import {useRouter} from "next/router";
+import {useTranslation} from "next-i18next";
 
 const options = [
     {value: 'eng', label: 'Eng', photo: '/assets/countries/eng.png'},
@@ -34,6 +35,7 @@ const Header = ({links}) => {
         const [toggle, setToggle] = useState(false);
 
         const router = useRouter();
+        const {pathname, asPath, query} = router;
 
         const divRef = useRef();
 
@@ -45,6 +47,7 @@ const Header = ({links}) => {
 
         // console.log(auth, "toggle")
         // console.log(loginToken, "loginToken")
+        const {t} = useTranslation('common');
 
 
         useEffect(() => {
@@ -56,7 +59,7 @@ const Header = ({links}) => {
                     },
                 })
                     .then(res => res.json().then(res => {
-                            console.log(res, "transactions")
+                            // console.log(res, "transactions")
                             dispatch(setUser(res))
                         }
                     ));
@@ -159,7 +162,6 @@ const Header = ({links}) => {
             }),
         };
 
-
         useEffect(() => {
             if (toggle) {
                 document.body.style.overflow = 'hidden';
@@ -180,10 +182,21 @@ const Header = ({links}) => {
                 document.removeEventListener('mousedown', handleOutsideClick);
             };
         }, []);
-
+        console.log(selectedOption, "selectedOption")
+        useEffect(() => {
+            if (selectedOption.value === "rus") {
+                router.push({pathname, query}, asPath, {locale: "ru"})
+            } else if (selectedOption.value === "arm") {
+                router.push({pathname, query}, asPath, {locale: "am"})
+            } else {
+                router.push({pathname, query}, asPath, {locale: "en"})
+            }
+        }, [selectedOption])
         return (
             <header>
                 <Container>
+                    <h1>{t('welcome')}</h1>
+
                     <Row className="justify-content-center" style={{padding: "18px 0"}}>
                         <Col lg="12">
                             <Row className="header-row justify-content-between align-items-center g-3">
