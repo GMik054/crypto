@@ -10,7 +10,7 @@ import {useSelector} from "react-redux";
 import {selectIsLoading} from "../features/Slices/LoginSlice";
 
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
     const rates = await fetch(`${APICallUrl}/api/v1/rates`);
     const currencies = await fetch(`${APICallUrl}/api/v1/currencies`);
     const data = {

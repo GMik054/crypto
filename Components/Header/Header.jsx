@@ -44,7 +44,7 @@ const Header = ({links}) => {
         const isLoading = useSelector(selectIsLoading);
 
         // console.log(auth, "toggle")
-        console.log(loginToken, "loginToken")
+        // console.log(loginToken, "loginToken")
 
 
         useEffect(() => {

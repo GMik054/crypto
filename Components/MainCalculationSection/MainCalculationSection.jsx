@@ -131,6 +131,8 @@ const MainCalculationSection = ({currencies, rates}) => {
         setCurrenciesData(filteredCurrencies);
 
     }, [currency1])
+    // console.log(rateData.filter(el => el.from === currency2.id && el.to === currency1.id),"111111")
+
 
 
     useEffect(() => {
@@ -188,9 +190,18 @@ const MainCalculationSection = ({currencies, rates}) => {
     // };
     const changeCurrency = () => {
         // const tempCurrency = currency1;
-        setCurrency1(currency2);
-        // setCurrency2(tempCurrency);
+        const filteredRate1 = rateData.find((el) => Number(el.from) === Number(currency1.id));
+        const filteredRate2 = rateData.find((el) => Number(el.to) === Number(currency2.id));
+
+        // if(changeCurrencies[0].from ==currency2.id && changeCurrencies[0].to ==currency1.id ){
+            setCurrency1(currency2);
+            // setCurrency2(tempCurrency);
+        // }
+
     }
+
+    console.log(currency1,"currency1")
+    console.log(currency2,"currency2")
     const customFilter = (option, searchText) => {
         return option.data.name.toLowerCase().includes(searchText.toLowerCase()) || option.data.code.toLowerCase().includes(searchText.toLowerCase());
     };
