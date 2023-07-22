@@ -9,9 +9,6 @@ import {Backdrop, CircularProgress} from "@mui/material";
 import {useDispatch, useSelector} from "react-redux";
 import {selectIsLoading, selectLanguage} from "../features/Slices/LoginSlice"
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
-import setLanguage from "next-translate/setLanguage";
-import {useEffect} from "react";
-
 
 export async function getServerSideProps({locale}) {
     const rates = await fetch(`${APICallUrl}/api/v1/rates`);
@@ -22,7 +19,7 @@ export async function getServerSideProps({locale}) {
         // locale: locale
     }
     return {
-        props: {data, locale, ...(await serverSideTranslations(locale, ['common']))}
+        props: {locale, ...(await serverSideTranslations(locale, ['common'])), data}
     }
 }
 // export async function getServerSideProps({locale}) {
@@ -30,7 +27,7 @@ export async function getServerSideProps({locale}) {
 // }
 
 export default function IndexPage({data}) {
-    // console.log(data,"DATA")
+    // console.log(props,"props")
     const isLoading = useSelector(selectIsLoading);
 
     return (

@@ -46,7 +46,7 @@ const Header = ({links}) => {
         const loginToken = useSelector(selectLoginToken);
         const isLoading = useSelector(selectIsLoading);
 
-        console.log(language, "language2")
+        console.log(language, "language3")
         // console.log(loginToken, "loginToken")
         const {t} = useTranslation('common');
 

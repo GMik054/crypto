@@ -11,7 +11,7 @@ export async function getStaticProps({locale}) {
     return {props: {locale, ...(await serverSideTranslations(locale, ['common']))}}
 }
 const Gallery = (props) => {
-    console.log(props)
+    // console.log(props)
     const isLoading = useSelector(selectIsLoading);
     return (
         < >
