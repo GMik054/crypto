@@ -5,7 +5,10 @@ import PartnersSinglePage from "../../Components/Partners/PartnersSinglePage";
 import {Backdrop, CircularProgress} from "@mui/material";
 import {useSelector} from "react-redux";
 import {selectIsLoading} from "../features/Slices/LoginSlice";
-
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+export async function getStaticProps({locale}) {
+    return {props: {locale, ...(await serverSideTranslations(locale, ['common']))}}
+}
 const Partners = () => {
     const isLoading = useSelector(selectIsLoading);
     return (

@@ -3,19 +3,18 @@ import {Provider} from 'react-redux'
 import store from '../store'
 import Head from "next/head";
 import {appWithTranslation} from 'next-i18next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-
-export async function getStaticProps({ locale }) {
-    return {
-        props: {
-            ...(await serverSideTranslations(locale, [
-                'common',
-                'footer',
-            ])),
-            // Will be passed to the page component as props
-        },
-    }
-}
+// import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+// export async function getStaticProps({ locale }) {
+//     return {
+//         props: {
+//             ...(await serverSideTranslations(locale, [
+//                 'common',
+//                 'footer',
+//             ])),
+//             // Will be passed to the page component as props
+//         },
+//     }
+// }
 function MyApp({Component, pageProps}) {
     return (
         <>

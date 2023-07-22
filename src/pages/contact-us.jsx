@@ -5,7 +5,10 @@ import Contact from "../../Components/Contact/Contact";
 import {Backdrop, CircularProgress} from "@mui/material";
 import {useSelector} from "react-redux";
 import {selectIsLoading} from "../features/Slices/LoginSlice";
-
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+export async function getStaticProps({locale}) {
+    return {props: {locale, ...(await serverSideTranslations(locale, ['common']))}}
+}
 const ContactUs = () => {
     const isLoading = useSelector(selectIsLoading);
 

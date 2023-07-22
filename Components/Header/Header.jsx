@@ -10,9 +10,9 @@ import {persistor} from "../../src/store";
 import {useDispatch, useSelector} from "react-redux";
 import {
     selectAuth,
-    selectIsLoading,
+    selectIsLoading, selectLanguage,
     selectLoginToken, setUser,
-    signOut
+    signOut,setLanguage
 } from "../../src/features/Slices/LoginSlice";
 import ModalTransactions from "./ModalTransactions";
 import {APICallUrl} from "../../halpers/useWindowDimensions";
@@ -41,14 +41,21 @@ const Header = ({links}) => {
 
         const dispatch = useDispatch();
 
+        const language = useSelector(selectLanguage);
         const auth = useSelector(selectAuth);
         const loginToken = useSelector(selectLoginToken);
         const isLoading = useSelector(selectIsLoading);
 
-        // console.log(auth, "toggle")
+        console.log(router, "router")
         // console.log(loginToken, "loginToken")
         const {t} = useTranslation('common');
 
+        useEffect(() => {
+            if(Object.keys(language).length ===0){
+                dispatch(setLanguage(options[0]))
+            }
+            // setSelectedOption()
+        }, []);
 
         useEffect(() => {
             if (!auth) {
@@ -182,24 +189,27 @@ const Header = ({links}) => {
                 document.removeEventListener('mousedown', handleOutsideClick);
             };
         }, []);
-        console.log(selectedOption, "selectedOption")
+
         useEffect(() => {
-            if (selectedOption.value === "rus") {
+            if (language.value === "rus") {
                 router.push({pathname, query}, asPath, {locale: "ru"})
-            } else if (selectedOption.value === "arm") {
+            } else if (language.value === "arm") {
                 router.push({pathname, query}, asPath, {locale: "am"})
             } else {
                 router.push({pathname, query}, asPath, {locale: "en"})
             }
-        }, [selectedOption])
+        }, [language])
+
         return (
             <header>
                 <Container>
-                    <h1>{t('welcome')}</h1>
+                    <h1 onClick={() => router.push({pathname, query}, asPath, {locale: "ru"})}>{t('welcome')}</h1>
 
                     <Row className="justify-content-center" style={{padding: "18px 0"}}>
                         <Col lg="12">
                             <Row className="header-row justify-content-between align-items-center g-3">
+                                <PersistGate loading={null} persistor={persistor}>
+
                                 <Col xl="2" lg="8" md="5" sm="4" xs={`${!auth ? "4" : "5"}`} className="logo">
                                     <Link href={`/`}>
                                         <img src="/assets/images/logoHeader.svg" className="logo-img" alt="crypto-logo"
@@ -254,8 +264,10 @@ const Header = ({links}) => {
                                     <div className="language-section">
                                         <Select
                                             id={options.value}
-                                            defaultValue={selectedOption}
-                                            onChange={setSelectedOption}
+                                            value={language}
+                                            onChange={(language)=>{
+                                                dispatch(setLanguage(language))
+                                            }}
                                             options={options}
                                             isSearchable={false}
                                             // menuIsOpen={true}
@@ -280,7 +292,6 @@ const Header = ({links}) => {
                                 </Col>
                                 <Col xl="3" lg="3" md="6" sm="7" xs={`${!auth ? "7" : "6"}`} className="buttons">
                                     <Row className="justify-content-end">
-                                        <PersistGate loading={null} persistor={persistor}>
                                             {
                                                 auth ?
                                                     <>
@@ -308,11 +319,12 @@ const Header = ({links}) => {
                                                         </Col>
                                                     </>
                                             }
-                                        </PersistGate>
                                     </Row>
 
                                 </Col>
-                            </Row>
+                            </PersistGate>
+
+                    </Row>
                         </Col>
                     </Row>
                 </Container>

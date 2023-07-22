@@ -1,6 +1,7 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 
 const initialState = {
+    language:{},
     loginToken: {},
     auth: true,
     authUser: {},
@@ -15,6 +16,9 @@ export const LoginTokenSlice = createSlice({
     name: "login",
     initialState,
     reducers: {
+        setLanguage: (state, action) => {
+            state.language = action.payload;
+        },
         setLoginToken: (state, action) => {
             state.loginToken = action.payload
         },
@@ -50,6 +54,7 @@ export const LoginTokenSlice = createSlice({
         },
     }
 })
+export const selectLanguage = (state) => state.LoginTokenSlice.language;
 export const selectLoginToken = (state) => state.LoginTokenSlice.loginToken;
 export const selectAuth = (state) => state.LoginTokenSlice.auth;
 export const selectAuthUser = (state) => state.LoginTokenSlice.authUser;
@@ -57,6 +62,7 @@ export const selectIsLoading = (state) => state.LoginTokenSlice.isLoading;
 
 
 export const {
+    setLanguage,
     setLoginToken,
     setAuth,
     setUser,

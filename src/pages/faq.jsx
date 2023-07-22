@@ -5,6 +5,11 @@ import Layout from "../../Components/Layout/Layout";
 import {Backdrop, CircularProgress} from "@mui/material";
 import {useSelector} from "react-redux";
 import {selectIsLoading} from "../features/Slices/LoginSlice";
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+
+export async function getStaticProps({locale}) {
+    return {props: {locale, ...(await serverSideTranslations(locale, ['common']))}}
+}
 
 const Faq = () => {
     const isLoading = useSelector(selectIsLoading);
@@ -15,7 +20,7 @@ const Faq = () => {
                 <title>Faqs</title>
                 <link rel="icon" href="/favicon.png"/>
             </Head>
-            <Layout >
+            <Layout>
                 <HomeFaq background={background}/>
                 {isLoading && (
                     <Backdrop sx={{
