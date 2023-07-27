@@ -200,8 +200,8 @@ const MainCalculationSection = ({currencies, rates}) => {
 
     }
 
-    console.log(currency1,"currency1")
-    console.log(currency2,"currency2")
+    // console.log(currency1,"currency1")
+    // console.log(currency2,"currency2")
     const customFilter = (option, searchText) => {
         return option.data.name.toLowerCase().includes(searchText.toLowerCase()) || option.data.code.toLowerCase().includes(searchText.toLowerCase());
     };
