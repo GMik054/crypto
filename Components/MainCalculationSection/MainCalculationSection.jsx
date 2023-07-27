@@ -305,14 +305,17 @@ const MainCalculationSection = ({currencies, rates, buy, sell, settings}) => {
         const tempCurrency = currency1;
         setCurrency1(currency2);
         setCurrency2(tempCurrency);
+
+    }
+
+    useEffect(() => {
         if (sellActive) {
             setSelected(3)
         } else {
             setSelected(2)
         }
-    }
+    }, [sellActive])
 
-    console.log(sellActive, "sellActive")
     // console.log(currency2,"currency2")
     const customFilter = (option, searchText) => {
         return option.data.name.toLowerCase().includes(searchText.toLowerCase()) || option.data.code.toLowerCase().includes(searchText.toLowerCase());
