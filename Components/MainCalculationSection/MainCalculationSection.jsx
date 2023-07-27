@@ -48,7 +48,7 @@ const MainCalculationSection = ({currencies, rates, buy, sell, settings}) => {
                 },
             })
                 .then(res => res.json().then(res => {
-                        console.log(res, "RES")
+                        // console.log(res, "RES")
                         setMinValue1(Number(settings.min) * Number(res?.data?.rates[`${buy?.data[0]?.code.toUpperCase()}`]));
                         setMaxValue1(Number(settings.max) * Number(res?.data?.rates[`${buy?.data[0]?.code.toUpperCase()}`]));
                         setValueCurrency1(Number(settings.min) * Number(res?.data?.rates[`${buy?.data[0]?.code.toUpperCase()}`]));
