@@ -19,9 +19,13 @@ export async function getServerSideProps({locale}) {
         // locale: locale
     }
     return {
-        props: {locale, ...(await serverSideTranslations(locale, ['common'])), data}
+        props: {
+            locale, ...(await serverSideTranslations(locale,
+                ['common'], {reloadOnPrerender: false})), data
+        }
     }
 }
+
 // export async function getServerSideProps({locale}) {
 //     return {props: {locale, ...(await serverSideTranslations(locale, ['common']))}}
 // }
@@ -29,7 +33,7 @@ export async function getServerSideProps({locale}) {
 export default function IndexPage({data}) {
     // console.log(props,"props")
     const isLoading = useSelector(selectIsLoading);
-
+    console.log("11")
     return (
         <>
             <Head>
