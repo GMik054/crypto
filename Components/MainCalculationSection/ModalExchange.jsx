@@ -17,7 +17,7 @@ import {
 import {useDispatch, useSelector} from "react-redux";
 import {FaCheckCircle} from "react-icons/fa";
 
-const ModalExchange = ({valueCurrency1, valueCurrency2, minValue1, maxValue1, currency1, currency2, rateData}) => {
+const ModalExchange = ({valueCurrency1, valueCurrency2, minValue1, maxValue1, currency1, currency2}) => {
 
     const [open, setOpen] = React.useState(false);
 
@@ -69,7 +69,7 @@ const ModalExchange = ({valueCurrency1, valueCurrency2, minValue1, maxValue1, cu
             name: `${formik.values.first_name} ${formik.values.last_name}`,
             phone: formik.values.phone,
             email: formik.values.email,
-            content: `To ${valueCurrency1} ${currency1.name} from ${valueCurrency2} ${currency2.name} / Rate ${rateData.find((el) => el.to === currency2.id).rate}`
+            content: `To ${valueCurrency1} ${currency1.name} from ${valueCurrency2} ${currency2.name}`
 
         }
         fetch(`${APICallUrl}/api/v1/contact/send`, {

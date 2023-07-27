@@ -10,6 +10,7 @@ const MainCalculationSection = ({currencies, rates, buy, sell, settings}) => {
 
     const [selected, setSelected] = useState(1);
     const [sellActive, setSellActive] = useState(false);
+
     const {width} = useWindowDimensions();
 
     const [isSelectOpen, setIsSelectOpen] = useState(false);
@@ -22,7 +23,7 @@ const MainCalculationSection = ({currencies, rates, buy, sell, settings}) => {
     const [currency2, setCurrency2] = useState({});
 
     const [coinRate, setCoinRate] = useState(0);
-    const [changeCurrencies, setChangeCurrencies] = useState([]);
+    const [changeCurrencies, setChangeCurrencies] = useState();
 
     const [rateData, setRateData] = useState([]);
     const [currenciesData, setCurrenciesData] = useState([]);
@@ -57,7 +58,7 @@ const MainCalculationSection = ({currencies, rates, buy, sell, settings}) => {
                             },
                         })
                             .then(res => res.json().then(res => {
-                                    console.log(res, "RES")
+                                    // console.log(res, "RES")
                                     setCoinRate(Number(res?.data?.rates[`${sell?.data[0]?.code.toUpperCase()}`]))
                                     setMinValue2(Number(settings.min) * Number(res.data.rates[`${sell?.data[0].code.toUpperCase()}`]) + ((Number(settings.min) * Number(res.data.rates[`${sell?.data[0].code.toUpperCase()}`])) / 100 * Number(settings.buy_commission)));
                                     setMaxValue2(Number(settings.max) * Number(res.data.rates[`${sell?.data[0].code.toUpperCase()}`]) + ((Number(settings.max) * Number(res.data.rates[`${sell?.data[0].code.toUpperCase()}`])) / 100 * Number(settings.buy_commission)));
@@ -71,9 +72,6 @@ const MainCalculationSection = ({currencies, rates, buy, sell, settings}) => {
         }
     }, [])
 
-    // console.log(currency1, "currency1");
-    // console.log(currency2, "currency2");
-    console.log(settings, "settings");
 
     const customStyles = {
 
@@ -174,26 +172,35 @@ const MainCalculationSection = ({currencies, rates, buy, sell, settings}) => {
             })
                 .then(res => res.json().then(res => {
                         // console.log(res, "RES")
-                        console.log(Number(settings.min) * Number(res?.data?.rates[`${currency1?.code.toUpperCase()}`]), "res")
-                        let min = Number(settings.min) * Number(res?.data?.rates[`${currency1?.code.toUpperCase()}`])
-                        let max = Number(settings.max) * Number(res?.data?.rates[`${currency1?.code.toUpperCase()}`])
+                        // setChangeCurrencies();
+                        if (!buy?.data?.find((el) => Number(el.id) === Number(currency1.id))) {
+                            setSelected(3);
+                            setSellActive(true);
 
-                        setMinValue1(Number(settings.min) * Number(res?.data?.rates[`${currency1?.code.toUpperCase()}`]));
-                        setMaxValue1(Number(settings.max) * Number(res?.data?.rates[`${currency1?.code.toUpperCase()}`]));
-                        setValueCurrency1(Number(settings.min) * Number(res?.data?.rates[`${currency1?.code.toUpperCase()}`]));
+                        } else if (selected === 1) {
+                            setSelected(1);
+
+                        } else {
+                            setSelected(2);
+                            setSellActive(false);
+
+                        }
+                        let min = Number(settings.min) * Number(res?.data?.rates[`${currency1?.code.toUpperCase()}`]);
+                        let max = Number(settings.max) * Number(res?.data?.rates[`${currency1?.code.toUpperCase()}`]);
+
+                        setMinValue1(min);
+                        setMaxValue1(max);
+                        setValueCurrency1(min);
                         fetch(`${APICoinBase}/v2/exchange-rates?currency=${currency1?.code.toUpperCase()}`, {
                             headers: {
                                 "Content-Type": "application/json;charset=UTF-8"
                             },
                         })
                             .then(res => res.json().then(res => {
-                                    // console.log(minValue1 * Number(res.data.rates[`${currency2.code.toUpperCase()}`]) + ((minValue1 * Number(res.data.rates[`${currency2.code.toUpperCase()}`])) / 100 * Number(sellActive ? settings?.sell_commission : settings.buy_commission)), "Number(settings.min)")
-
-                                    setCoinRate(Number(res?.data?.rates[`${currency2.code.toUpperCase()}`]))
+                                    setCoinRate(Number(res?.data?.rates[`${currency2.code.toUpperCase()}`]));
                                     setMinValue2(min * Number(res.data.rates[`${currency2.code.toUpperCase()}`]) + ((min * Number(res.data.rates[`${currency2.code.toUpperCase()}`])) / 100 * Number(sellActive ? settings?.sell_commission : settings.buy_commission)));
                                     setMaxValue2(max * Number(res.data.rates[`${currency2.code.toUpperCase()}`]) + ((max * Number(res.data.rates[`${currency2.code.toUpperCase()}`])) / 100 * Number(sellActive ? settings?.sell_commission : settings.buy_commission)));
                                     setValueCurrency2(min * Number(res.data.rates[`${currency2.code.toUpperCase()}`]) + ((min * Number(res.data.rates[`${currency2.code.toUpperCase()}`])) / 100 * Number(sellActive ? settings?.sell_commission : settings.buy_commission)));
-
                                 }
                             ));
 
@@ -207,10 +214,9 @@ const MainCalculationSection = ({currencies, rates, buy, sell, settings}) => {
         // );
         // setCurrency2(filteredCurrencies[0]);
         // setCurrenciesData(filteredCurrencies);
-
     }, [currency1, currency2])
-    // console.log(rateData.filter(el => el.from === currency2.id && el.to === currency1.id),"111111")
-    console.log(minValue1, "minValue1")
+
+    // console.log(sellActive,"sellActive")
 
     // useEffect(() => {
 
@@ -274,49 +280,40 @@ const MainCalculationSection = ({currencies, rates, buy, sell, settings}) => {
 
     let change = (e) => {
         setValueCurrency1(e);
-        console.log(Number(e), "Number(e)")
-        console.log(Number(e) * Number(coinRate) + ((Number(e) * Number(coinRate)) / 100 * Number(sellActive ? settings?.sell_commission : settings.buy_commission)), "CHANGE")
-        // const filteredRate1 = rateData.find((el) => Number(el.to) === Number(currency2.id));
         setValueCurrency2(Number(e) * Number(coinRate) + ((Number(e) * Number(coinRate)) / 100 * Number(sellActive ? settings?.sell_commission : settings.buy_commission)));
     }
 
     let changeInverse = (e) => {
         setValueCurrency2(e);
-        // const filteredRate1 = rateData.find((el) => Number(el.to) === Number(currency2.id));
         setValueCurrency1(Number(e) / (1 + Number(sellActive ? settings?.sell_commission : settings.buy_commission) / 100) / Number(coinRate));
-        // setValueCurrency1((Number(e) - (Number(e) * inverseRate) / 100) / Number(coinRate));
+
     };
 
-    // let changeInverse = (e) => {
-    //     setValueCurrency2(Number(e));
-    //     const filteredRate1 = rateData.find((el) => Number(el.to) === Number(currency2.id));
-    //     console.log(filteredRate1,"filteredRate1")
-    //     if (filteredRate1 && filteredRate1.rate !== 0) {
-    //         const inverseRate = 1 / Number(filteredRate1.rate);
-    //         // setValueCurrency1(Number(e) * Number(coinRate) + ((Number(e) * Number(coinRate)) / 100 * Number(inverseRate)));
-    //         // setValueCurrency1(Number(e) * Number(inverseRate));
-    //     }
-    // };
+
     const changeCurrency = () => {
         const tempCurrencyArray = currencyArray1;
         setCurrencyArray1(currencyArray2);
         setCurrencyArray2(tempCurrencyArray);
-        setSellActive(prevState => !prevState);
         const tempCurrency = currency1;
         setCurrency1(currency2);
         setCurrency2(tempCurrency);
-
     }
 
-    useEffect(() => {
-        if (sellActive) {
-            setSelected(3)
-        } else {
-            setSelected(2)
-        }
-    }, [sellActive])
+    const toSell = (e) => {
+        setSelected(e)
+        setCurrency1(sell.data[0]);
+        setCurrency2(buy.data[0]);
+        setCurrencyArray1(sell.data);
+        setCurrencyArray2(buy.data);
+    }
+    const toBuy = (e) => {
+        setSelected(e);
+        setCurrency1(buy.data[0]);
+        setCurrency2(sell.data[0]);
+        setCurrencyArray1(buy.data);
+        setCurrencyArray2(sell.data);
+    }
 
-    // console.log(currency2,"currency2")
     const customFilter = (option, searchText) => {
         return option.data.name.toLowerCase().includes(searchText.toLowerCase()) || option.data.code.toLowerCase().includes(searchText.toLowerCase());
     };
@@ -333,20 +330,28 @@ const MainCalculationSection = ({currencies, rates, buy, sell, settings}) => {
                                     <div className="custom-button">
                                         <div
                                             className={`button-area left-button-area ${selected === 1 ? 'selected' : ''}`}
-                                            onClick={() => setSelected(1)}>
+                                            onClick={() => {
+                                                // setSelected(1)
+                                                toBuy(1)
+                                            }}>
                                             <p className="text">TRADE</p>
                                         </div>
                                     </div>
                                     <div className="custom-button center-div">
                                         <div className={`button-area ${selected === 2 ? 'selected' : ''}`}
-                                             onClick={() => setSelected(2)}>
+                                             onClick={() => {
+                                                 // setSelected(2);
+                                                 toBuy(2);
+                                             }}>
                                             <p className="text">BUY</p>
                                         </div>
                                     </div>
                                     <div className="custom-button">
                                         <div
                                             className={`button-area right-button-area ${selected === 3 ? 'selected' : ''}`}
-                                            onClick={() => setSelected(3)}>
+                                            onClick={() => {
+                                                toSell(3)
+                                            }}>
                                             <p className="text">SELL</p>
                                         </div>
                                     </div>
@@ -361,13 +366,7 @@ const MainCalculationSection = ({currencies, rates, buy, sell, settings}) => {
                                     <div className="form-section">
                                         <label className='form-label'
                                                style={Number(valueCurrency1) < minValue1 || Number(valueCurrency1) > maxValue1 ? {color: "#F00"} : {color: "white"}}>
-                                            Min {minValue1.toFixed(2)} / Max {maxValue1.toFixed(2)} {
-                                            rateData.map(el => {
-                                                if (el.to === currency2.id) {
-                                                    return currency1.code
-                                                }
-                                            })
-                                        }
+                                            Min {minValue1.toFixed(2)} / Max {maxValue1.toFixed(2)} {currency1.code}
                                         </label>
                                         <div className='form-main'>
                                             <input type='number'
@@ -427,13 +426,7 @@ const MainCalculationSection = ({currencies, rates, buy, sell, settings}) => {
                                     <div className="form-section">
                                         <label className='form-label'
                                                style={Number(valueCurrency1) < minValue1 || Number(valueCurrency1) > maxValue1 ? {color: "#F00"} : {color: "white"}}>
-                                            Min {minValue2.toFixed(2)} / Max {maxValue2.toFixed(2)} {
-                                            rateData.map(el => {
-                                                if (el.to === currency2.id) {
-                                                    return currency2.code
-                                                }
-                                            })
-                                        }
+                                            Min {minValue2.toFixed(2)} / Max {maxValue2.toFixed(2)} {currency2.code}
                                         </label>
                                         <div className='form-main'>
                                             <input type='number'
@@ -494,7 +487,7 @@ const MainCalculationSection = ({currencies, rates, buy, sell, settings}) => {
                             </Row>
                             <ModalExchange valueCurrency1={valueCurrency1} valueCurrency2={valueCurrency2}
                                            minValue1={minValue1} maxValue1={maxValue1}
-                                           currency1={currency1} currency2={currency2} rateData={rateData}/>
+                                           currency1={currency1} currency2={currency2}/>
                         </div>
                     </Col>
                     <Col xl="4" lg='5' md="12" sm="12" xs="12" className="info">
