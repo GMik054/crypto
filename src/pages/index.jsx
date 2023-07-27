@@ -10,6 +10,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {selectIsLoading, selectLanguage} from "../features/Slices/LoginSlice"
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 
+
 export async function getServerSideProps({locale}) {
     // const rates = await fetch(`${APICallUrl}/api/v1/rates`);
     // const currencies = await fetch(`${APICallUrl}/api/v1/currencies`);
@@ -21,7 +22,7 @@ export async function getServerSideProps({locale}) {
     return {
         props: {
             locale, ...(await serverSideTranslations(locale,
-                ['common'], {reloadOnPrerender: false})), data
+                ['common'],)), data
         }
     }
 }
