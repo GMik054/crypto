@@ -13,14 +13,14 @@ import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 
 export async function getServerSideProps({locale}) {
     // const rates = await fetch(`${APICallUrl}/api/v1/rates`);
-    const currencies = await fetch(`${APICallUrl}/api/v1/currencies`);
+    // const currencies = await fetch(`${APICallUrl}/api/v1/currencies`);
     const sell = await fetch(`${APICallUrl}/api/v1/currencies?type=sell`);
     const buy = await fetch(`${APICallUrl}/api/v1/currencies?type=buy`);
     const settings = await fetch(`${APICallUrl}/api/v1/settings`);
 
     const data = {
         // rates: await rates?.json(),
-        currencies: await currencies?.json(),
+        // currencies: await currencies?.json(),
         sell: await sell?.json(),
         buy: await buy?.json(),
         settings: await settings?.json(),
@@ -44,7 +44,7 @@ export default function IndexPage({data}) {
                 <link rel="icon" href="/favicon.png"/>
             </Head>
             <Layout>
-                <MainCalculationSection currencies={data?.currencies} buy={data?.buy} sell={data?.sell} rates={data?.rates} settings={data?.settings}/>
+                <MainCalculationSection buy={data?.buy} sell={data?.sell} rates={data?.rates} settings={data?.settings}/>
                 <ExchangeSteps/>
                 <HomeFaq/>
                 <Partners/>
