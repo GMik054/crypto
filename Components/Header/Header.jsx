@@ -35,6 +35,7 @@ const Header = ({links}) => {
         const [toggle, setToggle] = useState(false);
 
         const router = useRouter();
+
         const {pathname, asPath, query} = router;
 
         const divRef = useRef();
@@ -46,18 +47,30 @@ const Header = ({links}) => {
         const loginToken = useSelector(selectLoginToken);
         const isLoading = useSelector(selectIsLoading);
 
+        // console.log(router, "router")
         // console.log(language, "language")
-        // console.log(loginToken, "loginToken")
         const {t} = useTranslation('common');
 
-        useEffect(() => {
-            if (language) {
-                if(Object.keys(language).length === 0){
-                    dispatch(setLanguage(options[0]))
-                }
-            }
-            // setSelectedOption()
-        }, []);
+        // useEffect(() => {
+        //     if (language) {
+        //         if(Object.keys(language).length === 0){
+        //             dispatch(setLanguage(options[0]))
+        //         }
+        //     }
+        //     // setSelectedOption()
+        //
+        // }, []);
+        // useEffect(()=>{
+        //     if (router.locale === "en") {
+        //         router.push({pathname, query}, asPath, {locale: "en"})
+        //     } else if (router.locale === "ru") {
+        //         router.push({pathname, query}, asPath, {locale: "ru"})
+        //     } else if (router.locale  === "am") {
+        //         router.push({pathname, query}, asPath, {locale: "am"})
+        //     } else {
+        //         router.push({pathname, query}, asPath, {locale: "en"})
+        //     }
+        // },[])
 
         useEffect(() => {
             if (!auth) {
@@ -200,10 +213,23 @@ const Header = ({links}) => {
             } else if (language.value === "arm") {
                 router.push({pathname, query}, asPath, {locale: "am"})
             } else {
-                router.push({pathname, query}, asPath, {locale: "en"})
+                console.log("ye")
+                    if (router.locale === "en") {
+                        dispatch(setLanguage(options[0]))
+                        router.push({pathname, query}, asPath, {locale: "en"})
+                    } else if (router.locale === "ru") {
+                        dispatch(setLanguage(options[2]))
+                        router.push({pathname, query}, asPath, {locale: "ru"})
+                    } else if (router.locale  === "am") {
+                        dispatch(setLanguage(options[1]))
+                        router.push({pathname, query}, asPath, {locale: "am"})
+                    } else {
+                        dispatch(setLanguage(options[0]))
+                        router.push({pathname, query}, asPath, {locale: "en"})
+                    }
             }
-        }, [language])
-    // console.log(language,"language")
+        }, [language]);
+
         return (
             <header>
                 <Container>

@@ -4,10 +4,25 @@ import Select from 'react-select';
 import IconsSection from "./IconsSection";
 import ModalExchange from "./ModalExchange";
 import useWindowDimensions, {APICoinBase} from "../../halpers/useWindowDimensions";
+import {useRouter} from "next/router";
+// import {getExchangeRates} from "../../halpers/coinbaseAPI";
 
 
 const MainCalculationSection = ({ buy, sell, settings}) => {
+    // const [rates, setRates] = useState({});
+    // useEffect(() => {
+    //     async function fetchRates() {
+    //         try {
+    //             const rates = await getExchangeRates('BTC');
+    //             setRates(rates);
+    //         } catch (error) {
+    //             console.error('Error fetching exchange rates:', error);
+    //         }
+    //     }
+    //     fetchRates();
+    // }, []);
 
+    // console.log(rates,"RESTES")
     const [selected, setSelected] = useState(1);
     const [sellActive, setSellActive] = useState(false);
 
