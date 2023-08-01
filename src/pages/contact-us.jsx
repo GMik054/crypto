@@ -7,7 +7,7 @@ import {useSelector} from "react-redux";
 import {selectIsLoading} from "../features/Slices/LoginSlice";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 export async function getStaticProps({locale}) {
-    return {props: {locale, ...(await serverSideTranslations(locale, ['common']))}}
+    return {props: {locale, ...(await serverSideTranslations(locale, ['common','footer']))}}
 }
 const ContactUs = () => {
     const isLoading = useSelector(selectIsLoading);

@@ -11,7 +11,7 @@ import {selectIsLoading, selectLanguage} from "../features/Slices/LoginSlice"
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 
 
-export async function getStaticProps({locale}) {
+export async function getServerSideProps({locale}) {
     // const rates = await fetch(`${APICallUrl}/api/v1/rates`);
     // const currencies = await fetch(`${APICallUrl}/api/v1/currencies`);
     const sell = await fetch(`${APICallUrl}/api/v1/currencies?type=sell`);
@@ -26,7 +26,7 @@ export async function getStaticProps({locale}) {
         settings: await settings?.json(),
         locale: locale
     }
-    return {props: {locale, ...(await serverSideTranslations(locale, ['common'])), data}}
+    return {props: {locale, ...(await serverSideTranslations(locale, ['common','footer'])), data}}
 }
 
 // export async function getServerSideProps({locale}) {
@@ -34,7 +34,7 @@ export async function getStaticProps({locale}) {
 // }
 
 export default function IndexPage({data}) {
-    console.log(data,"data111")
+    console.log(data,"data")
     const isLoading = useSelector(selectIsLoading);
 
     return (
