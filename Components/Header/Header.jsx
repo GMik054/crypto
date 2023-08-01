@@ -193,7 +193,9 @@ const Header = ({links}) => {
         }, []);
 
         useEffect(() => {
-            if (language.value === "rus") {
+            if (language.value === "eng") {
+                router.push({pathname, query}, asPath, {locale: "en"})
+            } else if (language.value === "rus") {
                 router.push({pathname, query}, asPath, {locale: "ru"})
             } else if (language.value === "arm") {
                 router.push({pathname, query}, asPath, {locale: "am"})
