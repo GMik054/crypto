@@ -192,15 +192,15 @@ const Header = ({links}) => {
             };
         }, []);
 
-        // useEffect(() => {
-        //     if (language.value === "rus") {
-        //         router.push({pathname, query}, asPath, {locale: "ru"})
-        //     } else if (language.value === "arm") {
-        //         router.push({pathname, query}, asPath, {locale: "am"})
-        //     } else {
-        //         router.push({pathname, query}, asPath, {locale: "en"})
-        //     }
-        // }, [language])
+        useEffect(() => {
+            if (language.value === "rus") {
+                router.push({pathname, query}, asPath, {locale: "ru"})
+            } else if (language.value === "arm") {
+                router.push({pathname, query}, asPath, {locale: "am"})
+            } else {
+                router.push({pathname, query}, asPath, {locale: "en"})
+            }
+        }, [language])
     console.log(language,"language")
         return (
             <header>
