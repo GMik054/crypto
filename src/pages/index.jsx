@@ -34,7 +34,7 @@ export async function getServerSideProps({locale}) {
 // }
 
 export default function IndexPage({data}) {
-    console.log(data,"1")
+    console.log(data,"2")
     const isLoading = useSelector(selectIsLoading);
 
     return (
