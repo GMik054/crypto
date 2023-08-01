@@ -11,22 +11,26 @@ import {selectIsLoading, selectLanguage} from "../features/Slices/LoginSlice"
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 
 
-export async function getServerSideProps({locale}) {
-    // const rates = await fetch(`${APICallUrl}/api/v1/rates`);
-    // const currencies = await fetch(`${APICallUrl}/api/v1/currencies`);
-    const sell = await fetch(`${APICallUrl}/api/v1/currencies?type=sell`);
-    const buy = await fetch(`${APICallUrl}/api/v1/currencies?type=buy`);
-    const settings = await fetch(`${APICallUrl}/api/v1/settings`);
+// export async function getServerSideProps({locale}) {
+//     // const rates = await fetch(`${APICallUrl}/api/v1/rates`);
+//     // const currencies = await fetch(`${APICallUrl}/api/v1/currencies`);
+//     const sell = await fetch(`${APICallUrl}/api/v1/currencies?type=sell`);
+//     const buy = await fetch(`${APICallUrl}/api/v1/currencies?type=buy`);
+//     const settings = await fetch(`${APICallUrl}/api/v1/settings`);
+//
+//     const data = {
+//         // rates: await rates?.json(),
+//         // currencies: await currencies?.json(),
+//         sell: await sell?.json(),
+//         buy: await buy?.json(),
+//         settings: await settings?.json(),
+//         locale: locale
+//     }
+//     return {props: {locale, ...(await serverSideTranslations(locale, ['common','footer'])), data}}
+// }
 
-    const data = {
-        // rates: await rates?.json(),
-        // currencies: await currencies?.json(),
-        sell: await sell?.json(),
-        buy: await buy?.json(),
-        settings: await settings?.json(),
-        locale: locale
-    }
-    return {props: {locale, ...(await serverSideTranslations(locale, ['common','footer'])), data}}
+export async function getStaticProps({locale}) {
+    return {props: {locale, ...(await serverSideTranslations(locale, ['common','footer']))}}
 }
 
 // export async function getServerSideProps({locale}) {
@@ -34,7 +38,7 @@ export async function getServerSideProps({locale}) {
 // }
 
 export default function IndexPage({data}) {
-    console.log(data,"data")
+    console.log(data,"data11111")
     const isLoading = useSelector(selectIsLoading);
 
     return (
@@ -44,7 +48,7 @@ export default function IndexPage({data}) {
                 <link rel="icon" href="/favicon.png"/>
             </Head>
             <Layout>
-                <MainCalculationSection buy={data?.buy} sell={data?.sell} rates={data?.rates} settings={data?.settings}/>
+                {/*<MainCalculationSection buy={data?.buy} sell={data?.sell} rates={data?.rates} settings={data?.settings}/>*/}
                 <ExchangeSteps/>
                 <HomeFaq/>
                 {/*<Partners/>*/}
