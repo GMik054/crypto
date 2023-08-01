@@ -39,7 +39,7 @@ const MainCalculationSection = ({ buy, sell, settings}) => {
     const lastUpdateTimeRef = useRef(Date.now());
 
     useEffect(() => {
-        if (buy.data && sell.data) {
+        if (buy?.data && sell?.data) {
             setCurrency1(buy.data[0]);
             setCurrency2(sell.data[0]);
             setCurrencyArray1(buy.data);
