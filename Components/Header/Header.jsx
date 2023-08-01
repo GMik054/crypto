@@ -205,8 +205,7 @@ const Header = ({links}) => {
         return (
             <header>
                 <Container>
-                    <h1 onClick={() => router.push({pathname, query}, asPath, {locale: "ru"})}>{t('welcome')}</h1>
-
+                    <h1>{t('welcome')}</h1>
                     <Row className="justify-content-center" style={{padding: "18px 0"}}>
                         <Col lg="12">
                             <Row className="header-row justify-content-between align-items-center g-3">

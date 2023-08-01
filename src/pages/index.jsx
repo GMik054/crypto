@@ -47,7 +47,7 @@ export default function IndexPage({data}) {
                 <MainCalculationSection buy={data?.buy} sell={data?.sell} rates={data?.rates} settings={data?.settings}/>
                 <ExchangeSteps/>
                 <HomeFaq/>
-                <Partners/>
+                {/*<Partners/>*/}
                 {isLoading && (
                     <Backdrop sx={{
                         color: '#fff',

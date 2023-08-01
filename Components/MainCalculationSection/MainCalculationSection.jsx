@@ -369,7 +369,7 @@ const MainCalculationSection = ({ buy, sell, settings}) => {
                                                        change(value)
                                                    }}
                                                    className={`form-control form-control-custom ${isSelectOpen ? "opacity-0 position-absolute w-25" : ""}`}
-                                                   id='some-id' placeholder='Send Qiwi(RUB)' name='billing-company'/>
+                                                   id='some-id'  name='first' placeholder="0" />
                                             <Select
                                                 id="1"
                                                 value={currency1}
@@ -429,8 +429,7 @@ const MainCalculationSection = ({ buy, sell, settings}) => {
                                                        changeInverse(value)
                                                    }}
                                                    className={`form-control form-control-custom  ${isSelectOpen2 ? "opacity-0 position-absolute w-25" : ""}`}
-                                                   id="some-id-2" placeholder='Receive Bitcoin(BTC)'
-                                                   name='billing-company'/>
+                                                   id="some-id-2" name='second' placeholder="0"/>
                                             <Select
                                                 id="2"
                                                 defaultValue={currency2}
