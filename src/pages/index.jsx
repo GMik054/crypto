@@ -11,7 +11,7 @@ import {selectIsLoading, selectLanguage} from "../features/Slices/LoginSlice"
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 
 
-export async function getServerSideProps({locale}) {
+export async function getStaticProps({locale}) {
     // const rates = await fetch(`${APICallUrl}/api/v1/rates`);
     // const currencies = await fetch(`${APICallUrl}/api/v1/currencies`);
     const sell = await fetch(`${APICallUrl}/api/v1/currencies?type=sell`);
