@@ -201,7 +201,7 @@ const Header = ({links}) => {
                 router.push({pathname, query}, asPath, {locale: "en"})
             }
         }, [language])
-
+    console.log(language,"language")
         return (
             <header>
                 <Container>

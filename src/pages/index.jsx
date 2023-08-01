@@ -24,7 +24,7 @@ export async function getServerSideProps({locale}) {
         sell: await sell?.json(),
         buy: await buy?.json(),
         settings: await settings?.json(),
-        // locale: locale
+        locale: locale
     }
     return {props: {locale, ...(await serverSideTranslations(locale, ['common'])), data}}
 }
