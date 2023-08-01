@@ -34,7 +34,7 @@ export async function getStaticProps({locale}) {
 // }
 
 export default function IndexPage({data}) {
-    console.log(data,"data")
+    console.log(data,"data111")
     const isLoading = useSelector(selectIsLoading);
 
     return (
