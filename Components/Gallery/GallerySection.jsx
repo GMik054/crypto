@@ -47,8 +47,11 @@ const GallerySection = () => {
                     </Row>
                 </Container>
             </section>
-            <section className="icons-gallery">
-                <IconsSection/>
+            <section className="calculation-section mt-0 pt-0" style={{
+                backgroundImage: "none",
+                paddingBottom: "calc(32px + 140 * (100vw - 320px) / 1600)"
+            }}>
+                <IconsSection top={true}/>
             </section>
         </>
 

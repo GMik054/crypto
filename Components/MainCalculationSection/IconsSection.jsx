@@ -1,7 +1,7 @@
 import React from 'react';
 import {Col, Container, Row} from "reactstrap";
 
-const IconsSection = ({background}) => {
+const IconsSection = ({top}) => {
 
     const customerService = [
         {
@@ -31,9 +31,9 @@ const IconsSection = ({background}) => {
     ]
     return (
         <Container >
-            <Row className="icons-info justify-content-center">
+            <Row className={`icons-info justify-content-center ${top? "mt-0 pt-0 pb-0":""}`}>
                 <Col lg="11">
-                    <Row className="justify-content-center g-4">
+                    <Row className="justify-content-center g-4" >
 
                 {customerService.map((elem) => {
                     return (
