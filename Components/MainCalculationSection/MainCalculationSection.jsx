@@ -3,91 +3,106 @@ import {Col, Container, Row} from "reactstrap";
 import Select from 'react-select';
 import IconsSection from "./IconsSection";
 import ModalExchange from "./ModalExchange";
-import useWindowDimensions, {APICoinBase} from "../../halpers/useWindowDimensions";
+import useWindowDimensions, {APICallUrl, APICoinBase} from "../../halpers/useWindowDimensions";
 import {useRouter} from "next/router";
 // import {getExchangeRates} from "../../halpers/coinbaseAPI";
 
 
-const MainCalculationSection = ({ buy, sell, settings}) => {
-    // const [rates, setRates] = useState({});
-    // useEffect(() => {
-    //     async function fetchRates() {
-    //         try {
-    //             const rates = await getExchangeRates('BTC');
-    //             setRates(rates);
-    //         } catch (error) {
-    //             console.error('Error fetching exchange rates:', error);
-    //         }
-    //     }
-    //     fetchRates();
-    // }, []);
+const MainCalculationSection = ({
+                                    buy,
+                                    sell,
+                                    settings,
+                                    currency1,
+                                    setCurrency1,
+                                    currency2,
+                                    currencyArray1,
+                                    currencyArray2,
+                                    setMaxValue1,
+                                    setMinValue2,
+                                    maxValue1,
+                                    minValue1,
+                                    setMinValue1,
+                                    maxValue2,
+                                    setMaxValue2,
+                                    minValue2,
+                                    setCurrency2,
+                                    setCurrencyArray1,
+                                    valueCurrency2,
+                                    setValueCurrency2,
+                                    setCurrencyArray2,
+                                    valueCurrency1,
+                                    setValueCurrency1
+                                }) => {
 
-    // console.log(rates,"RESTES")
+
+
     const [selected, setSelected] = useState(1);
-    const [sellActive, setSellActive] = useState(false);
 
     const {width} = useWindowDimensions();
 
     const [isSelectOpen, setIsSelectOpen] = useState(false);
     const [isSelectOpen2, setIsSelectOpen2] = useState(false);
 
-    const [currencyArray1, setCurrencyArray1] = useState([]);
-    const [currencyArray2, setCurrencyArray2] = useState([]);
+    const [timeoutId, setTimeoutId] = useState(null);
 
-    const [currency1, setCurrency1] = useState({});
-    const [currency2, setCurrency2] = useState({});
+
+    // const [currencyArray1, setCurrencyArray1] = useState([]);
+    // const [currencyArray2, setCurrencyArray2] = useState([]);
+
+    // const [currency1, setCurrency1] = useState({});
+    // const [currency2, setCurrency2] = useState({});
 
     const [coinRate, setCoinRate] = useState(0);
-    const [changeCurrencies, setChangeCurrencies] = useState();
+    //
+    // const [minValue1, setMinValue1] = useState(0);
+    // const [minValue2, setMinValue2] = useState(0);
+    // const [maxValue1, setMaxValue1] = useState(0);
+    // const [maxValue2, setMaxValue2] = useState(0);
 
-    const [rateData, setRateData] = useState([]);
-    const [currenciesData, setCurrenciesData] = useState([]);
-
-    const [minValue1, setMinValue1] = useState(0);
-    const [minValue2, setMinValue2] = useState(0);
-    const [maxValue1, setMaxValue1] = useState(0);
-    const [maxValue2, setMaxValue2] = useState(0);
-
-    const [valueCurrency1, setValueCurrency1] = useState(0);
-    const [valueCurrency2, setValueCurrency2] = useState(0);
+    // const [valueCurrency1, setValueCurrency1] = useState(0);
+    // const [valueCurrency2, setValueCurrency2] = useState(0);
 
     const lastUpdateTimeRef = useRef(Date.now());
 
-    useEffect(() => {
-        if (buy?.data && sell?.data) {
-            setCurrency1(buy.data[0]);
-            setCurrency2(sell.data[0]);
-            setCurrencyArray1(buy.data);
-            setCurrencyArray2(sell.data);
-            fetch(`${APICoinBase}/v2/exchange-rates?currency=USD`, {
-                headers: {
-                    "Content-Type": "application/json;charset=UTF-8"
-                },
-            })
-                .then(res => res.json().then(res => {
-                        // console.log(res, "RES")
-                        setMinValue1(Number(settings.min) * Number(res?.data?.rates[`${buy?.data[0]?.code.toUpperCase()}`]));
-                        setMaxValue1(Number(settings.max) * Number(res?.data?.rates[`${buy?.data[0]?.code.toUpperCase()}`]));
-                        setValueCurrency1(Number(settings.min) * Number(res?.data?.rates[`${buy?.data[0]?.code.toUpperCase()}`]));
-                        fetch(`${APICoinBase}/v2/exchange-rates?currency=${buy.data[0]?.code}`, {
-                            headers: {
-                                "Content-Type": "application/json;charset=UTF-8"
-                            },
-                        })
-                            .then(res => res.json().then(res => {
-                                    // console.log(res, "RES")
-                                    setCoinRate(Number(res?.data?.rates[`${sell?.data[0]?.code.toUpperCase()}`]))
-                                    setMinValue2(Number(settings.min) * Number(res.data.rates[`${sell?.data[0].code.toUpperCase()}`]) + ((Number(settings.min) * Number(res.data.rates[`${sell?.data[0].code.toUpperCase()}`])) / 100 * Number(settings.buy_commission)));
-                                    setMaxValue2(Number(settings.max) * Number(res.data.rates[`${sell?.data[0].code.toUpperCase()}`]) + ((Number(settings.max) * Number(res.data.rates[`${sell?.data[0].code.toUpperCase()}`])) / 100 * Number(settings.buy_commission)));
-                                    setValueCurrency2(Number(settings.min) * Number(res.data.rates[`${sell?.data[0].code.toUpperCase()}`]) + ((Number(settings.min) * Number(res.data.rates[`${sell?.data[0].code.toUpperCase()}`])) / 100 * Number(settings.buy_commission)));
+    // useEffect(() => {
+    //     if (buy?.data && sell?.data) {
+    //         setCurrency1(buy.data[0]);
+    //         setCurrency2(sell.data[0]);
+    //         setCurrencyArray1(buy.data);
+    //         setCurrencyArray2(sell.data);
+    //         setMinValue1(1000)
+    //         setMaxValue1(10000)
+    //         setValueCurrency1(1000)
+    //         fetch(`${APICallUrl}/api/v1/get-currency-exchange?symbol=${sell.data[0].code.toUpperCase()}&convert=${buy.data[0].code.toUpperCase()}&price=1000&type=${buy.data[0].type}`, {
+    //             headers: {
+    //                 "Content-Type": "application/json;charset=UTF-8"
+    //             },
+    //         })
+    //             .then(res => res.json().then(res => {
 
-                                }
-                            ));
-
-                    }
-                ));
-        }
-    }, [])
+    //                     setValueCurrency2(res.cost)
+    //                     // setMinValue1(Number(settings.min) * Number(res?.data?.rates[`${buy?.data[0]?.code.toUpperCase()}`]));
+    //                     // setMaxValue1(Number(settings.max) * Number(res?.data?.rates[`${buy?.data[0]?.code.toUpperCase()}`]));
+    //                     // setValueCurrency1(Number(settings.min) * Number(res?.data?.rates[`${buy?.data[0]?.code.toUpperCase()}`]));
+    //                     // // fetch(`${APICoinBase}/v2/exchange-rates?currency=${buy.data[0]?.code}`, {
+    //                     //     headers: {
+    //                     //         "Content-Type": "application/json;charset=UTF-8"
+    //                     //     },
+    //                     // })
+    //                     //     .then(res => res.json().then(res => {
+    //                     //             // console.log(res, "RES")
+    //                     //             setCoinRate(Number(res?.data?.rates[`${sell?.data[0]?.code.toUpperCase()}`]))
+    //                     //             setMinValue2(Number(settings.min) * Number(res.data.rates[`${sell?.data[0].code.toUpperCase()}`]) + ((Number(settings.min) * Number(res.data.rates[`${sell?.data[0].code.toUpperCase()}`])) / 100 * Number(settings.buy_commission)));
+    //                     //             setMaxValue2(Number(settings.max) * Number(res.data.rates[`${sell?.data[0].code.toUpperCase()}`]) + ((Number(settings.max) * Number(res.data.rates[`${sell?.data[0].code.toUpperCase()}`])) / 100 * Number(settings.buy_commission)));
+    //                     //             setValueCurrency2(Number(settings.min) * Number(res.data.rates[`${sell?.data[0].code.toUpperCase()}`]) + ((Number(settings.min) * Number(res.data.rates[`${sell?.data[0].code.toUpperCase()}`])) / 100 * Number(settings.buy_commission)));
+    //                     //
+    //                     //         }
+    //                     //     ));
+    //
+    //                 }
+    //             ));
+    //     }
+    // }, [])
 
 
     const customStyles = {
@@ -180,147 +195,224 @@ const MainCalculationSection = ({ buy, sell, settings}) => {
         }),
     };
 
-
-    useEffect(() => {
-        if (Object.keys(currency1).length > 0) {
-            fetch(`${APICoinBase}/v2/exchange-rates?currency=USD`, {
-                headers: {
-                    "Content-Type": "application/json;charset=UTF-8"
-                },
-            })
-                .then(res => res.json().then(res => {
-                        // console.log(res, "RES")
-                        // setChangeCurrencies();
-                        if (!buy?.data?.find((el) => Number(el.id) === Number(currency1.id))) {
-                            setSelected(3);
-                            // setSellActive(true);
-
-                        } else if (selected === 1) {
-                            setSelected(1);
-
-                        } else {
-                            setSelected(2);
-
-                        }
-                        let min = Number(settings.min) * Number(res?.data?.rates[`${currency1?.code.toUpperCase()}`]);
-                        let max = Number(settings.max) * Number(res?.data?.rates[`${currency1?.code.toUpperCase()}`]);
-
-                        setMinValue1(min);
-                        setMaxValue1(max);
-                        setValueCurrency1(min);
-                        fetch(`${APICoinBase}/v2/exchange-rates?currency=${currency1?.code.toUpperCase()}`, {
-                            headers: {
-                                "Content-Type": "application/json;charset=UTF-8"
-                            },
-                        })
-                            .then(res => res.json().then(res => {
-                                    // console.log(min, "min")
-                                    setCoinRate(Number(res?.data?.rates[`${currency2.code.toUpperCase()}`]));
-                                    setMinValue2(min * Number(res.data.rates[`${currency2.code.toUpperCase()}`]) + ((min * Number(res.data.rates[`${currency2.code.toUpperCase()}`])) / 100 * Number(!buy?.data?.find((el) => Number(el.id) === Number(currency1.id)) ? settings?.sell_commission : settings.buy_commission)));
-                                    setMaxValue2(max * Number(res.data.rates[`${currency2.code.toUpperCase()}`]) + ((max * Number(res.data.rates[`${currency2.code.toUpperCase()}`])) / 100 * Number(!buy?.data?.find((el) => Number(el.id) === Number(currency1.id)) ? settings?.sell_commission : settings.buy_commission)));
-                                    setValueCurrency2(min * Number(res.data.rates[`${currency2.code.toUpperCase()}`]) + ((min * Number(res.data.rates[`${currency2.code.toUpperCase()}`])) / 100 * Number(!buy?.data?.find((el) => Number(el.id) === Number(currency1.id)) ? settings?.sell_commission : settings.buy_commission)));
-                                }
-                            ));
-
-                    }
-                ));
-        }
-    }, [currency1, currency2])
-
+    // useEffect(() => {
+    //     if (Object.keys(currency1).length > 0) {
+    //         // fetch(`${APICoinBase}/v2/exchange-rates?currency=USD`, {
+    //         //     headers: {
+    //         //         "Content-Type": "application/json;charset=UTF-8"
+    //         //     },
+    //         // })
+    //         //     .then(res => res.json().then(res => {
+    //         // if (!buy?.data?.find((el) => Number(el.id) === Number(currency1.id))) {
+    //         //     setSelected(3);
+    //         // } else if (selected === 1) {
+    //         //     setSelected(1);
+    //         // } else {
+    //         //     setSelected(2);
+    //         // }
+    //         // let min = Number(settings.min) * Number(res?.data?.rates[`${currency1?.code.toUpperCase()}`]);
+    //         // let max = Number(settings.max) * Number(res?.data?.rates[`${currency1?.code.toUpperCase()}`]);
+    //
+    //         // setMinValue1(min);
+    //         // setMaxValue1(max);
+    //         // setValueCurrency1(min);
+    //         // console.log(currency1,"currency1")
+    //         fetch(`${APICallUrl}/api/v1/get-currency-exchange?symbol=${currency1?.type === "sell" ? currency1?.code.toUpperCase() : currency2?.code.toUpperCase()}&convert=${currency2?.type === "buy" ? currency2?.code.toUpperCase() : currency1?.code.toUpperCase()}&price=${valueCurrency1}&type=${currency1?.type}`, {
+    //             headers: {
+    //                 "Content-Type": "application/json;charset=UTF-8"
+    //             },
+    //         })
+    //             .then(res => res.json().then(res => {
+    //                     console.log(res, "min")
+    //                     // setCoinRate(Number(res?.data?.rates[`${currency2.code.toUpperCase()}`]));
+    //                     // setMinValue2(min * Number(res.data.rates[`${currency2.code.toUpperCase()}`]) + ((min * Number(res.data.rates[`${currency2.code.toUpperCase()}`])) / 100 * Number(!buy?.data?.find((el) => Number(el.id) === Number(currency1.id)) ? settings?.sell_commission : settings.buy_commission)));
+    //                     // setMaxValue2(max * Number(res.data.rates[`${currency2.code.toUpperCase()}`]) + ((max * Number(res.data.rates[`${currency2.code.toUpperCase()}`])) / 100 * Number(!buy?.data?.find((el) => Number(el.id) === Number(currency1.id)) ? settings?.sell_commission : settings.buy_commission)));
+    //                     // setValueCurrency2(min * Number(res.data.rates[`${currency2.code.toUpperCase()}`]) + ((min * Number(res.data.rates[`${currency2.code.toUpperCase()}`])) / 100 * Number(!buy?.data?.find((el) => Number(el.id) === Number(currency1.id)) ? settings?.sell_commission : settings.buy_commission)));
+    //                 }
+    //             ));
+    //         //     }
+    //         // ));
+    //     }
+    // }, [currency1, currency2])
 
     let change = (e) => {
-        setValueCurrency1(e);
-        setValueCurrency2(Number(e) * Number(coinRate) + ((Number(e) * Number(coinRate)) / 100 * Number(!buy?.data?.find((el) => Number(el.id) === Number(currency1.id)) ? settings?.sell_commission : settings.buy_commission)));
+        // setValueCurrency1(e);
+        // setValueCurrency2(Number(e) * Number(coinRate) + ((Number(e) * Number(coinRate)) / 100 * Number(currency1.type === "sell" ? settings?.sell_commission : settings.buy_commission)));
+        fetch(`${APICallUrl}/api/v1/get-currency-exchange?symbol=${currency1?.type === "sell" ? currency1?.code.toUpperCase() : currency2?.code.toUpperCase()}&convert=${currency2?.type === "buy" ? currency2?.code.toUpperCase() : currency1?.code.toUpperCase()}&price=${e}&type=${currency1?.type}`, {
+            headers: {
+                "Content-Type": "application/json;charset=UTF-8"
+            },
+        })
+            .then(res => res.json().then(res => {
+
+                    setValueCurrency2(res.cost)
+                }
+            ));
+
     }
 
-    let changeInverse = (e) => {
-        setValueCurrency2(e);
-        setValueCurrency1(Number(e) / (1 + Number(!buy?.data?.find((el) => Number(el.id) === Number(currency1.id)) ? settings?.sell_commission : settings.buy_commission) / 100) / Number(coinRate));
-    };
+    // let changeInverse = (e) => {
+    //     setValueCurrency2(e);
+    //     setValueCurrency1(Number(e) / (1 + Number(currency1.type === "sell" ? settings?.sell_commission : settings.buy_commission) / 100) / Number(coinRate));
+    // };
 
+    const changeCurrency = async () => {
+        const minMaxRes1 = await fetch(`${APICallUrl}/api/v1/get-exchange-limit?currency=${currency2.code.toUpperCase()}&symbol=${currency1.code.toUpperCase()}`, {
+            headers: {
+                "Content-Type": "application/json;charset=UTF-8",
+            },
+        });
 
-    const changeCurrency = () => {
+        const minMaxData1 = await minMaxRes1.json();
+
+        setMinValue1(minMaxData1?.min);
+        setValueCurrency1(minMaxData1?.min);
+        setMaxValue1(minMaxData1?.max);
+
+        const minMaxRes2 = await fetch(`${APICallUrl}/api/v1/get-exchange-limit?currency=${currency1.code.toUpperCase()}&symbol=${currency2.code.toUpperCase()}`, {
+            headers: {
+                "Content-Type": "application/json;charset=UTF-8",
+            },
+        });
+
+        const minMaxData2 = await minMaxRes2.json();
+        setMinValue2(minMaxData2?.min);
+        setValueCurrency2(minMaxData2?.min);
+        setMaxValue2(minMaxData2?.max);
         const tempCurrencyArray = currencyArray1;
         setCurrencyArray1(currencyArray2);
         setCurrencyArray2(tempCurrencyArray);
+
+
         const tempCurrency = currency1;
         setCurrency1(currency2);
         setCurrency2(tempCurrency);
+
 
     }
 
     const toSell = (e) => {
         setSelected(e)
-        setCurrency1(sell.data[0]);
-        setCurrency2(buy.data[0]);
-        setCurrencyArray1(sell.data);
-        setCurrencyArray2(buy.data);
+        if (currency1.type !== "sell") {
+            changeCurrency()
+        }
+        // setCurrency1(sell.data[0]);
+        // setCurrency2(buy.data[0]);
+        // setCurrencyArray1(sell.data);
+        // setCurrencyArray2(buy.data);
     }
     const toBuy = (e) => {
         setSelected(e);
-        setCurrency1(buy.data[0]);
-        setCurrency2(sell.data[0]);
-        setCurrencyArray1(buy.data);
-        setCurrencyArray2(sell.data);
+        if (currency1.type !== "buy") {
+            changeCurrency()
+        }
+        // setCurrency1(buy.data[0]);
+        // setCurrency2(sell.data[0]);
+        // setCurrencyArray1(buy.data);
+        // setCurrencyArray2(sell.data);
     }
 
     const customFilter = (option, searchText) => {
         return option.data.name.toLowerCase().includes(searchText.toLowerCase()) || option.data.code.toLowerCase().includes(searchText.toLowerCase());
     };
 
-    useEffect(() => {
-        // Function to fetch data and update states
-        const fetchDataAndUpdate = () => {
+    const selectCurrency1 = async (c) => {
+        const minMaxRes1 = await fetch(`${APICallUrl}/api/v1/get-exchange-limit?currency=${c.code.toUpperCase()}&symbol=${currency2.code.toUpperCase()}`, {
+            headers: {
+                "Content-Type": "application/json;charset=UTF-8",
+            },
+        });
 
-            const currentTime = Date.now();
-            if (currentTime - lastUpdateTimeRef.current >= 10000) {
-                if (Object.keys(currency1).length > 0) {
-                    fetch(`${APICoinBase}/v2/exchange-rates?currency=USD`, {
-                        headers: {
-                            "Content-Type": "application/json;charset=UTF-8"
-                        },
-                    })
-                        .then(res => res.json().then(res => {
+        const minMaxData1 = await minMaxRes1.json();
 
-                                let min = Number(settings.min) * Number(res?.data?.rates[`${currency1?.code.toUpperCase()}`]);
-                                let max = Number(settings.max) * Number(res?.data?.rates[`${currency1?.code.toUpperCase()}`]);
-                                // setMinValue1(min);
-                                // setMaxValue1(max);
-                                // setValueCurrency1(valueCurrency1);
-                                fetch(`${APICoinBase}/v2/exchange-rates?currency=${currency1?.code.toUpperCase()}`, {
-                                    headers: {
-                                        "Content-Type": "application/json;charset=UTF-8"
-                                    },
-                                })
-                                    .then(res => res.json().then(res => {
-                                            setCoinRate(Number(res?.data?.rates[`${currency2.code.toUpperCase()}`]));
-                                            setMinValue2(min * Number(res.data.rates[`${currency2.code.toUpperCase()}`]) + ((min * Number(res.data.rates[`${currency2.code.toUpperCase()}`])) / 100 * Number(!buy?.data?.find((el) => Number(el.id) === Number(currency1.id)) ? settings?.sell_commission : settings.buy_commission)));
-                                            setMaxValue2(max * Number(res.data.rates[`${currency2.code.toUpperCase()}`]) + ((max * Number(res.data.rates[`${currency2.code.toUpperCase()}`])) / 100 * Number(!buy?.data?.find((el) => Number(el.id) === Number(currency1.id)) ? settings?.sell_commission : settings.buy_commission)));
-                                            setValueCurrency2(Number(valueCurrency1) * Number(res.data.rates[`${currency2.code.toUpperCase()}`]) + ((Number(valueCurrency1) * Number(res.data.rates[`${currency2.code.toUpperCase()}`])) / 100 * Number(!buy?.data?.find((el) => Number(el.id) === Number(currency1.id)) ? settings?.sell_commission : settings.buy_commission)));
-                                        }
-                                    ));
+        setMinValue1(minMaxData1?.min);
+        setValueCurrency1(minMaxData1?.min);
+        setMaxValue1(minMaxData1?.max);
 
-                            }
-                        ));
-                }
-                lastUpdateTimeRef.current = currentTime;
-            }
-        };
+        const minMaxRes2 = await fetch(`${APICallUrl}/api/v1/get-exchange-limit?currency=${currency2.code.toUpperCase()}&symbol=${c.code.toUpperCase()}`, {
+            headers: {
+                "Content-Type": "application/json;charset=UTF-8",
+            },
+        });
+        const minMaxData2 = await minMaxRes2.json();
+        setMinValue2(minMaxData2?.min);
+        setValueCurrency2(minMaxData2?.min);
+        setMaxValue2(minMaxData2?.max);
 
-        // Call the fetchDataAndUpdate function initially
-        fetchDataAndUpdate();
+    }
 
-        // Set an interval to call the fetchDataAndUpdate function every 10 seconds
-        const intervalId = setInterval(() => {
-            fetchDataAndUpdate();
-        }, 10000); // 10000 milliseconds = 10 seconds
+    const selectCurrency2 = async (c) => {
+        const minMaxRes1 = await fetch(`${APICallUrl}/api/v1/get-exchange-limit?currency=${currency1.code.toUpperCase()}&symbol=${currency2.code.toUpperCase()}`, {
+            headers: {
+                "Content-Type": "application/json;charset=UTF-8",
+            },
+        });
 
-        // Clear the interval when the component is unmounted
-        return () => {
-            clearInterval(intervalId);
-        };
-    }, [change,changeCurrency, valueCurrency1]);
-    // console.log(valueCurrency1,"valueCurrency1")
+        const minMaxData1 = await minMaxRes1.json();
+
+        setMinValue1(minMaxData1?.min);
+        setValueCurrency1(minMaxData1?.min);
+        setMaxValue1(minMaxData1?.max);
+
+        const minMaxRes2 = await fetch(`${APICallUrl}/api/v1/get-exchange-limit?currency=${c.code.toUpperCase()}&symbol=${currency1.code.toUpperCase()}`, {
+            headers: {
+                "Content-Type": "application/json;charset=UTF-8",
+            },
+        });
+        const minMaxData2 = await minMaxRes2.json();
+        setMinValue2(minMaxData2?.min);
+        setValueCurrency2(minMaxData2?.min);
+        setMaxValue2(minMaxData2?.max);
+
+    }
+
+    // useEffect(() => {
+    //     const fetchDataAndUpdate = () => {
+    //
+    //         const currentTime = Date.now();
+    //         if (currentTime - lastUpdateTimeRef.current >= 10000) {
+    //             if (Object.keys(currency1).length > 0) {
+    //                 fetch(`${APICoinBase}/v2/exchange-rates?currency=USD`, {
+    //                     headers: {
+    //                         "Content-Type": "application/json;charset=UTF-8"
+    //                     },
+    //                 })
+    //                     .then(res => res.json().then(res => {
+    //                             let min = Number(settings.min) * Number(res?.data?.rates[`${currency1?.code.toUpperCase()}`]);
+    //                             let max = Number(settings.max) * Number(res?.data?.rates[`${currency1?.code.toUpperCase()}`]);
+    //
+    //                             fetch(`${APICoinBase}/v2/exchange-rates?currency=${currency1?.code.toUpperCase()}`, {
+    //                                 headers: {
+    //                                     "Content-Type": "application/json;charset=UTF-8"
+    //                                 },
+    //                             })
+    //                                 .then(res => res.json().then(res => {
+    //                                         setCoinRate(Number(res?.data?.rates[`${currency2.code.toUpperCase()}`]));
+    //                                         setMinValue2(min * Number(res.data.rates[`${currency2.code.toUpperCase()}`]) + ((min * Number(res.data.rates[`${currency2.code.toUpperCase()}`])) / 100 * Number(!buy?.data?.find((el) => Number(el.id) === Number(currency1.id)) ? settings?.sell_commission : settings.buy_commission)));
+    //                                         setMaxValue2(max * Number(res.data.rates[`${currency2.code.toUpperCase()}`]) + ((max * Number(res.data.rates[`${currency2.code.toUpperCase()}`])) / 100 * Number(!buy?.data?.find((el) => Number(el.id) === Number(currency1.id)) ? settings?.sell_commission : settings.buy_commission)));
+    //                                         setValueCurrency2(Number(valueCurrency1) * Number(res.data.rates[`${currency2.code.toUpperCase()}`]) + ((Number(valueCurrency1) * Number(res.data.rates[`${currency2.code.toUpperCase()}`])) / 100 * Number(!buy?.data?.find((el) => Number(el.id) === Number(currency1.id)) ? settings?.sell_commission : settings.buy_commission)));
+    //                                     }
+    //                                 ));
+    //
+    //                         }
+    //                     ));
+    //             }
+    //             lastUpdateTimeRef.current = currentTime;
+    //         }
+    //     };
+    //
+    //     fetchDataAndUpdate();
+    //
+    //     const intervalId = setInterval(() => {
+    //         fetchDataAndUpdate();
+    //     }, 10000); // 10000 milliseconds = 10 seconds
+    //
+    //     // Clear the interval when the component is unmounted
+    //     return () => {
+    //         clearInterval(intervalId);
+    //     };
+    // }, [change, changeCurrency, valueCurrency1]);
+
     return (
         <section className="calculation-section">
             <Container>
@@ -334,8 +426,8 @@ const MainCalculationSection = ({ buy, sell, settings}) => {
                                         <div
                                             className={`button-area left-button-area ${selected === 1 ? 'selected' : ''}`}
                                             onClick={() => {
-                                                // setSelected(1)
-                                                toBuy(1)
+                                                setSelected(1)
+                                                // toBuy(1)
                                             }}>
                                             <p className="text">TRADE</p>
                                         </div>
@@ -362,14 +454,16 @@ const MainCalculationSection = ({ buy, sell, settings}) => {
                                 </div>
                             </div>
                             <Row className="custom-row-form">
-                                <img onClick={changeCurrency}
+                                <img onClick={() => {
+                                    changeCurrency();
+                                    setSelected(1);
+                                }}
                                      className="change-img" src="/assets/images/change.svg"/>
-
                                 <Col lg="12">
                                     <div className="form-section">
                                         <label className='form-label'
                                                style={Number(valueCurrency1) < minValue1 || Number(valueCurrency1) > maxValue1 ? {color: "#F00"} : {color: "white"}}>
-                                            Min {minValue1.toFixed(2)} / Max {maxValue1.toFixed(2)} {currency1.code}
+                                            Min {minValue1?.toFixed(2)} / Max {maxValue1?.toFixed(2)} {currency1?.code}
                                         </label>
                                         <div className='form-main'>
                                             <input type='number'
@@ -377,19 +471,29 @@ const MainCalculationSection = ({ buy, sell, settings}) => {
                                                    value={valueCurrency1}
                                                    onChange={(e) => {
                                                        let value = e.target.value.replace(/^0+(?=\d)/, '');
-
                                                        if (value.startsWith(".")) {
                                                            value = "0" + value;
                                                        }
-                                                       change(value)
+                                                       setValueCurrency1(value);
+
+                                                       if (timeoutId) {
+                                                           clearTimeout(timeoutId);
+                                                       }
+
+                                                       const newTimeoutId = setTimeout(() => {
+                                                           change(value);
+                                                       }, 3000); // 3 seconds delay
+
+                                                       setTimeoutId(newTimeoutId);
                                                    }}
                                                    className={`form-control form-control-custom ${isSelectOpen ? "opacity-0 position-absolute w-25" : ""}`}
-                                                   id='some-id'  name='first' placeholder="0" />
+                                                   id='some-id' name='first' placeholder="0"/>
                                             <Select
                                                 id="1"
                                                 value={currency1}
                                                 onChange={(currency1) => {
                                                     setCurrency1(currency1);
+                                                    selectCurrency1(currency1);
                                                     setIsSelectOpen(false);
                                                     document.getElementById('some-id').focus()
                                                 }}
@@ -429,15 +533,15 @@ const MainCalculationSection = ({ buy, sell, settings}) => {
                                     <div className="form-section">
                                         <label className='form-label'
                                                style={Number(valueCurrency1) < minValue1 || Number(valueCurrency1) > maxValue1 ? {color: "#F00"} : {color: "white"}}>
-                                            Min {minValue2.toFixed(2)} / Max {maxValue2.toFixed(2)} {currency2.code}
+                                            Min {minValue2?.toFixed(2)} / Max {maxValue2?.toFixed(2)} {currency2?.code}
                                         </label>
                                         <div className='form-main'>
                                             <input type='number'
+                                                   readOnly
                                                    style={Number(valueCurrency1) < minValue1 || Number(valueCurrency1) > maxValue1 ? {border: "1px solid #F00"} : {border: "none"}}
                                                    value={valueCurrency2}
                                                    onChange={(e) => {
                                                        let value = e.target.value.replace(/^0+(?=\d)/, '');
-
                                                        if (value.startsWith(".")) {
                                                            value = "0" + value;
                                                        }
@@ -448,10 +552,13 @@ const MainCalculationSection = ({ buy, sell, settings}) => {
                                             <Select
                                                 id="2"
                                                 defaultValue={currency2}
+
                                                 value={currency2}
                                                 onChange={(currency2) => {
-                                                    setCurrency2(currency2)
-                                                    setIsSelectOpen2(false)
+                                                    setCurrency2(currency2);
+                                                    selectCurrency2(currency2);
+                                                    setIsSelectOpen2(false);
+
                                                     document.getElementById('some-id-2').focus()
                                                 }}
                                                 onFocus={() => setIsSelectOpen2(true)}

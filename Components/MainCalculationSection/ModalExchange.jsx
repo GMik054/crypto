@@ -81,7 +81,7 @@ const ModalExchange = ({valueCurrency1, valueCurrency2, minValue1, maxValue1, cu
             body: JSON.stringify(info),
         })
             .then((res) => res.json()).then((res) => {
-            // console.log(res, "RES")
+
             if (res.error === false) {
                 setShowModal(true);
                 handleClose();

@@ -10,8 +10,8 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 export async function getStaticProps({locale}) {
     return {props: {locale, ...(await serverSideTranslations(locale, ['common','footer']))}}
 }
-const Gallery = (props) => {
-    // console.log(props)
+const Gallery = () => {
+
     const isLoading = useSelector(selectIsLoading);
     return (
         < >

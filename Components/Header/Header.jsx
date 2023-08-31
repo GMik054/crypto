@@ -47,8 +47,6 @@ const Header = ({links}) => {
         const loginToken = useSelector(selectLoginToken);
         const isLoading = useSelector(selectIsLoading);
 
-        // console.log(router, "router")
-        // console.log(language, "language")
         const {t} = useTranslation('common');
 
         // useEffect(() => {

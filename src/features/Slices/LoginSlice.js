@@ -27,7 +27,7 @@ export const LoginTokenSlice = createSlice({
 
         },
         setUser: (state, action) => {
-            // console.log(action.payload, "payload")
+
             state.authUser = action.payload
         },
         signOut: (state, action) => {
@@ -37,7 +37,7 @@ export const LoginTokenSlice = createSlice({
             state.authUser = {};
         },
         setIsLoading: (state, action) => {
-            // console.log(action.payload, "payload")
+
             state.isLoading = action.payload
         },
 
