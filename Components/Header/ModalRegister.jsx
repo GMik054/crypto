@@ -82,8 +82,7 @@ const ModalRegister = () => {
             body: JSON.stringify(formik.values),
         })
             .then((res) => res.json()).then((res) => {
-            // console.log(res, "RES")
-            if (res.error === false) {
+                if (res.error === false) {
                 setShowModal(true);
                 handleClose();
                 formik.resetForm();

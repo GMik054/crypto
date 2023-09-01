@@ -79,7 +79,7 @@ const Header = ({links}) => {
                     },
                 })
                     .then(res => res.json().then(res => {
-                            // console.log(res, "transactions")
+
                             dispatch(setUser(res))
                         }
                     ));

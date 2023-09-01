@@ -1,10 +1,12 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Col, Container, Row} from "reactstrap";
+import {Card, Col, Container, Row} from "reactstrap";
 import Select from 'react-select';
 import IconsSection from "./IconsSection";
 import ModalExchange from "./ModalExchange";
 import useWindowDimensions, {APICallUrl, APICoinBase} from "../../halpers/useWindowDimensions";
 import {useRouter} from "next/router";
+import {Triangle} from "react-loader-spinner";
+import {Skeleton} from "@mui/material";
 // import {getExchangeRates} from "../../halpers/coinbaseAPI";
 
 
@@ -31,9 +33,8 @@ const MainCalculationSection = ({
                                     setValueCurrency2,
                                     setCurrencyArray2,
                                     valueCurrency1,
-                                    setValueCurrency1
+                                    setValueCurrency1, show, setShow
                                 }) => {
-
 
 
     const [selected, setSelected] = useState(1);
@@ -45,64 +46,10 @@ const MainCalculationSection = ({
 
     const [timeoutId, setTimeoutId] = useState(null);
 
+    const [toggle, setToggle] = useState(false);
 
-    // const [currencyArray1, setCurrencyArray1] = useState([]);
-    // const [currencyArray2, setCurrencyArray2] = useState([]);
-
-    // const [currency1, setCurrency1] = useState({});
-    // const [currency2, setCurrency2] = useState({});
-
-    const [coinRate, setCoinRate] = useState(0);
-    //
-    // const [minValue1, setMinValue1] = useState(0);
-    // const [minValue2, setMinValue2] = useState(0);
-    // const [maxValue1, setMaxValue1] = useState(0);
-    // const [maxValue2, setMaxValue2] = useState(0);
-
-    // const [valueCurrency1, setValueCurrency1] = useState(0);
-    // const [valueCurrency2, setValueCurrency2] = useState(0);
 
     const lastUpdateTimeRef = useRef(Date.now());
-
-    // useEffect(() => {
-    //     if (buy?.data && sell?.data) {
-    //         setCurrency1(buy.data[0]);
-    //         setCurrency2(sell.data[0]);
-    //         setCurrencyArray1(buy.data);
-    //         setCurrencyArray2(sell.data);
-    //         setMinValue1(1000)
-    //         setMaxValue1(10000)
-    //         setValueCurrency1(1000)
-    //         fetch(`${APICallUrl}/api/v1/get-currency-exchange?symbol=${sell.data[0].code.toUpperCase()}&convert=${buy.data[0].code.toUpperCase()}&price=1000&type=${buy.data[0].type}`, {
-    //             headers: {
-    //                 "Content-Type": "application/json;charset=UTF-8"
-    //             },
-    //         })
-    //             .then(res => res.json().then(res => {
-
-    //                     setValueCurrency2(res.cost)
-    //                     // setMinValue1(Number(settings.min) * Number(res?.data?.rates[`${buy?.data[0]?.code.toUpperCase()}`]));
-    //                     // setMaxValue1(Number(settings.max) * Number(res?.data?.rates[`${buy?.data[0]?.code.toUpperCase()}`]));
-    //                     // setValueCurrency1(Number(settings.min) * Number(res?.data?.rates[`${buy?.data[0]?.code.toUpperCase()}`]));
-    //                     // // fetch(`${APICoinBase}/v2/exchange-rates?currency=${buy.data[0]?.code}`, {
-    //                     //     headers: {
-    //                     //         "Content-Type": "application/json;charset=UTF-8"
-    //                     //     },
-    //                     // })
-    //                     //     .then(res => res.json().then(res => {
-    //                     //             // console.log(res, "RES")
-    //                     //             setCoinRate(Number(res?.data?.rates[`${sell?.data[0]?.code.toUpperCase()}`]))
-    //                     //             setMinValue2(Number(settings.min) * Number(res.data.rates[`${sell?.data[0].code.toUpperCase()}`]) + ((Number(settings.min) * Number(res.data.rates[`${sell?.data[0].code.toUpperCase()}`])) / 100 * Number(settings.buy_commission)));
-    //                     //             setMaxValue2(Number(settings.max) * Number(res.data.rates[`${sell?.data[0].code.toUpperCase()}`]) + ((Number(settings.max) * Number(res.data.rates[`${sell?.data[0].code.toUpperCase()}`])) / 100 * Number(settings.buy_commission)));
-    //                     //             setValueCurrency2(Number(settings.min) * Number(res.data.rates[`${sell?.data[0].code.toUpperCase()}`]) + ((Number(settings.min) * Number(res.data.rates[`${sell?.data[0].code.toUpperCase()}`])) / 100 * Number(settings.buy_commission)));
-    //                     //
-    //                     //         }
-    //                     //     ));
-    //
-    //                 }
-    //             ));
-    //     }
-    // }, [])
 
 
     const customStyles = {
@@ -195,59 +142,25 @@ const MainCalculationSection = ({
         }),
     };
 
-    // useEffect(() => {
-    //     if (Object.keys(currency1).length > 0) {
-    //         // fetch(`${APICoinBase}/v2/exchange-rates?currency=USD`, {
-    //         //     headers: {
-    //         //         "Content-Type": "application/json;charset=UTF-8"
-    //         //     },
-    //         // })
-    //         //     .then(res => res.json().then(res => {
-    //         // if (!buy?.data?.find((el) => Number(el.id) === Number(currency1.id))) {
-    //         //     setSelected(3);
-    //         // } else if (selected === 1) {
-    //         //     setSelected(1);
-    //         // } else {
-    //         //     setSelected(2);
-    //         // }
-    //         // let min = Number(settings.min) * Number(res?.data?.rates[`${currency1?.code.toUpperCase()}`]);
-    //         // let max = Number(settings.max) * Number(res?.data?.rates[`${currency1?.code.toUpperCase()}`]);
-    //
-    //         // setMinValue1(min);
-    //         // setMaxValue1(max);
-    //         // setValueCurrency1(min);
-    //         // console.log(currency1,"currency1")
-    //         fetch(`${APICallUrl}/api/v1/get-currency-exchange?symbol=${currency1?.type === "sell" ? currency1?.code.toUpperCase() : currency2?.code.toUpperCase()}&convert=${currency2?.type === "buy" ? currency2?.code.toUpperCase() : currency1?.code.toUpperCase()}&price=${valueCurrency1}&type=${currency1?.type}`, {
-    //             headers: {
-    //                 "Content-Type": "application/json;charset=UTF-8"
-    //             },
-    //         })
-    //             .then(res => res.json().then(res => {
-    //                     console.log(res, "min")
-    //                     // setCoinRate(Number(res?.data?.rates[`${currency2.code.toUpperCase()}`]));
-    //                     // setMinValue2(min * Number(res.data.rates[`${currency2.code.toUpperCase()}`]) + ((min * Number(res.data.rates[`${currency2.code.toUpperCase()}`])) / 100 * Number(!buy?.data?.find((el) => Number(el.id) === Number(currency1.id)) ? settings?.sell_commission : settings.buy_commission)));
-    //                     // setMaxValue2(max * Number(res.data.rates[`${currency2.code.toUpperCase()}`]) + ((max * Number(res.data.rates[`${currency2.code.toUpperCase()}`])) / 100 * Number(!buy?.data?.find((el) => Number(el.id) === Number(currency1.id)) ? settings?.sell_commission : settings.buy_commission)));
-    //                     // setValueCurrency2(min * Number(res.data.rates[`${currency2.code.toUpperCase()}`]) + ((min * Number(res.data.rates[`${currency2.code.toUpperCase()}`])) / 100 * Number(!buy?.data?.find((el) => Number(el.id) === Number(currency1.id)) ? settings?.sell_commission : settings.buy_commission)));
-    //                 }
-    //             ));
-    //         //     }
-    //         // ));
-    //     }
-    // }, [currency1, currency2])
 
     let change = (e) => {
-        // setValueCurrency1(e);
-        // setValueCurrency2(Number(e) * Number(coinRate) + ((Number(e) * Number(coinRate)) / 100 * Number(currency1.type === "sell" ? settings?.sell_commission : settings.buy_commission)));
         fetch(`${APICallUrl}/api/v1/get-currency-exchange?symbol=${currency1?.type === "sell" ? currency1?.code.toUpperCase() : currency2?.code.toUpperCase()}&convert=${currency2?.type === "buy" ? currency2?.code.toUpperCase() : currency1?.code.toUpperCase()}&price=${e}&type=${currency1?.type}`, {
             headers: {
                 "Content-Type": "application/json;charset=UTF-8"
             },
         })
             .then(res => res.json().then(res => {
-
-                    setValueCurrency2(res.cost)
+                    // console.log(res,"RESS")
+                    setValueCurrency2(res.cost);
+                    setToggle(false);
                 }
-            ));
+            ))
+            .catch((error) => {
+                // Handle general fetch error
+                console.error('Failed to change', error);
+                setToggle(false);
+            });
+
 
     }
 
@@ -257,6 +170,8 @@ const MainCalculationSection = ({
     // };
 
     const changeCurrency = async () => {
+        setToggle(true);
+        setShow(true);
         const minMaxRes1 = await fetch(`${APICallUrl}/api/v1/get-exchange-limit?currency=${currency2.code.toUpperCase()}&symbol=${currency1.code.toUpperCase()}`, {
             headers: {
                 "Content-Type": "application/json;charset=UTF-8",
@@ -264,30 +179,35 @@ const MainCalculationSection = ({
         });
 
         const minMaxData1 = await minMaxRes1.json();
+        console.log(minMaxData1)
 
-        setMinValue1(minMaxData1?.min);
-        setValueCurrency1(minMaxData1?.min);
-        setMaxValue1(minMaxData1?.max);
-
+        const cur2Res = await fetch(`${APICallUrl}/api/v1/get-currency-exchange?symbol=${currency2?.type === "sell" ? currency2?.code.toUpperCase() : currency1?.code.toUpperCase()}&convert=${currency1?.type === "buy" ? currency1?.code.toUpperCase() : currency2?.code.toUpperCase()}&price=${minMaxData1?.min}&type=${currency2?.type}`)
         const minMaxRes2 = await fetch(`${APICallUrl}/api/v1/get-exchange-limit?currency=${currency1.code.toUpperCase()}&symbol=${currency2.code.toUpperCase()}`, {
             headers: {
                 "Content-Type": "application/json;charset=UTF-8",
             },
         });
 
+        const cur = await cur2Res.json();
+        console.log(cur)
         const minMaxData2 = await minMaxRes2.json();
-        setMinValue2(minMaxData2?.min);
-        setValueCurrency2(minMaxData2?.min);
+
+        setMinValue1(minMaxData1?.min);
+        setValueCurrency1(minMaxData1?.min);
+        setMaxValue1(minMaxData1?.max);
+
+        setMinValue2(cur?.cost);
+        setValueCurrency2(cur?.cost);
         setMaxValue2(minMaxData2?.max);
         const tempCurrencyArray = currencyArray1;
         setCurrencyArray1(currencyArray2);
         setCurrencyArray2(tempCurrencyArray);
 
-
         const tempCurrency = currency1;
         setCurrency1(currency2);
         setCurrency2(tempCurrency);
-
+        setShow(false);
+        setToggle(false);
 
     }
 
@@ -296,20 +216,14 @@ const MainCalculationSection = ({
         if (currency1.type !== "sell") {
             changeCurrency()
         }
-        // setCurrency1(sell.data[0]);
-        // setCurrency2(buy.data[0]);
-        // setCurrencyArray1(sell.data);
-        // setCurrencyArray2(buy.data);
+
     }
     const toBuy = (e) => {
         setSelected(e);
         if (currency1.type !== "buy") {
             changeCurrency()
         }
-        // setCurrency1(buy.data[0]);
-        // setCurrency2(sell.data[0]);
-        // setCurrencyArray1(buy.data);
-        // setCurrencyArray2(sell.data);
+
     }
 
     const customFilter = (option, searchText) => {
@@ -328,15 +242,16 @@ const MainCalculationSection = ({
         setMinValue1(minMaxData1?.min);
         setValueCurrency1(minMaxData1?.min);
         setMaxValue1(minMaxData1?.max);
-
+        const cur2Res = await fetch(`${APICallUrl}/api/v1/get-currency-exchange?symbol=${c?.type === "sell" ? c?.code.toUpperCase() : currency2?.code.toUpperCase()}&convert=${currency2?.type === "buy" ? currency2?.code.toUpperCase() : c?.code.toUpperCase()}&price=${minMaxData1?.min}&type=${c?.type}`)
         const minMaxRes2 = await fetch(`${APICallUrl}/api/v1/get-exchange-limit?currency=${currency2.code.toUpperCase()}&symbol=${c.code.toUpperCase()}`, {
             headers: {
                 "Content-Type": "application/json;charset=UTF-8",
             },
         });
+        const cur = await cur2Res.json();
         const minMaxData2 = await minMaxRes2.json();
-        setMinValue2(minMaxData2?.min);
-        setValueCurrency2(minMaxData2?.min);
+        setMinValue2(cur?.cost);
+        setValueCurrency2(cur?.cost);
         setMaxValue2(minMaxData2?.max);
 
     }
@@ -354,49 +269,77 @@ const MainCalculationSection = ({
         setValueCurrency1(minMaxData1?.min);
         setMaxValue1(minMaxData1?.max);
 
+        const cur2Res = await fetch(`${APICallUrl}/api/v1/get-currency-exchange?symbol=${currency1?.type === "sell" ? currency1?.code.toUpperCase() : c?.code.toUpperCase()}&convert=${c?.type === "buy" ? c?.code.toUpperCase() : currency1?.code.toUpperCase()}&price=${valueCurrency1}&type=${currency1?.type}`)
         const minMaxRes2 = await fetch(`${APICallUrl}/api/v1/get-exchange-limit?currency=${c.code.toUpperCase()}&symbol=${currency1.code.toUpperCase()}`, {
             headers: {
                 "Content-Type": "application/json;charset=UTF-8",
             },
         });
+        const cur = await cur2Res.json();
         const minMaxData2 = await minMaxRes2.json();
-        setMinValue2(minMaxData2?.min);
-        setValueCurrency2(minMaxData2?.min);
+        setMinValue2(cur?.cost);
+        setValueCurrency2(cur?.cost);
         setMaxValue2(minMaxData2?.max);
+
 
     }
 
+
+    useEffect(() => {
+        // Define an async function within the useEffect
+        if (!toggle) { // Only proceed if toggle is false
+            const intervalId = setInterval(async () => {
+                try {
+
+                    const minMaxRes1 = await fetch(`${APICallUrl}/api/v1/get-exchange-limit?currency=${currency1.code.toUpperCase()}&symbol=${currency2.code.toUpperCase()}`, {
+                        headers: {
+                            "Content-Type": "application/json;charset=UTF-8",
+                        },
+                    });
+
+                    const minMaxData1 = await minMaxRes1.json();
+
+
+                    setMinValue1(Number(valueCurrency1) < minMaxData1?.min ? minMaxData1?.min : Number(valueCurrency1));
+                    setValueCurrency1(Number(valueCurrency1) < minMaxData1?.min ? minMaxData1?.min : Number(valueCurrency1));
+                    setMaxValue1(minMaxData1?.max);
+
+                    const cur2Res = await fetch(`${APICallUrl}/api/v1/get-currency-exchange?symbol=${currency2?.type === "sell" ? currency2?.code.toUpperCase() : currency1?.code.toUpperCase()}&convert=${currency1?.type === "buy" ? currency1?.code.toUpperCase() : currency2?.code.toUpperCase()}&price=${Number(valueCurrency1) < minMaxData1?.min ? minMaxData1?.min : Number(valueCurrency1)}&type=${currency1?.type}`);
+                    const minMaxRes2 = await fetch(`${APICallUrl}/api/v1/get-exchange-limit?currency=${currency2.code.toUpperCase()}&symbol=${currency1.code.toUpperCase()}`, {
+                        headers: {
+                            "Content-Type": "application/json;charset=UTF-8",
+                        },
+                    });
+                    const cur = await cur2Res.json();
+                    const minMaxData2 = await minMaxRes2.json();
+
+                    setMinValue2(cur?.cost);
+                    setValueCurrency2(cur?.cost);
+                    setMaxValue2(minMaxData2?.max);
+                    // Do something with the data
+                } catch (error) {
+                    // Handle errors
+                    console.error(error);
+                }
+            }, 10000); // 10 seconds
+            return () => clearInterval(intervalId); // Clear the interval when the component is unmounted or when the effect is re-run
+        }
+
+    }, [currency1, currency2, valueCurrency1, valueCurrency2, toggle]); // dependencies
+
     // useEffect(() => {
-    //     const fetchDataAndUpdate = () => {
+    //     const fetchDataAndUpdate = async () => {
     //
     //         const currentTime = Date.now();
-    //         if (currentTime - lastUpdateTimeRef.current >= 10000) {
-    //             if (Object.keys(currency1).length > 0) {
-    //                 fetch(`${APICoinBase}/v2/exchange-rates?currency=USD`, {
-    //                     headers: {
-    //                         "Content-Type": "application/json;charset=UTF-8"
-    //                     },
-    //                 })
-    //                     .then(res => res.json().then(res => {
-    //                             let min = Number(settings.min) * Number(res?.data?.rates[`${currency1?.code.toUpperCase()}`]);
-    //                             let max = Number(settings.max) * Number(res?.data?.rates[`${currency1?.code.toUpperCase()}`]);
-    //
-    //                             fetch(`${APICoinBase}/v2/exchange-rates?currency=${currency1?.code.toUpperCase()}`, {
-    //                                 headers: {
-    //                                     "Content-Type": "application/json;charset=UTF-8"
-    //                                 },
-    //                             })
-    //                                 .then(res => res.json().then(res => {
-    //                                         setCoinRate(Number(res?.data?.rates[`${currency2.code.toUpperCase()}`]));
-    //                                         setMinValue2(min * Number(res.data.rates[`${currency2.code.toUpperCase()}`]) + ((min * Number(res.data.rates[`${currency2.code.toUpperCase()}`])) / 100 * Number(!buy?.data?.find((el) => Number(el.id) === Number(currency1.id)) ? settings?.sell_commission : settings.buy_commission)));
-    //                                         setMaxValue2(max * Number(res.data.rates[`${currency2.code.toUpperCase()}`]) + ((max * Number(res.data.rates[`${currency2.code.toUpperCase()}`])) / 100 * Number(!buy?.data?.find((el) => Number(el.id) === Number(currency1.id)) ? settings?.sell_commission : settings.buy_commission)));
-    //                                         setValueCurrency2(Number(valueCurrency1) * Number(res.data.rates[`${currency2.code.toUpperCase()}`]) + ((Number(valueCurrency1) * Number(res.data.rates[`${currency2.code.toUpperCase()}`])) / 100 * Number(!buy?.data?.find((el) => Number(el.id) === Number(currency1.id)) ? settings?.sell_commission : settings.buy_commission)));
-    //                                     }
-    //                                 ));
-    //
-    //                         }
-    //                     ));
-    //             }
+    //         if (currentTime - lastUpdateTimeRef.current >= 30000) {
+    //             const minMaxRes2 = await fetch(`${APICallUrl}/api/v1/get-currency-exchange?symbol=${currency1?.type === "sell" ? currency1?.code.toUpperCase() : currency2?.code.toUpperCase()}&convert=${currency2?.type === "buy" ? currency2?.code.toUpperCase() : currency1?.code.toUpperCase()}&price=${valueCurrency1}&type=${currency1?.type}`, {
+    //                 headers: {
+    //                     "Content-Type": "application/json;charset=UTF-8",
+    //                 },
+    //             });
+    //             const minMaxData2 = await minMaxRes2.json();
+
+    //             setValueCurrency2(minMaxData2?.cost);
     //             lastUpdateTimeRef.current = currentTime;
     //         }
     //     };
@@ -405,13 +348,14 @@ const MainCalculationSection = ({
     //
     //     const intervalId = setInterval(() => {
     //         fetchDataAndUpdate();
-    //     }, 10000); // 10000 milliseconds = 10 seconds
+    //     }, 30000); // 10000 milliseconds = 10 seconds
     //
     //     // Clear the interval when the component is unmounted
     //     return () => {
     //         clearInterval(intervalId);
     //     };
-    // }, [change, changeCurrency, valueCurrency1]);
+    // }, [change,currency1, valueCurrency1]);
+
 
     return (
         <section className="calculation-section">
@@ -426,7 +370,7 @@ const MainCalculationSection = ({
                                         <div
                                             className={`button-area left-button-area ${selected === 1 ? 'selected' : ''}`}
                                             onClick={() => {
-                                                setSelected(1)
+                                                setSelected(1);
                                                 // toBuy(1)
                                             }}>
                                             <p className="text">TRADE</p>
@@ -453,147 +397,246 @@ const MainCalculationSection = ({
 
                                 </div>
                             </div>
-                            <Row className="custom-row-form">
-                                <img onClick={() => {
-                                    changeCurrency();
-                                    setSelected(1);
-                                }}
-                                     className="change-img" src="/assets/images/change.svg"/>
-                                <Col lg="12">
-                                    <div className="form-section">
-                                        <label className='form-label'
-                                               style={Number(valueCurrency1) < minValue1 || Number(valueCurrency1) > maxValue1 ? {color: "#F00"} : {color: "white"}}>
-                                            Min {minValue1?.toFixed(2)} / Max {maxValue1?.toFixed(2)} {currency1?.code}
-                                        </label>
-                                        <div className='form-main'>
-                                            <input type='number'
-                                                   style={Number(valueCurrency1) < minValue1 || Number(valueCurrency1) > maxValue1 ? {border: "1px solid #F00"} : {border: "none"}}
-                                                   value={valueCurrency1}
-                                                   onChange={(e) => {
-                                                       let value = e.target.value.replace(/^0+(?=\d)/, '');
-                                                       if (value.startsWith(".")) {
-                                                           value = "0" + value;
-                                                       }
-                                                       setValueCurrency1(value);
+                            {
+                                currencyArray1.length > 0 &&
+                                <Row className="custom-row-form">
+                                    {
+                                        !show &&
+                                        <img onClick={() => {
+                                            changeCurrency();
+                                            setSelected(1);
+                                        }} className="change-img" src="/assets/images/change.svg"/>
+                                    }
 
-                                                       if (timeoutId) {
-                                                           clearTimeout(timeoutId);
-                                                       }
+                                    <Col lg="12">
+                                        <div className="form-section">
+                                            {
+                                                show ?
+                                                    <Skeleton variant="text" className="short-text"/> :
+                                                    <label className='form-label'
+                                                           style={Number(valueCurrency1) < minValue1 || Number(valueCurrency1) > maxValue1 ? {color: "#F00"} : {color: "white"}}>
+                                                        Min {minValue1?.toFixed(2)} /
+                                                        Max {maxValue1?.toFixed(2)} {currency1?.code}
+                                                    </label>
+                                            }
+                                            <div className={`form-main ${show ? "form-main-height" : ""}`}>
+                                                {
+                                                    show ?
+                                                        <>
+                                                            <Skeleton variant="text" className="long-text"/>
 
-                                                       const newTimeoutId = setTimeout(() => {
-                                                           change(value);
-                                                       }, 3000); // 3 seconds delay
+                                                            <Skeleton variant="circular" width={44} height={44}
+                                                                      className="circular-skeleton"/>
+                                                        </> :
+                                                        <>
+                                                            <input type='number'
+                                                                   style={Number(valueCurrency1) < minValue1 || Number(valueCurrency1) > maxValue1 ? {border: "1px solid #F00"} : {border: "none"}}
+                                                                   value={valueCurrency1 || 0}
+                                                                   onChange={(e) => {
+                                                                       setToggle(true)
+                                                                       let value = e.target.value.replace(/^0+(?=\d)/, '');
+                                                                       if (value.startsWith(".")) {
+                                                                           value = "0" + value;
+                                                                       }
+                                                                       setValueCurrency1(value);
 
-                                                       setTimeoutId(newTimeoutId);
-                                                   }}
-                                                   className={`form-control form-control-custom ${isSelectOpen ? "opacity-0 position-absolute w-25" : ""}`}
-                                                   id='some-id' name='first' placeholder="0"/>
-                                            <Select
-                                                id="1"
-                                                value={currency1}
-                                                onChange={(currency1) => {
-                                                    setCurrency1(currency1);
-                                                    selectCurrency1(currency1);
-                                                    setIsSelectOpen(false);
-                                                    document.getElementById('some-id').focus()
-                                                }}
-                                                onFocus={() => setIsSelectOpen(true)}
-                                                onBlur={() => setIsSelectOpen(false)}
-                                                options={currencyArray1}
-                                                filterOption={customFilter}
-                                                formatOptionLabel={options => (
-                                                    <div className="country-option"
-                                                         style={{
-                                                             display: "flex",
-                                                             justifyContent: `${isSelectOpen ? "start" : "end"}`,
-                                                             alignItems: "center",
-                                                             minHeight: `${isSelectOpen ? "32px" : `${width <= 1399 && width > 500 ? "40px" : "46px"}`}`,
-                                                             padding: `${isSelectOpen ? "8px" : "0"}`
-                                                         }}>
-                                                        <img src={options?.image} title={options?.code}
-                                                             alt={options?.code}
-                                                             style={{
-                                                                 maxWidth: `${isSelectOpen ? "32px" : "46px"}`,
-                                                                 maxHeight: `${isSelectOpen ? "32px" : `${width <= 1399 && width > 500 ? "40px" : "46px"}`}`,
-                                                                 marginRight: `${isSelectOpen ? "10px" : "0"}`,
-                                                                 width: "auto",
-                                                                 position: "relative"
-                                                             }}/>
-                                                        <p>{isSelectOpen && options?.name}</p>
-                                                    </div>
-                                                )}
-                                                isSearchable={true}
-                                                styles={customStyles}
-                                                menuIsOpen={isSelectOpen}
-                                            />
+                                                                       if (timeoutId) {
+                                                                           clearTimeout(timeoutId);
+                                                                       }
+
+                                                                       const newTimeoutId = setTimeout(() => {
+                                                                           change(value);
+                                                                       }, 1000);
+
+                                                                       setTimeoutId(newTimeoutId);
+                                                                   }}
+                                                                   className={`form-control form-control-custom ${isSelectOpen ? "opacity-0 position-absolute w-25" : ""}`}
+                                                                   id='some-id' name='first' placeholder="0"/>
+                                                            <Select
+                                                                id="1"
+                                                                value={currency1}
+                                                                onChange={(currency1) => {
+                                                                    setCurrency1(currency1);
+                                                                    selectCurrency1(currency1);
+                                                                    setIsSelectOpen(false);
+                                                                    document.getElementById('some-id').focus()
+                                                                }}
+                                                                onFocus={() => setIsSelectOpen(true)}
+                                                                onBlur={() => setIsSelectOpen(false)}
+                                                                options={currencyArray1}
+                                                                filterOption={customFilter}
+                                                                formatOptionLabel={options => (
+                                                                    <div className="country-option"
+                                                                         style={{
+                                                                             display: "flex",
+                                                                             justifyContent: `${isSelectOpen ? "start" : "end"}`,
+                                                                             alignItems: "center",
+                                                                             minHeight: `${isSelectOpen ? "32px" : `${width <= 1399 && width > 500 ? "40px" : "46px"}`}`,
+                                                                             padding: `${isSelectOpen ? "8px" : "0"}`
+                                                                         }}>
+                                                                        <img src={options?.image} title={options?.code}
+                                                                             alt={options?.code}
+                                                                             style={{
+                                                                                 maxWidth: `${isSelectOpen ? "32px" : "46px"}`,
+                                                                                 maxHeight: `${isSelectOpen ? "32px" : `${width <= 1399 && width > 500 ? "40px" : "46px"}`}`,
+                                                                                 marginRight: `${isSelectOpen ? "10px" : "0"}`,
+                                                                                 width: "auto",
+                                                                                 position: "relative"
+                                                                             }}/>
+                                                                        <p>{isSelectOpen && options?.name}</p>
+                                                                    </div>
+                                                                )}
+                                                                isSearchable={true}
+                                                                styles={customStyles}
+                                                                menuIsOpen={isSelectOpen}
+                                                            />
+                                                        </>
+                                                }
+                                            </div>
                                         </div>
-                                    </div>
-                                </Col>
-                                <Col lg="12">
-                                    <div className="form-section">
-                                        <label className='form-label'
-                                               style={Number(valueCurrency1) < minValue1 || Number(valueCurrency1) > maxValue1 ? {color: "#F00"} : {color: "white"}}>
-                                            Min {minValue2?.toFixed(2)} / Max {maxValue2?.toFixed(2)} {currency2?.code}
-                                        </label>
-                                        <div className='form-main'>
-                                            <input type='number'
-                                                   readOnly
-                                                   style={Number(valueCurrency1) < minValue1 || Number(valueCurrency1) > maxValue1 ? {border: "1px solid #F00"} : {border: "none"}}
-                                                   value={valueCurrency2}
-                                                   onChange={(e) => {
-                                                       let value = e.target.value.replace(/^0+(?=\d)/, '');
-                                                       if (value.startsWith(".")) {
-                                                           value = "0" + value;
-                                                       }
-                                                       changeInverse(value)
-                                                   }}
-                                                   className={`form-control form-control-custom  ${isSelectOpen2 ? "opacity-0 position-absolute w-25" : ""}`}
-                                                   id="some-id-2" name='second' placeholder="0"/>
-                                            <Select
-                                                id="2"
-                                                defaultValue={currency2}
+                                    </Col>
+                                    <Col lg="12">
+                                        <div className="form-section">
+                                            {
+                                                show ?
+                                                    <Skeleton variant="text" className="short-text"/> :
+                                                    <label className='form-label'
+                                                           style={Number(valueCurrency1) < minValue1 || Number(valueCurrency1) > maxValue1 ? {color: "#F00"} : {color: "white"}}>
 
-                                                value={currency2}
-                                                onChange={(currency2) => {
-                                                    setCurrency2(currency2);
-                                                    selectCurrency2(currency2);
-                                                    setIsSelectOpen2(false);
+                                                        Min {minValue2?.toFixed(2)} /
+                                                        Max {maxValue2?.toFixed(2)} {currency2?.code}
+                                                    </label>
+                                            }
 
-                                                    document.getElementById('some-id-2').focus()
-                                                }}
-                                                onFocus={() => setIsSelectOpen2(true)}
-                                                onBlur={() => setIsSelectOpen2(false)}
-                                                options={currencyArray2}
-                                                formatOptionLabel={options => (
-                                                    <div className="country-option"
-                                                         style={{
-                                                             display: "flex",
-                                                             justifyContent: `${isSelectOpen2 ? "start" : "end"}`,
-                                                             alignItems: "center",
-                                                             minHeight: `${isSelectOpen2 ? "32px" : `${width <= 1399 && width > 500 ? "40px" : "46px"}`}`,
-                                                             padding: `${isSelectOpen2 ? "8px" : "0"}`
-                                                         }}>
-                                                        <img src={options?.image} title={options?.code}
-                                                             alt={options?.code}
-                                                             style={{
-                                                                 maxWidth: `${isSelectOpen2 ? "32px" : "46px"}`,
-                                                                 maxHeight: `${isSelectOpen2 ? "32px" : `${width <= 1399 && width > 500 ? "40px" : "46px"}`}`,
-                                                                 marginRight: `${isSelectOpen2 ? "10px" : "0"}`,
-                                                                 width: "auto",
-                                                                 position: "relative"
-                                                             }}/>
-                                                        <p>{isSelectOpen2 && options?.name}</p>
-                                                    </div>
-                                                )}
-                                                isSearchable={true}
-                                                filterOption={customFilter}
-                                                menuIsOpen={isSelectOpen2}
-                                                styles={customStyles}
-                                            />
+
+                                            <div className={`form-main ${show ? "form-main-height" : ""}`}>
+                                                {/*<Triangle*/}
+                                                {/*    height="80"*/}
+                                                {/*    width="80"*/}
+                                                {/*    color="#4fa94d"*/}
+                                                {/*    ariaLabel="triangle-loading"*/}
+                                                {/*    wrapperStyle={{}}*/}
+                                                {/*    wrapperClassName=""*/}
+                                                {/*    visible={true}*/}
+                                                {/*/>*/}
+                                                {
+                                                    show ?
+                                                        <>
+                                                            <Skeleton variant="text" className="long-text"/>
+
+                                                            <Skeleton variant="circular" width={44} height={44}
+                                                                      className="circular-skeleton"/>
+                                                        </> :
+                                                        <>
+                                                            <input type='number'
+                                                                   readOnly
+                                                                   style={Number(valueCurrency1) < minValue1 || Number(valueCurrency1) > maxValue1 ? {border: "1px solid #F00"} : {border: "none"}}
+                                                                   value={valueCurrency2 || 0}
+                                                                   onChange={(e) => {
+                                                                       let value = e.target.value.replace(/^0+(?=\d)/, '');
+                                                                       if (value.startsWith(".")) {
+                                                                           value = "0" + value;
+                                                                       }
+                                                                       // changeInverse(value)
+                                                                   }}
+                                                                   className={`form-control form-control-custom  ${isSelectOpen2 ? "opacity-0 position-absolute w-25" : ""}`}
+                                                                   id="some-id-2" name='second' placeholder="0"/>
+
+                                                            <Select
+                                                                id="2"
+                                                                defaultValue={currency2}
+
+                                                                value={currency2}
+                                                                onChange={(currency2) => {
+                                                                    setCurrency2(currency2);
+                                                                    selectCurrency2(currency2);
+                                                                    setIsSelectOpen2(false);
+
+                                                                    document.getElementById('some-id-2').focus()
+                                                                }}
+                                                                onFocus={() => setIsSelectOpen2(true)}
+                                                                onBlur={() => setIsSelectOpen2(false)}
+                                                                options={currencyArray2}
+                                                                formatOptionLabel={options => (
+                                                                    <div className="country-option"
+                                                                         style={{
+                                                                             display: "flex",
+                                                                             justifyContent: `${isSelectOpen2 ? "start" : "end"}`,
+                                                                             alignItems: "center",
+                                                                             minHeight: `${isSelectOpen2 ? "32px" : `${width <= 1399 && width > 500 ? "40px" : "46px"}`}`,
+                                                                             padding: `${isSelectOpen2 ? "8px" : "0"}`
+                                                                         }}>
+                                                                        <img src={options?.image} title={options?.code}
+                                                                             alt={options?.code}
+                                                                             style={{
+                                                                                 maxWidth: `${isSelectOpen2 ? "32px" : "46px"}`,
+                                                                                 maxHeight: `${isSelectOpen2 ? "32px" : `${width <= 1399 && width > 500 ? "40px" : "46px"}`}`,
+                                                                                 marginRight: `${isSelectOpen2 ? "10px" : "0"}`,
+                                                                                 width: "auto",
+                                                                                 position: "relative"
+                                                                             }}/>
+                                                                        <p>{isSelectOpen2 && options?.name}</p>
+                                                                    </div>
+                                                                )}
+                                                                isSearchable={true}
+                                                                filterOption={customFilter}
+                                                                menuIsOpen={isSelectOpen2}
+                                                                styles={customStyles}
+                                                            />
+                                                        </>
+                                                }
+                                            </div>
                                         </div>
-                                    </div>
-                                </Col>
-                            </Row>
+                                    </Col>
+                                </Row>
+                            }
+                            {
+                                currencyArray1.length === 0 &&
+                                <Row className="custom-row-form">
+
+                                    <Col lg="12">
+                                        <div className="form-section">
+                                            {
+                                                show &&
+                                                <Skeleton variant="text" className="short-text"/>
+                                            }
+                                            <div className={`form-main ${show ? "form-main-height" : ""}`}>
+                                                {
+                                                    show &&
+                                                    <>
+                                                        <Skeleton variant="text" className="long-text"/>
+                                                        <Skeleton variant="circular" width={44} height={44}
+                                                                  className="circular-skeleton"/>
+                                                    </>
+                                                }
+                                            </div>
+                                        </div>
+                                    </Col>
+                                    <Col lg="12">
+                                        <div className="form-section">
+                                            {
+                                                show &&
+                                                <Skeleton variant="text" className="short-text"/>
+                                            }
+
+
+                                            <div className={`form-main ${show ? "form-main-height" : ""}`}>
+                                                {
+                                                    show &&
+                                                    <>
+                                                        <Skeleton variant="text" className="long-text"/>
+
+                                                        <Skeleton variant="circular" width={44} height={44}
+                                                                  className="circular-skeleton"/>
+                                                    </>
+                                                }
+                                            </div>
+                                        </div>
+                                    </Col>
+                                </Row>
+                            }
+
+
                             <ModalExchange valueCurrency1={valueCurrency1} valueCurrency2={valueCurrency2}
                                            minValue1={minValue1} maxValue1={maxValue1}
                                            currency1={currency1} currency2={currency2}/>

@@ -45,19 +45,20 @@ export default function IndexPage({data}) {
     const [currency1, setCurrency1] = useState({});
     const [currency2, setCurrency2] = useState({});
 
-    const [coinRate, setCoinRate] = useState(0);
 
     const [minValue1, setMinValue1] = useState(0);
     const [minValue2, setMinValue2] = useState(0);
     const [maxValue1, setMaxValue1] = useState(0);
     const [maxValue2, setMaxValue2] = useState(0);
 
-    const [settings, setSettings] = useState({});
 
     const [valueCurrency1, setValueCurrency1] = useState(0);
     const [valueCurrency2, setValueCurrency2] = useState(0);
+    const [show, setShow] = useState(false);
+    // const [show2, setShow2] = useState(false);
 
     useEffect(() => {
+        setShow(true);
         const fetchData = async () => {
             try {
                 const sellRes = await fetch(`${APICallUrl}/api/v1/currencies?type=sell`);
@@ -71,13 +72,11 @@ export default function IndexPage({data}) {
                     setCurrency2(sell.data[0]);
                     setCurrencyArray1(buy.data);
                     setCurrencyArray2(sell.data);
-
                     const minMaxRes1 = await fetch(`${APICallUrl}/api/v1/get-exchange-limit?currency=${buy.data[0].code.toUpperCase()}&symbol=${sell.data[0].code.toUpperCase()}`, {
                         headers: {
                             "Content-Type": "application/json;charset=UTF-8",
                         },
                     });
-
                     const minMaxData1 = await minMaxRes1.json();
 
                     setMinValue1(minMaxData1?.min);
@@ -89,36 +88,21 @@ export default function IndexPage({data}) {
                         },
                     });
 
+                    const cur2Res = await fetch(`${APICallUrl}/api/v1/get-currency-exchange?symbol=${sell.data[0]?.code.toUpperCase()}&convert=${buy.data[0]?.code.toUpperCase()}&price=${minMaxData1?.min}&type=${buy.data[0]?.type}`)
+                    const cur = await cur2Res.json();
                     const minMaxData2 = await minMaxRes2.json();
-                    setMinValue2(minMaxData2?.min);
-                    setValueCurrency2(minMaxData2?.min);
+                    setMinValue2(cur?.cost);
                     setMaxValue2(minMaxData2?.max);
-
-                    // const exchangeRes = await fetch(`${APICallUrl}/api/v1/get-currency-exchange?symbol=${sell.data[0].code.toUpperCase()}&convert=${buy.data[0].code.toUpperCase()}&price=1000&type=${buy.data[0].type}`, {
-                    //     headers: {
-                    //         "Content-Type": "application/json;charset=UTF-8",
-                    //     },
-                    // });
-                    //
-                    // const exchangeData = await exchangeRes.json();
-
-                    // setValueCurrency2(exchangeData.cost);
+                    setValueCurrency2(cur?.cost);
+                    setShow(false);
                 }
             } catch (error) {
                 console.error('Error fetching data:', error);
+                setShow(false);
             }
         };
 
         fetchData();
-        fetch(`${APICallUrl}/api/v1/settings`)
-            .then((res) => res.json()).then((res) => {
-            setSettings(res);
-        })
-            .catch((error) => {
-                // Handle general fetch error
-                console.error('Failed to get Settings', error);
-            });
-        ;
     }, []);
 
 
@@ -129,17 +113,19 @@ export default function IndexPage({data}) {
                 <link rel="icon" href="/favicon.png"/>
             </Head>
             <Layout>
-                <MainCalculationSection buy={data?.buy} sell={data?.sell} rates={data?.rates}
-                                        // settings={data?.settings}
-                                        currencyArray1={currencyArray1} setCurrencyArray1={setCurrencyArray1}
-                                        currencyArray2={currencyArray2} setCurrencyArray2={setCurrencyArray2}
-                                        currency1={currency1} setCurrency1={setCurrency1} currency2={currency2}
-                                        setCurrency2={setCurrency2} minValue1={minValue1} setMinValue1={setMinValue1}
-                                        minValue2={minValue2} setMinValue2={setMinValue2} maxValue1={maxValue1}
-                                        setMaxValue1={setMaxValue1} maxValue2={maxValue2} setMaxValue2={setMaxValue2}
-                                        valueCurrency1={valueCurrency1} setValueCurrency1={setValueCurrency1}
-                                        valueCurrency2={valueCurrency2} setValueCurrency2={setValueCurrency2}
-                                        settings={settings}
+                <MainCalculationSection
+                    // buy={data?.buy} sell={data?.sell} rates={data?.rates}
+                    //                     settings={data?.settings}
+                    currencyArray1={currencyArray1} setCurrencyArray1={setCurrencyArray1}
+                    currencyArray2={currencyArray2} setCurrencyArray2={setCurrencyArray2}
+                    currency1={currency1} setCurrency1={setCurrency1} currency2={currency2}
+                    setCurrency2={setCurrency2} minValue1={minValue1} setMinValue1={setMinValue1}
+                    minValue2={minValue2} setMinValue2={setMinValue2} maxValue1={maxValue1}
+                    setMaxValue1={setMaxValue1} maxValue2={maxValue2} setMaxValue2={setMaxValue2}
+                    valueCurrency1={valueCurrency1} setValueCurrency1={setValueCurrency1}
+                    valueCurrency2={valueCurrency2} setValueCurrency2={setValueCurrency2}
+                    show={show}   setShow={setShow}
+
                 />
                 <ExchangeSteps/>
                 <HomeFaq/>
