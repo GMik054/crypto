@@ -105,8 +105,8 @@ const ModalExchange = ({valueCurrency1, valueCurrency2, minValue1, maxValue1, cu
             <div className="custom-single-button">
 
                 <Button onClick={handleOpen}
-                        disabled={Number(valueCurrency1) < Number(minValue1) || Number(valueCurrency1) > Number(maxValue1)}
-                        className={`button-area ${Number(valueCurrency1) < Number(minValue1) || Number(valueCurrency1) > Number(maxValue1) ? "" : "active"}`}>
+                        disabled={Number(valueCurrency1) < Number(minValue1) || Number(valueCurrency1) > Number(maxValue1) || valueCurrency2 === undefined}
+                        className={`button-area ${Number(valueCurrency1) < Number(minValue1) || Number(valueCurrency1) > Number(maxValue1) || valueCurrency2 === undefined ? "" : "active"}`}>
                     <h5
                         className="text">EXCHANGE</h5></Button>
                 <Modal

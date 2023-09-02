@@ -48,8 +48,8 @@ const MainCalculationSection = ({
 
     const [toggle, setToggle] = useState(false);
 
-
-    const lastUpdateTimeRef = useRef(Date.now());
+    const [showTop, setShowTop] = useState(false);
+    const [showButton, setShowButton] = useState(false);
 
 
     const customStyles = {
@@ -152,12 +152,15 @@ const MainCalculationSection = ({
             .then(res => res.json().then(res => {
                     // console.log(res,"RESS")
                     setValueCurrency2(res.cost);
+                    setShowButton(false);
                     setToggle(false);
+
                 }
             ))
             .catch((error) => {
                 // Handle general fetch error
                 console.error('Failed to change', error);
+                setShowButton(false);
                 setToggle(false);
             });
 
@@ -169,6 +172,7 @@ const MainCalculationSection = ({
     //     setValueCurrency1(Number(e) / (1 + Number(currency1.type === "sell" ? settings?.sell_commission : settings.buy_commission) / 100) / Number(coinRate));
     // };
 
+
     const changeCurrency = async () => {
         setToggle(true);
         setShow(true);
@@ -179,8 +183,6 @@ const MainCalculationSection = ({
         });
 
         const minMaxData1 = await minMaxRes1.json();
-        console.log(minMaxData1)
-
         const cur2Res = await fetch(`${APICallUrl}/api/v1/get-currency-exchange?symbol=${currency2?.type === "sell" ? currency2?.code.toUpperCase() : currency1?.code.toUpperCase()}&convert=${currency1?.type === "buy" ? currency1?.code.toUpperCase() : currency2?.code.toUpperCase()}&price=${minMaxData1?.min}&type=${currency2?.type}`)
         const minMaxRes2 = await fetch(`${APICallUrl}/api/v1/get-exchange-limit?currency=${currency1.code.toUpperCase()}&symbol=${currency2.code.toUpperCase()}`, {
             headers: {
@@ -189,7 +191,6 @@ const MainCalculationSection = ({
         });
 
         const cur = await cur2Res.json();
-        console.log(cur)
         const minMaxData2 = await minMaxRes2.json();
 
         setMinValue1(minMaxData1?.min);
@@ -231,6 +232,7 @@ const MainCalculationSection = ({
     };
 
     const selectCurrency1 = async (c) => {
+
         const minMaxRes1 = await fetch(`${APICallUrl}/api/v1/get-exchange-limit?currency=${c.code.toUpperCase()}&symbol=${currency2.code.toUpperCase()}`, {
             headers: {
                 "Content-Type": "application/json;charset=UTF-8",
@@ -253,6 +255,10 @@ const MainCalculationSection = ({
         setMinValue2(cur?.cost);
         setValueCurrency2(cur?.cost);
         setMaxValue2(minMaxData2?.max);
+        setShowTop(false);
+        setShowButton(false);
+        setToggle(false);
+
 
     }
 
@@ -280,6 +286,9 @@ const MainCalculationSection = ({
         setMinValue2(cur?.cost);
         setValueCurrency2(cur?.cost);
         setMaxValue2(minMaxData2?.max);
+        setShowButton(false);
+        setToggle(false);
+        setShowTop(false);
 
 
     }
@@ -312,7 +321,7 @@ const MainCalculationSection = ({
                     });
                     const cur = await cur2Res.json();
                     const minMaxData2 = await minMaxRes2.json();
-
+                    console.log(cur)
                     setMinValue2(cur?.cost);
                     setValueCurrency2(cur?.cost);
                     setMaxValue2(minMaxData2?.max);
@@ -326,35 +335,6 @@ const MainCalculationSection = ({
         }
 
     }, [currency1, currency2, valueCurrency1, valueCurrency2, toggle]); // dependencies
-
-    // useEffect(() => {
-    //     const fetchDataAndUpdate = async () => {
-    //
-    //         const currentTime = Date.now();
-    //         if (currentTime - lastUpdateTimeRef.current >= 30000) {
-    //             const minMaxRes2 = await fetch(`${APICallUrl}/api/v1/get-currency-exchange?symbol=${currency1?.type === "sell" ? currency1?.code.toUpperCase() : currency2?.code.toUpperCase()}&convert=${currency2?.type === "buy" ? currency2?.code.toUpperCase() : currency1?.code.toUpperCase()}&price=${valueCurrency1}&type=${currency1?.type}`, {
-    //                 headers: {
-    //                     "Content-Type": "application/json;charset=UTF-8",
-    //                 },
-    //             });
-    //             const minMaxData2 = await minMaxRes2.json();
-
-    //             setValueCurrency2(minMaxData2?.cost);
-    //             lastUpdateTimeRef.current = currentTime;
-    //         }
-    //     };
-    //
-    //     fetchDataAndUpdate();
-    //
-    //     const intervalId = setInterval(() => {
-    //         fetchDataAndUpdate();
-    //     }, 30000); // 10000 milliseconds = 10 seconds
-    //
-    //     // Clear the interval when the component is unmounted
-    //     return () => {
-    //         clearInterval(intervalId);
-    //     };
-    // }, [change,currency1, valueCurrency1]);
 
 
     return (
@@ -401,7 +381,7 @@ const MainCalculationSection = ({
                                 currencyArray1.length > 0 &&
                                 <Row className="custom-row-form">
                                     {
-                                        !show &&
+                                        !show && !showButton &&
                                         <img onClick={() => {
                                             changeCurrency();
                                             setSelected(1);
@@ -411,7 +391,7 @@ const MainCalculationSection = ({
                                     <Col lg="12">
                                         <div className="form-section">
                                             {
-                                                show ?
+                                                show || showTop ?
                                                     <Skeleton variant="text" className="short-text"/> :
                                                     <label className='form-label'
                                                            style={Number(valueCurrency1) < minValue1 || Number(valueCurrency1) > maxValue1 ? {color: "#F00"} : {color: "white"}}>
@@ -419,78 +399,84 @@ const MainCalculationSection = ({
                                                         Max {maxValue1?.toFixed(2)} {currency1?.code}
                                                     </label>
                                             }
-                                            <div className={`form-main ${show ? "form-main-height" : ""}`}>
+                                            <div className={`form-main ${show || showTop ? "form-main-height" : ""}`}>
+                                                {
+                                                    show || showTop ?
+
+                                                        <Skeleton variant="text"
+                                                                  className={`long-text ${showTop ? "w-100" : ""}`}/>
+                                                        :
+                                                        <input type='number'
+                                                               style={Number(valueCurrency1) < minValue1 || Number(valueCurrency1) > maxValue1 ? {border: "1px solid #F00"} : {border: "none"}}
+                                                               value={valueCurrency1 || 0}
+                                                               onChange={(e) => {
+                                                                   setToggle(true);
+                                                                   setShowButton(true);
+                                                                   let value = e.target.value.replace(/^0+(?=\d)/, '');
+                                                                   if (value.startsWith(".")) {
+                                                                       value = "0" + value;
+                                                                   }
+                                                                   setValueCurrency1(value);
+
+                                                                   if (timeoutId) {
+                                                                       clearTimeout(timeoutId);
+                                                                   }
+
+                                                                   const newTimeoutId = setTimeout(() => {
+                                                                       change(value);
+                                                                   }, 1000);
+
+                                                                   setTimeoutId(newTimeoutId);
+                                                               }}
+                                                               className={`form-control form-control-custom ${isSelectOpen ? "opacity-0 position-absolute w-25" : ""}`}
+                                                               id='some-id' name='first' placeholder="0"/>
+                                                }
                                                 {
                                                     show ?
-                                                        <>
-                                                            <Skeleton variant="text" className="long-text"/>
-
-                                                            <Skeleton variant="circular" width={44} height={44}
-                                                                      className="circular-skeleton"/>
-                                                        </> :
-                                                        <>
-                                                            <input type='number'
-                                                                   style={Number(valueCurrency1) < minValue1 || Number(valueCurrency1) > maxValue1 ? {border: "1px solid #F00"} : {border: "none"}}
-                                                                   value={valueCurrency1 || 0}
-                                                                   onChange={(e) => {
-                                                                       setToggle(true)
-                                                                       let value = e.target.value.replace(/^0+(?=\d)/, '');
-                                                                       if (value.startsWith(".")) {
-                                                                           value = "0" + value;
-                                                                       }
-                                                                       setValueCurrency1(value);
-
-                                                                       if (timeoutId) {
-                                                                           clearTimeout(timeoutId);
-                                                                       }
-
-                                                                       const newTimeoutId = setTimeout(() => {
-                                                                           change(value);
-                                                                       }, 1000);
-
-                                                                       setTimeoutId(newTimeoutId);
-                                                                   }}
-                                                                   className={`form-control form-control-custom ${isSelectOpen ? "opacity-0 position-absolute w-25" : ""}`}
-                                                                   id='some-id' name='first' placeholder="0"/>
-                                                            <Select
-                                                                id="1"
-                                                                value={currency1}
-                                                                onChange={(currency1) => {
-                                                                    setCurrency1(currency1);
-                                                                    selectCurrency1(currency1);
-                                                                    setIsSelectOpen(false);
-                                                                    document.getElementById('some-id').focus()
-                                                                }}
-                                                                onFocus={() => setIsSelectOpen(true)}
-                                                                onBlur={() => setIsSelectOpen(false)}
-                                                                options={currencyArray1}
-                                                                filterOption={customFilter}
-                                                                formatOptionLabel={options => (
-                                                                    <div className="country-option"
+                                                        <Skeleton variant="circular" width={44} height={44}
+                                                                  className="circular-skeleton"/> :
+                                                        <Select
+                                                            id="1"
+                                                            value={currency1}
+                                                            onChange={(currency1) => {
+                                                                setCurrency1(currency1);
+                                                                setToggle(true);
+                                                                setShowTop(true);
+                                                                setShowButton(true);
+                                                                selectCurrency1(currency1);
+                                                                setIsSelectOpen(false);
+                                                                document.getElementById('some-id').focus()
+                                                            }}
+                                                            onFocus={() => setIsSelectOpen(true)}
+                                                            onBlur={() => setIsSelectOpen(false)}
+                                                            options={currencyArray1}
+                                                            filterOption={customFilter}
+                                                            formatOptionLabel={options => (
+                                                                <div className="country-option"
+                                                                     style={{
+                                                                         display: "flex",
+                                                                         justifyContent: `${isSelectOpen ? "start" : "end"}`,
+                                                                         alignItems: "center",
+                                                                         minHeight: `${isSelectOpen ? "32px" : `${width <= 1399 && width > 500 ? "40px" : "46px"}`}`,
+                                                                         padding: `${isSelectOpen ? "8px" : "0"}`
+                                                                     }}>
+                                                                    <img src={options?.image} title={options?.code}
+                                                                         alt={options?.code}
                                                                          style={{
-                                                                             display: "flex",
-                                                                             justifyContent: `${isSelectOpen ? "start" : "end"}`,
-                                                                             alignItems: "center",
-                                                                             minHeight: `${isSelectOpen ? "32px" : `${width <= 1399 && width > 500 ? "40px" : "46px"}`}`,
-                                                                             padding: `${isSelectOpen ? "8px" : "0"}`
-                                                                         }}>
-                                                                        <img src={options?.image} title={options?.code}
-                                                                             alt={options?.code}
-                                                                             style={{
-                                                                                 maxWidth: `${isSelectOpen ? "32px" : "46px"}`,
-                                                                                 maxHeight: `${isSelectOpen ? "32px" : `${width <= 1399 && width > 500 ? "40px" : "46px"}`}`,
-                                                                                 marginRight: `${isSelectOpen ? "10px" : "0"}`,
-                                                                                 width: "auto",
-                                                                                 position: "relative"
-                                                                             }}/>
-                                                                        <p>{isSelectOpen && options?.name}</p>
-                                                                    </div>
-                                                                )}
-                                                                isSearchable={true}
-                                                                styles={customStyles}
-                                                                menuIsOpen={isSelectOpen}
-                                                            />
-                                                        </>
+                                                                             maxWidth: `${isSelectOpen ? "32px" : "46px"}`,
+                                                                             maxHeight: `${isSelectOpen ? "32px" : `${width <= 1399 && width > 500 ? "40px" : "46px"}`}`,
+                                                                             marginRight: `${isSelectOpen ? "10px" : "0"}`,
+                                                                             width: "auto",
+                                                                             position: "relative"
+                                                                         }}/>
+                                                                    <p>{isSelectOpen && options?.name}</p>
+                                                                </div>
+                                                            )}
+                                                            isSearchable={true}
+                                                            styles={customStyles}
+                                                            menuIsOpen={isSelectOpen}
+                                                        />
+
                                                 }
                                             </div>
                                         </div>
@@ -498,18 +484,19 @@ const MainCalculationSection = ({
                                     <Col lg="12">
                                         <div className="form-section">
                                             {
-                                                show ?
+                                                show || showButton ?
                                                     <Skeleton variant="text" className="short-text"/> :
                                                     <label className='form-label'
                                                            style={Number(valueCurrency1) < minValue1 || Number(valueCurrency1) > maxValue1 ? {color: "#F00"} : {color: "white"}}>
 
-                                                        Min {minValue2?.toFixed(2)} /
+                                                        Min {minValue2?.toFixed(2) || 0} /
                                                         Max {maxValue2?.toFixed(2)} {currency2?.code}
                                                     </label>
                                             }
 
 
-                                            <div className={`form-main ${show ? "form-main-height" : ""}`}>
+                                            <div
+                                                className={`form-main ${show || showButton ? "form-main-height" : ""}`}>
                                                 {/*<Triangle*/}
                                                 {/*    height="80"*/}
                                                 {/*    width="80"*/}
@@ -520,70 +507,74 @@ const MainCalculationSection = ({
                                                 {/*    visible={true}*/}
                                                 {/*/>*/}
                                                 {
+                                                    show || showButton ?
+                                                        <Skeleton variant="text"
+                                                                  className={`long-text ${showButton ? "w-100" : ""}`}
+                                                        />
+
+                                                        : <input type='number'
+                                                                 readOnly
+                                                                 style={Number(valueCurrency1) < minValue1 || Number(valueCurrency1) > maxValue1 ? {border: "1px solid #F00"} : {border: "none"}}
+                                                                 value={valueCurrency2 || 0}
+                                                                 onChange={(e) => {
+                                                                     let value = e.target.value.replace(/^0+(?=\d)/, '');
+                                                                     if (value.startsWith(".")) {
+                                                                         value = "0" + value;
+                                                                     }
+                                                                     // changeInverse(value)
+                                                                 }}
+                                                                 className={`form-control form-control-custom  ${isSelectOpen2 ? "opacity-0 position-absolute w-25" : ""}`}
+                                                                 id="some-id-2" name='second' placeholder="0"/>
+                                                }
+                                                {
                                                     show ?
-                                                        <>
-                                                            <Skeleton variant="text" className="long-text"/>
+                                                        <Skeleton variant="circular" width={44} height={44}
+                                                                  className="circular-skeleton"/> :
+                                                        <Select
+                                                            id="2"
+                                                            defaultValue={currency2}
 
-                                                            <Skeleton variant="circular" width={44} height={44}
-                                                                      className="circular-skeleton"/>
-                                                        </> :
-                                                        <>
-                                                            <input type='number'
-                                                                   readOnly
-                                                                   style={Number(valueCurrency1) < minValue1 || Number(valueCurrency1) > maxValue1 ? {border: "1px solid #F00"} : {border: "none"}}
-                                                                   value={valueCurrency2 || 0}
-                                                                   onChange={(e) => {
-                                                                       let value = e.target.value.replace(/^0+(?=\d)/, '');
-                                                                       if (value.startsWith(".")) {
-                                                                           value = "0" + value;
-                                                                       }
-                                                                       // changeInverse(value)
-                                                                   }}
-                                                                   className={`form-control form-control-custom  ${isSelectOpen2 ? "opacity-0 position-absolute w-25" : ""}`}
-                                                                   id="some-id-2" name='second' placeholder="0"/>
+                                                            value={currency2}
+                                                            onChange={(currency2) => {
+                                                                setShowTop(true);
+                                                                setShowButton(true);
+                                                                setToggle(true);
+                                                                setCurrency2(currency2);
+                                                                selectCurrency2(currency2);
+                                                                setIsSelectOpen2(false);
 
-                                                            <Select
-                                                                id="2"
-                                                                defaultValue={currency2}
-
-                                                                value={currency2}
-                                                                onChange={(currency2) => {
-                                                                    setCurrency2(currency2);
-                                                                    selectCurrency2(currency2);
-                                                                    setIsSelectOpen2(false);
-
-                                                                    document.getElementById('some-id-2').focus()
-                                                                }}
-                                                                onFocus={() => setIsSelectOpen2(true)}
-                                                                onBlur={() => setIsSelectOpen2(false)}
-                                                                options={currencyArray2}
-                                                                formatOptionLabel={options => (
-                                                                    <div className="country-option"
+                                                                document.getElementById('some-id-2').focus()
+                                                            }}
+                                                            onFocus={() => setIsSelectOpen2(true)}
+                                                            onBlur={() => setIsSelectOpen2(false)}
+                                                            options={currencyArray2}
+                                                            formatOptionLabel={options => (
+                                                                <div className="country-option"
+                                                                     style={{
+                                                                         display: "flex",
+                                                                         justifyContent: `${isSelectOpen2 ? "start" : "end"}`,
+                                                                         alignItems: "center",
+                                                                         minHeight: `${isSelectOpen2 ? "32px" : `${width <= 1399 && width > 500 ? "40px" : "46px"}`}`,
+                                                                         padding: `${isSelectOpen2 ? "8px" : "0"}`
+                                                                     }}>
+                                                                    <img src={options?.image} title={options?.code}
+                                                                         alt={options?.code}
                                                                          style={{
-                                                                             display: "flex",
-                                                                             justifyContent: `${isSelectOpen2 ? "start" : "end"}`,
-                                                                             alignItems: "center",
-                                                                             minHeight: `${isSelectOpen2 ? "32px" : `${width <= 1399 && width > 500 ? "40px" : "46px"}`}`,
-                                                                             padding: `${isSelectOpen2 ? "8px" : "0"}`
-                                                                         }}>
-                                                                        <img src={options?.image} title={options?.code}
-                                                                             alt={options?.code}
-                                                                             style={{
-                                                                                 maxWidth: `${isSelectOpen2 ? "32px" : "46px"}`,
-                                                                                 maxHeight: `${isSelectOpen2 ? "32px" : `${width <= 1399 && width > 500 ? "40px" : "46px"}`}`,
-                                                                                 marginRight: `${isSelectOpen2 ? "10px" : "0"}`,
-                                                                                 width: "auto",
-                                                                                 position: "relative"
-                                                                             }}/>
-                                                                        <p>{isSelectOpen2 && options?.name}</p>
-                                                                    </div>
-                                                                )}
-                                                                isSearchable={true}
-                                                                filterOption={customFilter}
-                                                                menuIsOpen={isSelectOpen2}
-                                                                styles={customStyles}
-                                                            />
-                                                        </>
+                                                                             maxWidth: `${isSelectOpen2 ? "32px" : "46px"}`,
+                                                                             maxHeight: `${isSelectOpen2 ? "32px" : `${width <= 1399 && width > 500 ? "40px" : "46px"}`}`,
+                                                                             marginRight: `${isSelectOpen2 ? "10px" : "0"}`,
+                                                                             width: "auto",
+                                                                             position: "relative"
+                                                                         }}/>
+                                                                    <p>{isSelectOpen2 && options?.name}</p>
+                                                                </div>
+                                                            )}
+                                                            isSearchable={true}
+                                                            filterOption={customFilter}
+                                                            menuIsOpen={isSelectOpen2}
+                                                            styles={customStyles}
+                                                        />
+
                                                 }
                                             </div>
                                         </div>
