@@ -1,5 +1,31 @@
 {
-
+  "links": [
+    {
+      "value": "",
+      "label": "Home"
+    },
+    {
+      "value": "faq",
+      "label": "FAQ"
+    },
+    {
+      "value": "gallery",
+      "label": "Gallery"
+    },
+    {
+      "value": "contact-us",
+      "label": "Contacts"
+    }
+  ],
+  "login": "Login",
+  "loginText": "Use Your email address & password to login",
+  "register": "Register",
+  "email": "E-mail",
+  "name" : "Name",
+  "surName" : "Surname",
+  "phone" : "Phone Number",
+  "password": "Password",
+  "repeatPassword": "Repeat Password",
   "headerTitle": "<h3>Welcome to <span>Crypto.am</span></h3>",
   "headerDescription": "Our most significant asset is our strong reputation and the trust of our customers, \nbacked by over 2000 positive reviews.",
   "mainTextTitle": "<h3>Welcome to <span>Crypto.am</span></h3>",
@@ -28,23 +54,20 @@
       "title": "Trusted Experience",
       "description": "Over 2 years of excellence in cryptocurrency exchange.",
       "img": "/assets/CustomerService/Trusted.svg"
-
     },
     {
       "title": "Best Rates",
       "description": "Competitive prices and superior customer service.",
       "img": "/assets/CustomerService/Rates.svg"
-
     },
     {
       "title": "Global Reach",
       "description": "Access our services worldwide for seamless trading.",
       "img": "/assets/CustomerService/Global.svg"
-
     }
   ],
-  "successInfoModalATTENTION" : "ATTENTION!",
-  "successInfoModalATTENTIONDesc" : "This operation is conducted manually during a scheduled face-to-face meeting. Our representative will reach out to you within 30 minutes.",
-  "successInfoModalIMPORTANT" : "IMPORTANT!",
-  "successInfoModalIMPORTANTDesc" : "Our staff will exclusively reach out to you using the designated contact information. In any other situations, we are not holding responsibility for potential."
+  "successInfoModalATTENTION": "ATTENTION!",
+  "successInfoModalATTENTIONDesc": "This operation is conducted manually during a scheduled face-to-face meeting. Our representative will reach out to you within 30 minutes.",
+  "successInfoModalIMPORTANT": "IMPORTANT!",
+  "successInfoModalIMPORTANTDesc": "Our staff will exclusively reach out to you using the designated contact information. In any other situations, we are not holding responsibility for potential."
 }

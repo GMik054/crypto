@@ -10,6 +10,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {selectIsLoading, selectLanguage} from "../features/Slices/LoginSlice"
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import {useEffect, useState} from "react";
+import FadeInSection from "../../Components/FadeInSection";
 
 
 // export async function getServerSideProps({locale}) {
@@ -112,34 +113,37 @@ export default function IndexPage({data}) {
                 <title>Crypto Home</title>
                 <link rel="icon" href="/favicon.png"/>
             </Head>
-            <Layout>
-                <MainCalculationSection
-                    // buy={data?.buy} sell={data?.sell} rates={data?.rates}
-                    //                     settings={data?.settings}
-                    currencyArray1={currencyArray1} setCurrencyArray1={setCurrencyArray1}
-                    currencyArray2={currencyArray2} setCurrencyArray2={setCurrencyArray2}
-                    currency1={currency1} setCurrency1={setCurrency1} currency2={currency2}
-                    setCurrency2={setCurrency2} minValue1={minValue1} setMinValue1={setMinValue1}
-                    minValue2={minValue2} setMinValue2={setMinValue2} maxValue1={maxValue1}
-                    setMaxValue1={setMaxValue1} maxValue2={maxValue2} setMaxValue2={setMaxValue2}
-                    valueCurrency1={valueCurrency1} setValueCurrency1={setValueCurrency1}
-                    valueCurrency2={valueCurrency2} setValueCurrency2={setValueCurrency2}
-                    show={show}   setShow={setShow}
 
-                />
-                <ExchangeSteps/>
-                <HomeFaq/>
-                {/*<Partners/>*/}
-                {isLoading && (
-                    <Backdrop sx={{
-                        color: '#fff',
-                        zIndex: (theme) => theme.zIndex.drawer + 1000,
-                        backgroundColor: "rgba(255, 255, 255, 0.3)",
-                    }} open>
-                        <CircularProgress style={{color: '#E8BA4E'}}/>
-                    </Backdrop>
-                )}
-            </Layout>
+                <Layout>
+                    <MainCalculationSection
+                        // buy={data?.buy} sell={data?.sell} rates={data?.rates}
+                        //                     settings={data?.settings}
+                        currencyArray1={currencyArray1} setCurrencyArray1={setCurrencyArray1}
+                        currencyArray2={currencyArray2} setCurrencyArray2={setCurrencyArray2}
+                        currency1={currency1} setCurrency1={setCurrency1} currency2={currency2}
+                        setCurrency2={setCurrency2} minValue1={minValue1} setMinValue1={setMinValue1}
+                        minValue2={minValue2} setMinValue2={setMinValue2} maxValue1={maxValue1}
+                        setMaxValue1={setMaxValue1} maxValue2={maxValue2} setMaxValue2={setMaxValue2}
+                        valueCurrency1={valueCurrency1} setValueCurrency1={setValueCurrency1}
+                        valueCurrency2={valueCurrency2} setValueCurrency2={setValueCurrency2}
+                        show={show} setShow={setShow}
+
+                    />
+                    <ExchangeSteps/>
+
+                    <HomeFaq/>
+                    {/*<Partners/>*/}
+                    {isLoading && (
+                        <Backdrop sx={{
+                            color: '#fff',
+                            zIndex: (theme) => theme.zIndex.drawer + 1000,
+                            backgroundColor: "rgba(255, 255, 255, 0.3)",
+                        }} open>
+                            <CircularProgress style={{color: '#E8BA4E'}}/>
+                        </Backdrop>
+                    )}
+                </Layout>
+
         </>
     )
 }

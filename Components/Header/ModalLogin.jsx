@@ -14,6 +14,7 @@ import {
     setAuth, setIsLoading,
     setLoginToken,
 } from "../../src/features/Slices/LoginSlice";
+import {useTranslation} from "next-i18next";
 
 const ModalLogin = () => {
     const [open, setOpen] = useState(false);
@@ -102,11 +103,11 @@ const ModalLogin = () => {
                 dispatch(setIsLoading(false));
             });
     }
-
+    const { t } = useTranslation();
 
     return (
         <div className="header-buttons">
-            <Button className="login" onClick={handleOpen}>Login</Button>
+            <Button className="login" onClick={handleOpen}>{t('login')}</Button>
 
             <Modal
                 aria-labelledby="transition-modal-title"
@@ -126,12 +127,12 @@ const ModalLogin = () => {
                         <Button onClick={handleClose} className="close-button">
                             <CloseIcon/>
                         </Button>
-                        <h5>Login</h5>
-                        <p className="modal-desc">Use Your email address & password to login</p>
+                        <h5>  <p>{t('login')}</p></h5>
+                        <p className="modal-desc">{t('loginText')}</p>
                         <Form className="form">
                             <Row className="form-row">
                                 <Col lg="12">
-                                    <Label>E-mail </Label>
+                                    <Label>{t('email')}</Label>
                                     <Input type="email" className="modal-input" name="email"
                                            style={formik.touched.email && formik.errors.email ? {border: "1px solid #F00"} : {border: "none"}}
                                            value={formik.values.email}
@@ -149,7 +150,7 @@ const ModalLogin = () => {
                                 </Col>
 
                                 <Col lg='12'>
-                                    <Label>Password</Label>
+                                    <Label>{t('password')}</Label>
                                     <div className='password-input-container'>
                                         <Input
                                             type={showPassword ? 'text' : 'password'}
@@ -183,10 +184,10 @@ const ModalLogin = () => {
                             </Row>
                         </Form>
                         <Button
-                            className={`modal-exchange-button ${Object.keys(formik.errors).length !== 0 ? "" : "active"}`}
+                            className={`modal-exchange-button text-uppercase ${Object.keys(formik.errors).length !== 0 ? "" : "active"}`}
                             disabled={Object.keys(formik.errors).length !== 0}
                             onClick={login}
-                        >LOGIN</Button>
+                        >{t('login')}</Button>
                         {
                             err.length > 0 &&
                             <div className="d-flex justify-content-center">

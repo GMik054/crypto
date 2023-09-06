@@ -47,7 +47,7 @@ const Header = ({links}) => {
         const loginToken = useSelector(selectLoginToken);
         const isLoading = useSelector(selectIsLoading);
 
-        const {t} = useTranslation('common');
+    const { t } = useTranslation();
 
         // useEffect(() => {
         //     if (language) {

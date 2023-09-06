@@ -8,6 +8,7 @@ import {useRouter} from "next/router";
 import {Triangle} from "react-loader-spinner";
 import {Skeleton} from "@mui/material";
 import {useTranslation} from "next-i18next";
+import FadeInSection from "../FadeInSection";
 // import {getExchangeRates} from "../../halpers/coinbaseAPI";
 
 
@@ -343,7 +344,9 @@ const MainCalculationSection = ({
     return (
         <section className="calculation-section">
             <Container>
+
                 <Row className="justify-content-md-center">
+
                     <Col xl="6" lg='7' md="12" sm="12" xs="12" className="cart">
                         <div className="calculation-banner">
                             <img src="/assets/images/Vector.svg"/>
@@ -644,7 +647,10 @@ const MainCalculationSection = ({
                     </Col>
                 </Row>
             </Container>
+            <FadeInSection>
+
             <IconsSection/>
+            </FadeInSection>
         </section>
     );
 };

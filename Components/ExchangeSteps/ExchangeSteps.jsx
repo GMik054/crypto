@@ -2,6 +2,7 @@ import React from 'react';
 import {Col, Container, Row} from "reactstrap";
 import Slider from "react-slick";
 import {useTranslation} from "next-i18next";
+import FadeInSection from "../FadeInSection";
 
 const ExchangeSteps = () => {
     const { t } = useTranslation();
@@ -47,8 +48,12 @@ const ExchangeSteps = () => {
 
     return (
         <section className="exchange-steps-section">
+
             <Container>
+
                 <Row style={{gap:"20px"}}>
+                    <FadeInSection>
+
                     <Col lg='12'>
                         <Row>
                             <Col lg='2' md="3" xs="4">
@@ -93,6 +98,9 @@ const ExchangeSteps = () => {
                         </Row>
 
                     </Col>
+                    </FadeInSection>
+                    <FadeInSection>
+
                     <Col lg="12" style={{marginTop: "calc(70px + (220 - 120) * ((100vw - 320px) / (1920 - 320)))"}}>
                         <Row>
 
@@ -139,6 +147,9 @@ const ExchangeSteps = () => {
                         </Row>
 
                     </Col>
+                    </FadeInSection>
+                    <FadeInSection>
+
                     <Col lg="12" style={{marginTop: "calc(70px + (220 - 120) * ((100vw - 320px) / (1920 - 320)))"}} className="simply">
                         <Row className="justify-content-md-center d-flex">
                             <Col lg="11">
@@ -150,8 +161,11 @@ const ExchangeSteps = () => {
                         </Row>
 
                     </Col>
+                    </FadeInSection>
+
                 </Row>
             </Container>
+
         </section>
     );
 };

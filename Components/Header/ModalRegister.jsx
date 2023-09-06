@@ -12,6 +12,7 @@ import {APICallUrl} from "../../halpers/useWindowDimensions";
 import {FaCheckCircle} from "react-icons/fa";
 import {setIsLoading} from "../../src/features/Slices/LoginSlice";
 import {useDispatch} from "react-redux";
+import {useTranslation} from "next-i18next";
 
 
 const ModalRegister = () => {
@@ -100,10 +101,11 @@ const ModalRegister = () => {
             });
     }
 
+    const { t } = useTranslation();
     return (
         <>
             <div className="header-buttons">
-                <Button className="register" onClick={handleOpen}>Register</Button>
+                <Button className="register" onClick={handleOpen}>{t('register')}</Button>
 
                 <Modal
                     aria-labelledby="transition-modal-title"
@@ -123,14 +125,14 @@ const ModalRegister = () => {
                             <Button onClick={handleClose} className="close-button">
                                 <CloseIcon/>
                             </Button>
-                            <h5>Register</h5>
-                            <p className="modal-desc">Lorem Ipsum is simply dummy text of the printing and typesetting
-                                industry. Lorem Ipsum has
-                                been the industry's standard.</p>
+                            <h5>{t('register')}</h5>
+                            {/*<p className="modal-desc">Lorem Ipsum is simply dummy text of the printing and typesetting*/}
+                            {/*    industry. Lorem Ipsum has*/}
+                            {/*    been the industry's standard.</p>*/}
                             <Form className="form">
                                 <Row className="form-row">
                                     <Col lg="6">
-                                        <Label>Name</Label>
+                                        <Label>{t('name')}</Label>
                                         <Input type="text" className="modal-input" name="first_name"
                                                value={ltrim(formik.values.first_name)}
                                                style={formik.touched.first_name && formik.errors.first_name ? {border: "1px solid #F00"} : {border: "none"}}
@@ -145,7 +147,7 @@ const ModalRegister = () => {
                                         )}
                                     </Col>
                                     <Col lg="6">
-                                        <Label>Surname </Label>
+                                        <Label>{t('surName')}</Label>
                                         <Input type="text" className="modal-input" name="last_name"
                                                value={ltrim(formik.values.last_name)}
                                                style={formik.touched.last_name && formik.errors.last_name ? {border: "1px solid #F00"} : {border: "none"}}
@@ -160,7 +162,7 @@ const ModalRegister = () => {
                                         )}
                                     </Col>
                                     <Col lg="12">
-                                        <Label>E-mail </Label>
+                                        <Label>{t('email')}</Label>
                                         <Input type="email" className="modal-input" name="email"
                                                style={formik.touched.email && formik.errors.email ? {border: "1px solid #F00"} : {border: "none"}}
                                                value={formik.values.email}
@@ -177,7 +179,7 @@ const ModalRegister = () => {
                                         )}
                                     </Col>
                                     <Col lg="12">
-                                        <Label>Phone Number</Label>
+                                        <Label>{t('phone')}</Label>
                                         <Input type="phone" className="modal-input" name="phone"
                                                style={formik.touched.phone && formik.errors.phone ? {border: "1px solid #F00"} : {border: "none"}}
                                                value={formik.values.phone}
@@ -197,7 +199,7 @@ const ModalRegister = () => {
 
                                     </Col>
                                     <Col lg='6'>
-                                        <Label>Password</Label>
+                                        <Label>{t('password')}</Label>
                                         <div className='password-input-container'>
                                             <Input
                                                 type={showPassword ? 'text' : 'password'}
@@ -229,9 +231,7 @@ const ModalRegister = () => {
                                         )}
                                     </Col>
                                     <Col lg='6'>
-                                        <Label>
-                                            Repeat Password
-                                        </Label>
+                                        <Label>{t('repeatPassword')}</Label>
                                         <div className='password-input-container'>
 
                                             <input
@@ -270,7 +270,7 @@ const ModalRegister = () => {
                                 className={`modal-exchange-button ${Object.keys(formik.errors).length !== 0 ? "" : "active"}`}
                                 disabled={Object.keys(formik.errors).length !== 0}
                                 onClick={register}
-                            >REGISTER</Button>
+                            >{t('register')}</Button>
                             {
                                 err.length > 0 &&
                                 <div className="d-flex justify-content-center">
