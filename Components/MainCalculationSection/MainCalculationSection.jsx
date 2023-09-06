@@ -359,7 +359,7 @@ const MainCalculationSection = ({
                                                 setSelected(1);
                                                 // toBuy(1)
                                             }}>
-                                            <p className="text">TRADE</p>
+                                            <p className="text text-uppercase">{t('trade')}</p>
                                         </div>
                                     </div>
                                     <div className="custom-button center-div">
@@ -368,7 +368,7 @@ const MainCalculationSection = ({
                                                  // setSelected(2);
                                                  toBuy(2);
                                              }}>
-                                            <p className="text">BUY</p>
+                                            <p className="text text-uppercase">{t('buy')}</p>
                                         </div>
                                     </div>
                                     <div className="custom-button">
@@ -377,7 +377,7 @@ const MainCalculationSection = ({
                                             onClick={() => {
                                                 toSell(3)
                                             }}>
-                                            <p className="text">SELL</p>
+                                            <p className="text text-uppercase">{t('sell')}</p>
                                         </div>
                                     </div>
 
@@ -641,7 +641,8 @@ const MainCalculationSection = ({
                     </Col>
                     <Col xl="4" lg='5' md="12" sm="12" xs="12" className="info">
                         <div className="crypto-title-section">
-                            <h2>Buy, Sell and Trade with <span>Crypto.am</span></h2>
+                            {/*<h2>Buy, Sell and Trade with <span>Crypto.am</span></h2>*/}
+                            <div dangerouslySetInnerHTML={{ __html: t('headerTitle') }} />
                             <p>{t('headerDescription')}</p>
                         </div>
                     </Col>

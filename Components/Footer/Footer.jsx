@@ -2,10 +2,12 @@ import React, {Fragment} from 'react';
 import {Col, Container, Row} from "reactstrap";
 import Link from "next/link";
 import {useRouter} from "next/router";
+import {useTranslation} from "next-i18next";
 
 const Footer = ({links}) => {
 
     const router = useRouter();
+    const { t } = useTranslation();
 
     return (
         <footer className="footer">
@@ -51,10 +53,9 @@ const Footer = ({links}) => {
                             <Col lg="5" md="5">
                                 <div className="information">
 
-                                    <h3><span>Contact</span> Us</h3>
+                                    <div dangerouslySetInnerHTML={{ __html: t('contact') }} />
                                     <div>
-                                        <p>105/1 Teryan street, 0005, Yerevan,
-                                            Armenia <span>(Citadel Business Center)</span></p>
+                                        <p>{t('contact1')}<span> {t('contact2')}</span></p>
                                         <div className="email-phone">
                                             <a href="mailto:info@crypto.am">info@crypto.am</a> | <a
                                             href={`tel:+374 77 12 22 23`}>+374 77 122223</a>

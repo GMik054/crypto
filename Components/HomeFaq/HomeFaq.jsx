@@ -14,7 +14,7 @@ const HomeFaq = ({background}) => {
                 <FadeInSection>
                     <Row className="justify-content-md-center d-flex">
                         <Col lg="11">
-                            <h3>FAQ</h3>
+                            <h3>{t('faqTitle')}</h3>
                             <Accordion className="accordion-div">
                                 {
                                     faqs.map((el, i) => {

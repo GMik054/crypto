@@ -47,7 +47,6 @@ const Header = ({links}) => {
         const loginToken = useSelector(selectLoginToken);
         const isLoading = useSelector(selectIsLoading);
 
-    const { t } = useTranslation();
 
         // useEffect(() => {
         //     if (language) {
@@ -122,6 +121,7 @@ const Header = ({links}) => {
                 border: "none",
                 textAlign: 'left',
                 justifyContent: "center",
+                cursor: "pointer",
                 // justifyContent: 'end',
                 // padding: "calc(2px + 4 * (100vw - 320px) / 1600) calc(8px + 8 * (100vw - 320px) / 1600)",
                 boxShadow: state.isFocused ? 'none' : 'none',

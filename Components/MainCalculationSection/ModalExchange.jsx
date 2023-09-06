@@ -101,15 +101,14 @@ const ModalExchange = ({valueCurrency1, valueCurrency2, minValue1, maxValue1, cu
                 console.error('Failed to Exchange:', error);
             });
     }
+
     return (
         <>
             <div className="custom-single-button">
-
                 <Button onClick={handleOpen}
                         disabled={Number(valueCurrency1) < Number(minValue1) || Number(valueCurrency1) > Number(maxValue1) || valueCurrency2 === undefined}
                         className={`button-area ${Number(valueCurrency1) < Number(minValue1) || Number(valueCurrency1) > Number(maxValue1) || valueCurrency2 === undefined ? "" : "active"}`}>
-                    <h5
-                        className="text">EXCHANGE</h5></Button>
+                    <h5 className="text">{t('exchange')}</h5></Button>
                 <Modal
                     aria-labelledby="transition-modal-title"
                     aria-describedby="transition-modal-description"
@@ -128,14 +127,14 @@ const ModalExchange = ({valueCurrency1, valueCurrency2, minValue1, maxValue1, cu
                             <Button onClick={handleClose} className="close-button">
                                 <CloseIcon/>
                             </Button>
-                            <h5>Fill in data for exchange</h5>
-                            <p className="modal-desc">Lorem Ipsum is simply dummy text of the printing and typesetting
-                                industry. Lorem Ipsum has
-                                been the industry's standard.</p>
+                            <h5>{t('exchangeDesc')}</h5>
+                            {/*<p className="modal-desc">Lorem Ipsum is simply dummy text of the printing and typesetting*/}
+                            {/*    industry. Lorem Ipsum has*/}
+                            {/*    been the industry's standard.</p>*/}
                             <Form className="form">
                                 <Row className="form-row">
                                     <Col lg="12">
-                                        <Label>Name</Label>
+                                        <Label>{t('name')}</Label>
                                         <Input type="text" className="modal-input" name="first_name"
                                                style={formik.touched.first_name && formik.errors.first_name ? {border: "1px solid #F00"} : {border: "none"}}
                                                value={ltrim(formik.values.first_name)}
@@ -150,7 +149,7 @@ const ModalExchange = ({valueCurrency1, valueCurrency2, minValue1, maxValue1, cu
                                         )}
                                     </Col>
                                     <Col lg="12">
-                                        <Label>Surname </Label>
+                                        <Label>{t('surName')}</Label>
                                         <Input type="text" className="modal-input" name="last_name"
                                                style={formik.touched.last_name && formik.errors.last_name ? {border: "1px solid #F00"} : {border: "none"}}
                                                value={ltrim(formik.values.last_name)}
@@ -165,7 +164,7 @@ const ModalExchange = ({valueCurrency1, valueCurrency2, minValue1, maxValue1, cu
                                         )}
                                     </Col>
                                     <Col lg="12">
-                                        <Label>E-mail </Label>
+                                        <Label>{t('email')}</Label>
                                         <Input type="email" className="modal-input" name="email"
                                                style={formik.touched.email && formik.errors.email ? {border: "1px solid #F00"} : {border: "none"}}
 
@@ -183,8 +182,7 @@ const ModalExchange = ({valueCurrency1, valueCurrency2, minValue1, maxValue1, cu
                                         )}
                                     </Col>
                                     <Col lg="12">
-                                        <Label>Phone Number
-                                        </Label>
+                                        <Label>{t('phone')}</Label>
                                         <Input type="phone" className="modal-input" name="phone"
                                                style={formik.touched.phone && formik.errors.phone ? {border: "1px solid #F00"} : {border: "none"}}
                                                value={formik.values.phone}
@@ -204,14 +202,14 @@ const ModalExchange = ({valueCurrency1, valueCurrency2, minValue1, maxValue1, cu
                                     </Col>
                                 </Row>
                             </Form>
-                            <p className="modal-desc" style={{textAlign: "center"}}>Lorem Ipsum
-                                is
-                                simply dummy text of the printing and typesetting
-                                industry.</p>
+                            {/*<p className="modal-desc" style={{textAlign: "center"}}>Lorem Ipsum*/}
+                            {/*    is*/}
+                            {/*    simply dummy text of the printing and typesetting*/}
+                            {/*    industry.</p>*/}
                             <Button
                                 onClick={exchange}
                                 className={`modal-exchange-button ${Object.keys(formik.errors).length !== 0 ? "" : "active"}`}
-                                disabled={Object.keys(formik.errors).length !== 0}>EXCHANGE</Button>
+                                disabled={Object.keys(formik.errors).length !== 0}>{t('exchange')}</Button>
                             {
                                 err.length > 0 &&
                                 <div className="d-flex justify-content-center">
@@ -234,8 +232,8 @@ const ModalExchange = ({valueCurrency1, valueCurrency2, minValue1, maxValue1, cu
                         <CloseIcon/>
                     </Button>
                     <div className="text-center modal-success">
-                        <h2>Thank you!</h2>
-                        <h5 style={{textAlign: "left"}}>Message sent successfully!</h5>
+                        <h2>{t('thanks')}</h2>
+                        <h5 style={{textAlign: "left"}}>{t('messageSuccess')}</h5>
                         <p style={{textAlign: "left", fontSize:"20px",fontWeight: "800"}}>{t('successInfoModalATTENTION')}</p>
                         <p style={{ paddingBottom: "10px"}}>{t('successInfoModalATTENTIONDesc')}</p>
                         <p style={{textAlign: "left", fontSize:"20px",fontWeight: "800"}}>{t('successInfoModalIMPORTANT')}</p>

@@ -1,4 +1,7 @@
 {
+  "trade": "TRADE",
+  "buy": "BUY",
+  "sell": "SELL",
   "links": [
     {
       "value": "",
@@ -21,15 +24,24 @@
   "loginText": "Use Your email address & password to login",
   "register": "Register",
   "email": "E-mail",
-  "name" : "Name",
-  "surName" : "Surname",
-  "phone" : "Phone Number",
+  "name": "Name",
+  "surName": "Surname",
+  "phone": "Phone Number",
   "password": "Password",
   "repeatPassword": "Repeat Password",
-  "headerTitle": "<h3>Welcome to <span>Crypto.am</span></h3>",
+  "message": "Message",
+  "send": "SEND",
+  "date" : "Date",
+  "transactions" : "Transactions",
+  "close": "Close",
+
+  "exchange": "Exchange",
+  "exchangeDesc": "Fill in data for exchange",
+  "headerTitle": "<h2>Buy, Sell and Trade with <span>Crypto.am</span></h2>",
   "headerDescription": "Our most significant asset is our strong reputation and the trust of our customers, \nbacked by over 2000 positive reviews.",
   "mainTextTitle": "<h3>Welcome to <span>Crypto.am</span></h3>",
   "mainTextDescription": "Your ultimate guide for all about cryptocurrency. We \nprovide seamless and secure ways to buy, sell, and cash your cryptocurrencies with \nease. Whether you’re a seasoned crypto enthusiast or just starting to explore the \nexciting world of digital currencies, our company will provide you with \ncomprehensive information, resources and tools to navigate into the ever-evolving \nlandscape of cryptocurrencies. \nWe prioritize the security of your digital assets above anything else. Our ultra-\nmodern security measures, combined with the best practices of the industry, \nguarantee a safe and risk-free experience for all our customers.\n Crypto.am - where innovation and financial freedom meet!",
+  "faqTitle": "FAQ",
   "faq": [
     {
       "title": "Are crypto transactions reversible?",
@@ -44,6 +56,10 @@
       "description": "You don't need to register on our site to make exchanges."
     }
   ],
+  "gallery": "Gallery",
+  "contact": "<h3><span>Contact</span> Us</h3>",
+  "contact1": "105/1 Teryan street, 0005, Yerevan, Armenia",
+  "contact2": "(Citadel Business Center)",
   "info": [
     {
       "title": "Fast Transactions",
@@ -66,6 +82,14 @@
       "img": "/assets/CustomerService/Global.svg"
     }
   ],
+  "step1": "Choose the direction of exchange",
+  "step2": "Fill in data",
+  "step3": "Push the button “Exchange”",
+  "thanks": "Thank you!",
+  "messageSuccess": "Message sent successfully!",
+  "registerSuccess": "Registered successfully!",
+  "registerSuccessText1": "We emailed you to verify your account!",
+  "registerSuccessText2": "Please check your inbox for email address verification.",
   "successInfoModalATTENTION": "ATTENTION!",
   "successInfoModalATTENTIONDesc": "This operation is conducted manually during a scheduled face-to-face meeting. Our representative will reach out to you within 30 minutes.",
   "successInfoModalIMPORTANT": "IMPORTANT!",

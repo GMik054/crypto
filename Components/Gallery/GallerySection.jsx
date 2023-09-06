@@ -1,13 +1,16 @@
 import React from 'react';
 import {Col, Container, Row} from "reactstrap";
 import IconsSection from "../MainCalculationSection/IconsSection";
+import {useTranslation} from "next-i18next";
 
 const GallerySection = () => {
+    const { t } = useTranslation();
+
     return (
         <>
             <section className="gallery-section">
                 <Container>
-                    <h3>Gallery</h3>
+                    <h3>{t('gallery')}</h3>
                     <Row style={{gap: "32px 0"}}>
                         <Col lg="7">
                             <div className="gallery-img">

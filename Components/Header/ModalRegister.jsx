@@ -293,11 +293,10 @@ const ModalRegister = () => {
                         <CloseIcon/>
                     </Button>
                     <div className="text-center modal-success">
-                        <h2>Thank you!</h2>
-                        <h5 style={{textAlign: "left"}}>Registered successfully!</h5>
-                        <p >We emailed you to verify your account!</p><p
-                        style={{fontWeight: "500",paddingBottom:"30px"}}>Please check your inbox for email address
-                        verification.</p>
+                        <h2>{t('thanks')}</h2>
+                        <h5 style={{textAlign: "left"}}>{t('registerSuccess')}</h5>
+                        <p>{t('registerSuccessText1')}</p><p
+                        style={{fontWeight: "500",paddingBottom:"30px"}}>{t('registerSuccessText2')}</p>
                         <FaCheckCircle color="#FFE500" size={100}/>
                     </div>
                 </Box>

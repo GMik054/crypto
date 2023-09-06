@@ -416,7 +416,7 @@ $light-white: rgba(244, 244, 244, 0.8);
 
     h4 {
       font-family: Titillium Web;
-      line-height: 42px;
+      line-height: 34px;
     }
 
     p {
@@ -682,7 +682,7 @@ $light-white: rgba(244, 244, 244, 0.8);
     h3 {
       font-family: "Montserrat Alternates";
       font-weight: 700 !important;
-      margin-bottom: calc(16px + (180 - 100) * ((100vw - 320px) / (1920 - 320))) !important;
+      margin-bottom: calc(16px + (140 - 100) * ((100vw - 320px) / (1920 - 320))) !important;
 
       span {
         color: $yellow-project;

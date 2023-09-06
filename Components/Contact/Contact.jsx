@@ -1,16 +1,17 @@
 import React from 'react';
 import {Button, Col, Container, Form, Input, Label, Row} from "reactstrap";
+import {useTranslation} from "next-i18next";
 
 const Contact = () => {
+    const { t } = useTranslation();
 
     return (
         <section className="contact-us-section">
             <Container>
                 <Row className="justify-content-center">
                     <Col lg="7">
-                        <h3>Contact Us</h3>
-                        <h4 style={{paddingBottom:"16px"}}>105/1 Teryan street, 0005, Yerevan, Armenia
-                            (Citadel Business Center)</h4>
+                        <div dangerouslySetInnerHTML={{ __html: t('contact') }} />
+                        <h4 style={{paddingBottom:"16px"}}>{t('contact1')} {t('contact2')}</h4>
                         <h4><a href="mailto:info@crypto.am">info@crypto.am</a> | <a
                             href={`tel:+374 77 12 22 23`}>+374 77 122223</a></h4>
                     </Col>
@@ -18,19 +19,19 @@ const Contact = () => {
                         <Form className="contact-form">
                             <Row className="gap-5">
                                 <Col lg="12" className="contact-col">
-                                    <Label><p>Name</p></Label>
+                                    <Label><p>{t('name')}</p></Label>
                                     <Input type="text"/>
                                 </Col>
                                 <Col lg="12" className="contact-col">
-                                    <Label><p>Email</p></Label>
+                                    <Label><p>{t('email')}</p></Label>
                                     <Input type="email"/>
                                 </Col>
                                 <Col lg="12" className="contact-col">
-                                    <Label><p>Message</p></Label>
+                                    <Label><p>{t('message')}</p></Label>
                                     <Input type="text"/>
                                 </Col>
                                 <div className="contact-button">
-                                    <Button >SEND</Button>
+                                    <Button >{t('send')}</Button>
                                 </div>
                             </Row>
 

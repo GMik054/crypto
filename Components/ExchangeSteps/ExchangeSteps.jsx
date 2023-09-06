@@ -83,15 +83,15 @@ const ExchangeSteps = () => {
                                 <div className="line-text-section">
                                     <div className="line-text">
                                         <div className="dot">1</div>
-                                        <p>Choose the direction of exchange</p>
+                                        <p>{t('step1')}</p>
                                     </div>
                                     <div className="line-text" style={{left: "-6px"}}>
                                         <div className="dot">2</div>
-                                        <p>Fill in data</p>
+                                        <p>{t('step2')}</p>
                                     </div>
                                     <div className="line-text" style={{left: "-8px"}}>
                                         <div className="dot">3</div>
-                                        <p>Push the button “Exchange”</p>
+                                        <p>{t('step3')}</p>
                                     </div>
                                 </div>
                             </Col>
@@ -155,6 +155,7 @@ const ExchangeSteps = () => {
                             <Col lg="11">
                                 {/*<h3>{t('welcome')}</h3>*/}
                                 {/*<h3><span>Lorem Ipsum</span> is simply</h3>*/}
+
                                 <div dangerouslySetInnerHTML={{ __html: t('mainTextTitle') }} />
                                 <p>{t('mainTextDescription')}</p>
                             </Col>
