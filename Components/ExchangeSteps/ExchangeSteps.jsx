@@ -1,8 +1,10 @@
 import React from 'react';
 import {Col, Container, Row} from "reactstrap";
 import Slider from "react-slick";
+import {useTranslation} from "next-i18next";
 
 const ExchangeSteps = () => {
+    const { t } = useTranslation();
 
     const settings = {
         dots: false,
@@ -140,27 +142,10 @@ const ExchangeSteps = () => {
                     <Col lg="12" style={{marginTop: "calc(70px + (220 - 120) * ((100vw - 320px) / (1920 - 320)))"}} className="simply">
                         <Row className="justify-content-md-center d-flex">
                             <Col lg="11">
-                                <h3><span>Lorem Ipsum</span> is simply</h3>
-                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                                    Ipsum has
-                                    been the industry's standard dummy text ever since the 1500s, when an unknown
-                                    printer took a
-                                    galley of type and scrambled it to make a type specimen book. It has survived not
-                                    only five
-                                    centuries, but also the leap into electronic typesetting, remaining essentially
-                                    unchanged.
-                                    It was popularised in the 1960s with the release of Letraset sheets containing Lorem
-                                    Ipsum
-                                    passages, and more recently with desktop publishing software like Aldus PageMaker
-                                    including
-                                    versions of Lorem Ipsum.</p>
-                                <br/>
-                                <p> But also the leap into electronic typesetting, remaining essentially unchanged. It
-                                    was
-                                    popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
-                                    passages, and more recently with desktop publishing software like Aldus PageMaker
-                                    including
-                                    versions of Lorem Ipsum.</p>
+                                {/*<h3>{t('welcome')}</h3>*/}
+                                {/*<h3><span>Lorem Ipsum</span> is simply</h3>*/}
+                                <div dangerouslySetInnerHTML={{ __html: t('mainTextTitle') }} />
+                                <p>{t('mainTextDescription')}</p>
                             </Col>
                         </Row>
 

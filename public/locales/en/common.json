@@ -1,6 +1,18 @@
 {
-  "welcome": "Hello!",
-  "common:intro": "Welcome to my website.",
-  "common:about": "About Us",
-  "common:description": "We are a company dedicated to providing great products."
+  "mainTextTitle": "<h3>Welcome to <span>Crypto.am</span></h3>",
+  "mainTextDescription": "Your ultimate guide for all about cryptocurrency. We \nprovide seamless and secure ways to buy, sell, and cash your cryptocurrencies with \nease. Whether you’re a seasoned crypto enthusiast or just starting to explore the \nexciting world of digital currencies, our company will provide you with \ncomprehensive information, resources and tools to navigate into the ever-evolving \nlandscape of cryptocurrencies. \nWe prioritize the security of your digital assets above anything else. Our ultra-\nmodern security measures, combined with the best practices of the industry, \nguarantee a safe and risk-free experience for all our customers.\n Crypto.am - where innovation and financial freedom meet!",
+  "faq": [
+    {
+      "title": "Are crypto transactions reversible?",
+      "description": "Most crypto transactions are irreversible..."
+    },
+    {
+      "title": "What is a digital wallet?",
+      "description": "A digital wallet, also known as a cryptocurrency wallet..."
+    },
+    {
+      "title": "Is registration required?",
+      "description": "You don't need to register on our site to make exchanges"
+    }
+  ]
 }

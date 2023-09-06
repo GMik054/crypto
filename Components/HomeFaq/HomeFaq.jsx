@@ -1,9 +1,11 @@
 import React from 'react';
 import {Accordion} from "react-bootstrap";
 import {Col, Container, Row} from "reactstrap";
+import {useTranslation} from "next-i18next";
 
 const HomeFaq = ({background}) => {
-
+    const { t } = useTranslation(); // Initialize the translation hook
+    const faqs = t('faq', { returnObjects: true });
     const info_2 = [
         {text: "How to make an exchange on your service?"},
         {text: "How long does the exchange take?"},
@@ -19,10 +21,10 @@ const HomeFaq = ({background}) => {
                         <h3>FAQ</h3>
                         <Accordion className="accordion-div">
                             {
-                                info_2.map((el, i) => {
+                                faqs.map((el, i) => {
                                     return (
                                         <Accordion.Item key={i} eventKey={i} className="card card-div">
-                                            <Accordion.Header><h5>{el.text}</h5></Accordion.Header>
+                                            <Accordion.Header><h5>{el.title}</h5></Accordion.Header>
                                             <Accordion.Body>
                                                 {/*<p className="text-accardion-part">{decodeEntities(el.text3_eng)}</p>*/}
                                             </Accordion.Body>
