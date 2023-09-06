@@ -7,6 +7,7 @@ import useWindowDimensions, {APICallUrl, APICoinBase} from "../../halpers/useWin
 import {useRouter} from "next/router";
 import {Triangle} from "react-loader-spinner";
 import {Skeleton} from "@mui/material";
+import {useTranslation} from "next-i18next";
 // import {getExchangeRates} from "../../halpers/coinbaseAPI";
 
 
@@ -337,6 +338,8 @@ const MainCalculationSection = ({
     }, [currency1, currency2, valueCurrency1, valueCurrency2, toggle]); // dependencies
 
 
+    const { t } = useTranslation();
+
     return (
         <section className="calculation-section">
             <Container>
@@ -636,8 +639,7 @@ const MainCalculationSection = ({
                     <Col xl="4" lg='5' md="12" sm="12" xs="12" className="info">
                         <div className="crypto-title-section">
                             <h2>Buy, Sell and Trade with <span>Crypto.am</span></h2>
-                            <p>The main value we have is our reputation and the trust of our customers, which is
-                                confirmed by more than 2000 of positive reviews.</p>
+                            <p>{t('headerDescription')}</p>
                         </div>
                     </Col>
                 </Row>

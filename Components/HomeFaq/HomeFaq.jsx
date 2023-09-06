@@ -6,12 +6,6 @@ import {useTranslation} from "next-i18next";
 const HomeFaq = ({background}) => {
     const { t } = useTranslation(); // Initialize the translation hook
     const faqs = t('faq', { returnObjects: true });
-    const info_2 = [
-        {text: "How to make an exchange on your service?"},
-        {text: "How long does the exchange take?"},
-        {text: "How long to wait for Cashin replenishment?"},
-        {text: "Why was my order rejected?"}
-    ]
 
     return (
         <section className={`faq-section ${background ? "faq-single" : ""}`}>
@@ -25,8 +19,8 @@ const HomeFaq = ({background}) => {
                                     return (
                                         <Accordion.Item key={i} eventKey={i} className="card card-div">
                                             <Accordion.Header><h5>{el.title}</h5></Accordion.Header>
-                                            <Accordion.Body>
-                                                {/*<p className="text-accardion-part">{decodeEntities(el.text3_eng)}</p>*/}
+                                            <Accordion.Body style={{paddingLeft:"0", paddingRight:"0"}}>
+                                                <p className="text-accardion-part">{el.description}</p>
                                             </Accordion.Body>
                                         </Accordion.Item>
                                     )

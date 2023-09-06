@@ -16,9 +16,10 @@ import {
 } from "../../src/features/Slices/LoginSlice";
 import {useDispatch, useSelector} from "react-redux";
 import {FaCheckCircle} from "react-icons/fa";
+import {useTranslation} from "next-i18next";
 
 const ModalExchange = ({valueCurrency1, valueCurrency2, minValue1, maxValue1, currency1, currency2}) => {
-
+    const {t} = useTranslation();
     const [open, setOpen] = React.useState(false);
 
     const dispatch = useDispatch();
@@ -123,7 +124,7 @@ const ModalExchange = ({valueCurrency1, valueCurrency2, minValue1, maxValue1, cu
                     }}
                 >
                     <Fade in={open}>
-                        <Box className="modal-box" >
+                        <Box className="modal-box">
                             <Button onClick={handleClose} className="close-button">
                                 <CloseIcon/>
                             </Button>
@@ -235,8 +236,11 @@ const ModalExchange = ({valueCurrency1, valueCurrency2, minValue1, maxValue1, cu
                     <div className="text-center modal-success">
                         <h2>Thank you!</h2>
                         <h5 style={{textAlign: "left"}}>Message sent successfully!</h5>
-                        <p>We emailed</p><p
-                        style={{fontWeight: "500", paddingBottom: "30px"}}>Please check your inbox.</p>
+                        <p style={{textAlign: "left", fontSize:"20px",fontWeight: "800"}}>{t('successInfoModalATTENTION')}</p>
+                        <p style={{ paddingBottom: "10px"}}>{t('successInfoModalATTENTIONDesc')}</p>
+                        <p style={{textAlign: "left", fontSize:"20px",fontWeight: "800"}}>{t('successInfoModalIMPORTANT')}</p>
+                        <p style={{ paddingBottom: "30px"}}>{t('successInfoModalIMPORTANTDesc')}</p>
+
                         <FaCheckCircle color="#FFE500" size={100}/>
                     </div>
                 </Box>

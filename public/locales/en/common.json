@@ -1,18 +1,50 @@
 {
+
+  "headerTitle": "<h3>Welcome to <span>Crypto.am</span></h3>",
+  "headerDescription": "Our most significant asset is our strong reputation and the trust of our customers, \nbacked by over 2000 positive reviews.",
   "mainTextTitle": "<h3>Welcome to <span>Crypto.am</span></h3>",
   "mainTextDescription": "Your ultimate guide for all about cryptocurrency. We \nprovide seamless and secure ways to buy, sell, and cash your cryptocurrencies with \nease. Whether you’re a seasoned crypto enthusiast or just starting to explore the \nexciting world of digital currencies, our company will provide you with \ncomprehensive information, resources and tools to navigate into the ever-evolving \nlandscape of cryptocurrencies. \nWe prioritize the security of your digital assets above anything else. Our ultra-\nmodern security measures, combined with the best practices of the industry, \nguarantee a safe and risk-free experience for all our customers.\n Crypto.am - where innovation and financial freedom meet!",
   "faq": [
     {
       "title": "Are crypto transactions reversible?",
-      "description": "Most crypto transactions are irreversible..."
+      "description": "Most crypto transactions are irreversible. Once a transaction is initiated on the \nblockchain network, it cannot be canceled or reversed. Users should exercise \ncaution when sending cryptocurrencies and ensure they double-check the \nrecipient's address."
     },
     {
       "title": "What is a digital wallet?",
-      "description": "A digital wallet, also known as a cryptocurrency wallet..."
+      "description": "A digital wallet, also known as a cryptocurrency wallet, is a software application that\nallows users to store, send, and receive cryptocurrencies securely. It stores the \nuser's private keys, which are essential for accessing and managing their crypto \nholdings."
     },
     {
       "title": "Is registration required?",
-      "description": "You don't need to register on our site to make exchanges"
+      "description": "You don't need to register on our site to make exchanges."
     }
-  ]
+  ],
+  "info": [
+    {
+      "title": "Fast Transactions",
+      "description": "Complete transactions in under 5 minutes.",
+      "img": "/assets/CustomerService/Fast.svg"
+    },
+    {
+      "title": "Trusted Experience",
+      "description": "Over 2 years of excellence in cryptocurrency exchange.",
+      "img": "/assets/CustomerService/Trusted.svg"
+
+    },
+    {
+      "title": "Best Rates",
+      "description": "Competitive prices and superior customer service.",
+      "img": "/assets/CustomerService/Rates.svg"
+
+    },
+    {
+      "title": "Global Reach",
+      "description": "Access our services worldwide for seamless trading.",
+      "img": "/assets/CustomerService/Global.svg"
+
+    }
+  ],
+  "successInfoModalATTENTION" : "ATTENTION!",
+  "successInfoModalATTENTIONDesc" : "This operation is conducted manually during a scheduled face-to-face meeting. Our representative will reach out to you within 30 minutes.",
+  "successInfoModalIMPORTANT" : "IMPORTANT!",
+  "successInfoModalIMPORTANTDesc" : "Our staff will exclusively reach out to you using the designated contact information. In any other situations, we are not holding responsibility for potential."
 }
