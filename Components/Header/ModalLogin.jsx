@@ -17,6 +17,8 @@ import {
 import {useTranslation} from "next-i18next";
 
 const ModalLogin = () => {
+    const { t } = useTranslation();
+
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -29,13 +31,13 @@ const ModalLogin = () => {
     }
 
     const validationSchema = Yup.object({
-        email: Yup.string().email("Invalid format").required("Required"),
+        email: Yup.string().email(t('emailError')).required(t('required')),
         password: Yup.string()
-            .required('No password provided.')
-            .min(8, 'Password is too short - should be 8 characters minimum.')
+            .required(t('phoneReq'))
+            .min(8, t('phoneReq1'))
             .matches(
                 /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,30}$/,
-                'Password must include at least one uppercase letter, one lowercase letter, and one number.'
+                t('phoneReq2')
             ),
 
     })
@@ -103,7 +105,6 @@ const ModalLogin = () => {
                 dispatch(setIsLoading(false));
             });
     }
-    const { t } = useTranslation();
 
     return (
         <div className="header-buttons">

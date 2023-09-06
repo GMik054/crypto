@@ -38,13 +38,13 @@ const ModalExchange = ({valueCurrency1, valueCurrency2, minValue1, maxValue1, cu
     }
 
     const validationSchema = Yup.object({
-        first_name: Yup.string().required("Required"),
-        last_name: Yup.string().required("Required"),
-        email: Yup.string().email("Invalid format").required("Required"),
+        first_name: Yup.string().required(t('required')),
+        last_name: Yup.string().required(t('required')),
+        email: Yup.string().email(t('emailError')).required(t('required')),
         phone: Yup.string()
             .matches(
                 /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/,
-                "Invalid phone number").required("Required").max(18, "Invalid phone number"),
+                t('phoneNumberError')).required(t('required')).max(18, t('phoneNumberError')),
     })
 
     const formik = useFormik({

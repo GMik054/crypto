@@ -1,7 +1,26 @@
 {
+  "options": [
+    {
+      "value": "eng",
+      "label": "Eng",
+      "photo": "/assets/countries/eng.png"
+    },
+    {
+      "value": "arm",
+      "label": "Arm",
+      "photo": "/assets/countries/arm.jpg"
+    },
+    {
+      "value": "rus",
+      "label": "Rus",
+      "photo": "/assets/countries/rus.png"
+    }
+  ],
   "trade": "TRADE",
   "buy": "BUY",
   "sell": "SELL",
+  "min": "Min",
+  "max": "Max",
   "links": [
     {
       "value": "",
@@ -31,10 +50,9 @@
   "repeatPassword": "Repeat Password",
   "message": "Message",
   "send": "SEND",
-  "date" : "Date",
-  "transactions" : "Transactions",
+  "date": "Date",
+  "transactions": "Transactions",
   "close": "Close",
-
   "exchange": "Exchange",
   "exchangeDesc": "Fill in data for exchange",
   "headerTitle": "<h2>Buy, Sell and Trade with <span>Crypto.am</span></h2>",
@@ -82,6 +100,7 @@
       "img": "/assets/CustomerService/Global.svg"
     }
   ],
+  "247": "<h3>Exchange in three <span>simple</span> steps</h3>",
   "step1": "Choose the direction of exchange",
   "step2": "Fill in data",
   "step3": "Push the button “Exchange”",
@@ -93,5 +112,13 @@
   "successInfoModalATTENTION": "ATTENTION!",
   "successInfoModalATTENTIONDesc": "This operation is conducted manually during a scheduled face-to-face meeting. Our representative will reach out to you within 30 minutes.",
   "successInfoModalIMPORTANT": "IMPORTANT!",
-  "successInfoModalIMPORTANTDesc": "Our staff will exclusively reach out to you using the designated contact information. In any other situations, we are not holding responsibility for potential."
+  "successInfoModalIMPORTANTDesc": "Our staff will exclusively reach out to you using the designated contact information. In any other situations, we are not holding responsibility for potential.",
+  "required": "Required",
+  "emailError": "Invalid format",
+  "phoneReq": "No password provided.",
+  "phoneReq1": "Password is too short - should be 8 characters minimum.",
+  "phoneReq2": "Password must include at least one uppercase letter, one lowercase letter, and one number.",
+  "repeat1": "Passwords must match",
+  "repeat2": "Please repeat your password.",
+  "phoneNumberError": "Invalid phone number"
 }

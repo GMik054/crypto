@@ -339,7 +339,7 @@ const MainCalculationSection = ({
     }, [currency1, currency2, valueCurrency1, valueCurrency2, toggle]); // dependencies
 
 
-    const { t } = useTranslation();
+    const {t} = useTranslation();
 
     return (
         <section className="calculation-section">
@@ -401,8 +401,7 @@ const MainCalculationSection = ({
                                                     <Skeleton variant="text" className="short-text"/> :
                                                     <label className='form-label'
                                                            style={Number(valueCurrency1) < minValue1 || Number(valueCurrency1) > maxValue1 ? {color: "#F00"} : {color: "white"}}>
-                                                        Min {minValue1?.toFixed(2)} /
-                                                        Max {maxValue1?.toFixed(2)} {currency1?.code}
+                                                        {t('min')} {minValue1?.toFixed(2)} / {t('max')} {maxValue1?.toFixed(2)} {currency1?.code}
                                                     </label>
                                             }
                                             <div className={`form-main ${show || showTop ? "form-main-height" : ""}`}>
@@ -495,8 +494,7 @@ const MainCalculationSection = ({
                                                     <label className='form-label'
                                                            style={Number(valueCurrency1) < minValue1 || Number(valueCurrency1) > maxValue1 ? {color: "#F00"} : {color: "white"}}>
 
-                                                        Min {minValue2?.toFixed(2) || 0} /
-                                                        Max {maxValue2?.toFixed(2)} {currency2?.code}
+                                                        {t('min')} {minValue2?.toFixed(2) || 0} / {t('max')} {maxValue2?.toFixed(2)} {currency2?.code}
                                                     </label>
                                             }
 
@@ -642,7 +640,7 @@ const MainCalculationSection = ({
                     <Col xl="4" lg='5' md="12" sm="12" xs="12" className="info">
                         <div className="crypto-title-section">
                             {/*<h2>Buy, Sell and Trade with <span>Crypto.am</span></h2>*/}
-                            <div dangerouslySetInnerHTML={{ __html: t('headerTitle') }} />
+                            <div dangerouslySetInnerHTML={{__html: t('headerTitle')}}/>
                             <p>{t('headerDescription')}</p>
                         </div>
                     </Col>
@@ -650,7 +648,7 @@ const MainCalculationSection = ({
             </Container>
             <FadeInSection>
 
-            <IconsSection/>
+                <IconsSection/>
             </FadeInSection>
         </section>
     );

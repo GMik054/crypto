@@ -16,6 +16,7 @@ import {useTranslation} from "next-i18next";
 
 
 const ModalRegister = () => {
+    const { t } = useTranslation();
 
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
@@ -33,23 +34,23 @@ const ModalRegister = () => {
     }
 
     const validationSchema = Yup.object({
-        first_name: Yup.string().required("Required"),
-        last_name: Yup.string().required("Required"),
-        email: Yup.string().email("Invalid format").required("Required"),
+        first_name: Yup.string().required(t('required')),
+        last_name: Yup.string().required(t('required')),
+        email: Yup.string().email(t('emailError')).required(t('required')),
         phone: Yup.string()
             .matches(
                 /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/,
-                "Invalid phone number").required("Required").max(18, "Invalid phone number"),
+                t('phoneNumberError')).required(t('required')).max(18, t('phoneNumberError')),
         password: Yup.string()
-            .required('No password provided.')
-            .min(8, 'Password is too short - should be 8 characters minimum.')
+            .required(t('phoneReq'))
+            .min(8, t('phoneReq1'))
             .matches(
                 /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,30}$/,
-                'Password must include at least one uppercase letter, one lowercase letter, and one number.'
+                t('phoneReq2')
             ),
         password_confirmation: Yup.string()
-            .oneOf([Yup.ref('password'), null], 'Passwords must match')
-            .required('Please repeat your password.'),
+            .oneOf([Yup.ref('password'), null], t('repeat1'))
+            .required(t('repeat2')),
     })
 
     const formik = useFormik({
@@ -101,7 +102,6 @@ const ModalRegister = () => {
             });
     }
 
-    const { t } = useTranslation();
     return (
         <>
             <div className="header-buttons">

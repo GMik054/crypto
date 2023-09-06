@@ -21,16 +21,17 @@ import {CloseIcon} from "next/dist/client/components/react-dev-overlay/internal/
 import {useRouter} from "next/router";
 import {useTranslation} from "next-i18next";
 
-const options = [
-    {value: 'eng', label: 'Eng', photo: '/assets/countries/eng.png'},
-    {value: 'arm', label: 'Arm', photo: '/assets/countries/arm.jpg'},
-    {value: 'rus', label: 'Rus', photo: '/assets/countries/rus.png'},
-];
+// const options = [
+//     {value: 'eng', label: 'Eng', photo: '/assets/countries/eng.png'},
+//     {value: 'arm', label: 'Arm', photo: '/assets/countries/arm.jpg'},
+//     {value: 'rus', label: 'Rus', photo: '/assets/countries/rus.png'},
+// ];
 
 
 const Header = ({links}) => {
-
-        const [selectedOption, setSelectedOption] = useState(options[0]);
+    const {t} = useTranslation(); // Initialize the translation hook
+    const options = t('options', {returnObjects: true});
+        // const [selectedOption, setSelectedOption] = useState(options[0]);
 
         const [toggle, setToggle] = useState(false);
 

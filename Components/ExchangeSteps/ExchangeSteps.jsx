@@ -60,11 +60,14 @@ const ExchangeSteps = () => {
                                 <img style={{maxWidth: "100%"}} src="/assets/images/247.png"/>
                             </Col>
                             <Col lg='10' md='9' xs='8' className="d-flex align-items-center">
-                                <h3>Exchange in three <span>simple</span> steps</h3>
+                                <div dangerouslySetInnerHTML={{__html: t('247')}}/>
                             </Col>
                         </Row>
 
                     </Col>
+                    </FadeInSection>
+                    <FadeInSection>
+
                     <Col lg='12'>
                         <Row className="g-4">
                             <Col lg='12'>
