@@ -146,7 +146,7 @@ const MainCalculationSection = ({
 
 
     let change = (e) => {
-        fetch(`${APICallUrl}/api/v1/get-currency-exchange?symbol=${currency1?.type === "sell" ? currency1?.code.toUpperCase() : currency2?.code.toUpperCase()}&convert=${currency2?.type === "buy" ? currency2?.code.toUpperCase() : currency1?.code.toUpperCase()}&price=${e}&type=${currency1?.type}`, {
+        fetch(`${APICallUrl}/api/v1/get-currency-exchange?symbol=${currency1?.type === "sell" ? currency1?.code.toUpperCase() : currency2?.code.toUpperCase()}&convert=${currency2?.type === "buy" ? currency2?.code.toUpperCase() : currency1?.code.toUpperCase()}&price=${e || 0}&type=${currency1?.type}`, {
             headers: {
                 "Content-Type": "application/json;charset=UTF-8"
             },
@@ -185,7 +185,7 @@ const MainCalculationSection = ({
         });
 
         const minMaxData1 = await minMaxRes1.json();
-        const cur2Res = await fetch(`${APICallUrl}/api/v1/get-currency-exchange?symbol=${currency2?.type === "sell" ? currency2?.code.toUpperCase() : currency1?.code.toUpperCase()}&convert=${currency1?.type === "buy" ? currency1?.code.toUpperCase() : currency2?.code.toUpperCase()}&price=${minMaxData1?.min}&type=${currency2?.type}`)
+        const cur2Res = await fetch(`${APICallUrl}/api/v1/get-currency-exchange?symbol=${currency2?.type === "sell" ? currency2?.code.toUpperCase() : currency1?.code.toUpperCase()}&convert=${currency1?.type === "buy" ? currency1?.code.toUpperCase() : currency2?.code.toUpperCase()}&price=${minMaxData1?.min || 0}&type=${currency2?.type}`)
         const minMaxRes2 = await fetch(`${APICallUrl}/api/v1/get-exchange-limit?currency=${currency1.code.toUpperCase()}&symbol=${currency2.code.toUpperCase()}`, {
             headers: {
                 "Content-Type": "application/json;charset=UTF-8",
@@ -246,7 +246,7 @@ const MainCalculationSection = ({
         setMinValue1(minMaxData1?.min);
         setValueCurrency1(minMaxData1?.min);
         setMaxValue1(minMaxData1?.max);
-        const cur2Res = await fetch(`${APICallUrl}/api/v1/get-currency-exchange?symbol=${c?.type === "sell" ? c?.code.toUpperCase() : currency2?.code.toUpperCase()}&convert=${currency2?.type === "buy" ? currency2?.code.toUpperCase() : c?.code.toUpperCase()}&price=${minMaxData1?.min}&type=${c?.type}`)
+        const cur2Res = await fetch(`${APICallUrl}/api/v1/get-currency-exchange?symbol=${c?.type === "sell" ? c?.code.toUpperCase() : currency2?.code.toUpperCase()}&convert=${currency2?.type === "buy" ? currency2?.code.toUpperCase() : c?.code.toUpperCase()}&price=${minMaxData1?.min || 0}&type=${c?.type}`)
         const minMaxRes2 = await fetch(`${APICallUrl}/api/v1/get-exchange-limit?currency=${currency2.code.toUpperCase()}&symbol=${c.code.toUpperCase()}`, {
             headers: {
                 "Content-Type": "application/json;charset=UTF-8",
@@ -276,8 +276,8 @@ const MainCalculationSection = ({
         setMinValue1(minMaxData1?.min);
         setValueCurrency1(minMaxData1?.min);
         setMaxValue1(minMaxData1?.max);
-
-        const cur2Res = await fetch(`${APICallUrl}/api/v1/get-currency-exchange?symbol=${currency1?.type === "sell" ? currency1?.code.toUpperCase() : c?.code.toUpperCase()}&convert=${c?.type === "buy" ? c?.code.toUpperCase() : currency1?.code.toUpperCase()}&price=${valueCurrency1}&type=${currency1?.type}`)
+        console.log(valueCurrency1)
+        const cur2Res = await fetch(`${APICallUrl}/api/v1/get-currency-exchange?symbol=${currency1?.type === "sell" ? currency1?.code.toUpperCase() : c?.code.toUpperCase()}&convert=${c?.type === "buy" ? c?.code.toUpperCase() : currency1?.code.toUpperCase()}&price=${valueCurrency1 || 0}&type=${currency1?.type}`)
         const minMaxRes2 = await fetch(`${APICallUrl}/api/v1/get-exchange-limit?currency=${c.code.toUpperCase()}&symbol=${currency1.code.toUpperCase()}`, {
             headers: {
                 "Content-Type": "application/json;charset=UTF-8",
@@ -315,7 +315,7 @@ const MainCalculationSection = ({
                     setValueCurrency1(Number(valueCurrency1) < minMaxData1?.min ? minMaxData1?.min : Number(valueCurrency1));
                     setMaxValue1(minMaxData1?.max);
 
-                    const cur2Res = await fetch(`${APICallUrl}/api/v1/get-currency-exchange?symbol=${currency2?.type === "sell" ? currency2?.code.toUpperCase() : currency1?.code.toUpperCase()}&convert=${currency1?.type === "buy" ? currency1?.code.toUpperCase() : currency2?.code.toUpperCase()}&price=${Number(valueCurrency1) < minMaxData1?.min ? minMaxData1?.min : Number(valueCurrency1)}&type=${currency1?.type}`);
+                    const cur2Res = await fetch(`${APICallUrl}/api/v1/get-currency-exchange?symbol=${currency2?.type === "sell" ? currency2?.code.toUpperCase() : currency1?.code.toUpperCase()}&convert=${currency1?.type === "buy" ? currency1?.code.toUpperCase() : currency2?.code.toUpperCase()}&price=${Number(valueCurrency1) < minMaxData1?.min ? minMaxData1?.min : Number(valueCurrency1) }&type=${currency1?.type}`);
                     const minMaxRes2 = await fetch(`${APICallUrl}/api/v1/get-exchange-limit?currency=${currency2.code.toUpperCase()}&symbol=${currency1.code.toUpperCase()}`, {
                         headers: {
                             "Content-Type": "application/json;charset=UTF-8",
@@ -332,7 +332,7 @@ const MainCalculationSection = ({
                     // Handle errors
                     console.error(error);
                 }
-            }, 10000); // 10 seconds
+            }, 60000); // 60 seconds
             return () => clearInterval(intervalId); // Clear the interval when the component is unmounted or when the effect is re-run
         }
 
@@ -450,7 +450,7 @@ const MainCalculationSection = ({
                                                                 setShowButton(true);
                                                                 selectCurrency1(currency1);
                                                                 setIsSelectOpen(false);
-                                                                document.getElementById('some-id').focus()
+                                                                document.getElementById('some-id')?.focus()
                                                             }}
                                                             onFocus={() => setIsSelectOpen(true)}
                                                             onBlur={() => setIsSelectOpen(false)}
