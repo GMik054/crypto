@@ -1,11 +1,24 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Button, Col, Container, Form, Input, Label, Row} from "reactstrap";
 import {useTranslation} from "next-i18next";
 import * as Yup from "yup";
 import {useFormik} from "formik";
+import {selectLoginToken, setIsLoading} from "../../src/features/Slices/LoginSlice";
+import {APICallUrl} from "../../halpers/useWindowDimensions";
+import {useDispatch, useSelector} from "react-redux";
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
+import {CloseIcon} from "next/dist/client/components/react-dev-overlay/internal/icons/CloseIcon";
+import {FaCheckCircle} from "react-icons/fa";
 
 const Contact = () => {
     const {t} = useTranslation();
+const dispatch = useDispatch();
+
+    const loginToken = useSelector(selectLoginToken);
+    const [err, setErr] = useState("")
+    const [showModal, setShowModal] = useState(false); // State variable to control modal visibility
+
     const initialValues = {
         first_name: "",
         email: "",
@@ -27,6 +40,47 @@ const Contact = () => {
     function ltrim(str) {
         if (!str) return str;
         return str.replace(/^\s+/g, '');
+    }
+
+
+    const send = () => {
+
+        dispatch(setIsLoading(true));
+
+        fetch(`${APICallUrl}/api/v1/contact/send`, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json;charset=UTF-8",
+                Authorization: `Bearer ${loginToken.token}`
+            },
+            body: JSON.stringify({
+                name: formik.values.first_name,
+                phone: "999999999",
+                email: formik.values.email,
+                content: formik.values.message
+
+            }),
+        })
+            .then((res) => res.json()).then((res) => {
+            console.log(res,"res")
+            if (res.error === false) {
+                setShowModal(true);
+                // handleClose();
+
+                formik.resetForm();
+                setErr("");
+                dispatch(setIsLoading(false));
+
+            } else {
+                setErr(res.message);
+                dispatch(setIsLoading(false));
+            }
+
+        })
+            .catch((error) => {
+                // dispatch(setIsLoading(false));
+                console.error('Failed to send Message:', error);
+            });
     }
 
     return (
@@ -92,7 +146,9 @@ const Contact = () => {
                                     )}
                                 </Col>
                                 <div className="contact-button">
-                                    <Button disabled={
+                                    <Button
+                                        onClick={send}
+                                        disabled={
                                         !formik.values.first_name ||
                                         !formik.values.email ||
                                         !formik.values.message ||
@@ -101,12 +157,41 @@ const Contact = () => {
                                         formik.errors.message
                                     }>{t('send')}</Button>
                                 </div>
-                            </Row>
 
+                            </Row>
+                            {
+                                err.length > 0 &&
+                                <div className="d-flex justify-content-end">
+                                <span style={{
+                                    marginTop: "10px",
+                                    color: '#F00',
+                                    fontSize: "12px",
+                                    fontWeight: "700"
+                                }}>{err}</span>
+                                </div>
+                            }
                         </Form>
 
                     </Col>
                 </Row>
+                <Modal
+                    open={showModal}>
+                    <Box className="modal-box">
+                        <Button onClick={() => setShowModal(false)} className="close-button">
+                            <CloseIcon/>
+                        </Button>
+                        <div className="text-center modal-success">
+                            <h2>{t('thanks')}</h2>
+                            <h5 style={{textAlign: "left"}}>{t('messageSuccess')}</h5>
+                            <p style={{textAlign: "left", fontSize:"20px",fontWeight: "800"}}>{t('successInfoModalATTENTION')}</p>
+                            <p style={{ paddingBottom: "10px"}}>{t('successInfoModalATTENTIONDesc')}</p>
+                            <p style={{textAlign: "left", fontSize:"20px",fontWeight: "800"}}>{t('successInfoModalIMPORTANT')}</p>
+                            <p style={{ paddingBottom: "30px"}}>{t('successInfoModalIMPORTANTDesc')}</p>
+
+                            <FaCheckCircle color="#FFE500" size={100}/>
+                        </div>
+                    </Box>
+                </Modal>
             </Container>
             <Container fluid={true}>
                 <Row className='gy-4'>
