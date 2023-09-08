@@ -360,7 +360,7 @@ const MainCalculationSection = ({
                                                 // setSelected(1);
                                                 toBuy(1)
                                             }}>
-                                            <p className="text text-uppercase">{t('trade')}</p>
+                                            <p className="text text-uppercase">{t('buy')}</p>
                                         </div>
                                     </div>
                                     {/*<div className="custom-button center-div">*/}
