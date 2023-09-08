@@ -106,7 +106,7 @@ const ModalExchange = ({valueCurrency1, valueCurrency2, minValue1, maxValue1, cu
         <>
             <div className="custom-single-button">
                 <Button onClick={handleOpen}
-                        disabled={Number(valueCurrency1) < Number(minValue1) || Number(valueCurrency1) > Number(maxValue1) || valueCurrency2 === undefined}
+                        disabled={Number(valueCurrency1) < Number(minValue1) || Number(valueCurrency1) > Number(maxValue1) || (valueCurrency2 === undefined || valueCurrency1 === undefined)}
                         className={`button-area ${Number(valueCurrency1) < Number(minValue1) || Number(valueCurrency1) > Number(maxValue1) || valueCurrency2 === undefined ? "" : "active"}`}>
                     <h5 className="text">{t('exchange')}</h5></Button>
                 <Modal
@@ -233,11 +233,21 @@ const ModalExchange = ({valueCurrency1, valueCurrency2, minValue1, maxValue1, cu
                     </Button>
                     <div className="text-center modal-success">
                         <h2>{t('thanks')}</h2>
-                        <h5 style={{textAlign: "left"}}>{t('messageSuccess')}</h5>
-                        <p style={{textAlign: "left", fontSize:"20px",fontWeight: "800"}}>{t('successInfoModalATTENTION')}</p>
-                        <p style={{ paddingBottom: "10px"}}>{t('successInfoModalATTENTIONDesc')}</p>
-                        <p style={{textAlign: "left", fontSize:"20px",fontWeight: "800"}}>{t('successInfoModalIMPORTANT')}</p>
-                        <p style={{ paddingBottom: "30px"}}>{t('successInfoModalIMPORTANTDesc')}</p>
+                        <h5 style={{textAlign: "left",}}>{t('messageSuccess')}</h5>
+                        <p style={{
+                            textAlign: "left",
+                            fontSize: "20px",
+                            fontWeight: "800",
+                            color: '#F00'
+                        }}>{t('successInfoModalATTENTION')}</p>
+                        <p style={{paddingBottom: "10px"}}>{t('successInfoModalATTENTIONDesc')}</p>
+                        <p style={{
+                            textAlign: "left",
+                            fontSize: "20px",
+                            fontWeight: "800",
+                            color: 'white'
+                        }}>{t('successInfoModalIMPORTANT')}</p>
+                        <p style={{paddingBottom: "30px"}}>{t('successInfoModalIMPORTANTDesc')}</p>
 
                         <FaCheckCircle color="#FFE500" size={100}/>
                     </div>

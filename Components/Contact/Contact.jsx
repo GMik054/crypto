@@ -62,7 +62,7 @@ const dispatch = useDispatch();
             }),
         })
             .then((res) => res.json()).then((res) => {
-            console.log(res,"res")
+
             if (res.error === false) {
                 setShowModal(true);
                 // handleClose();
@@ -183,9 +183,9 @@ const dispatch = useDispatch();
                         <div className="text-center modal-success">
                             <h2>{t('thanks')}</h2>
                             <h5 style={{textAlign: "left"}}>{t('messageSuccess')}</h5>
-                            <p style={{textAlign: "left", fontSize:"20px",fontWeight: "800"}}>{t('successInfoModalATTENTION')}</p>
+                            <p style={{textAlign: "left", fontSize:"20px",fontWeight: "800", color: '#F00'}}>{t('successInfoModalATTENTION')}</p>
                             <p style={{ paddingBottom: "10px"}}>{t('successInfoModalATTENTIONDesc')}</p>
-                            <p style={{textAlign: "left", fontSize:"20px",fontWeight: "800"}}>{t('successInfoModalIMPORTANT')}</p>
+                            <p style={{textAlign: "left", fontSize:"20px",fontWeight: "800" ,color: 'white'}}>{t('successInfoModalIMPORTANT')}</p>
                             <p style={{ paddingBottom: "30px"}}>{t('successInfoModalIMPORTANTDesc')}</p>
 
                             <FaCheckCircle color="#FFE500" size={100}/>

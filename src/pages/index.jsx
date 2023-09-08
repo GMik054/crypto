@@ -67,7 +67,7 @@ export default function IndexPage({data}) {
 
                 const sell = await sellRes.json();
                 const buy = await buyRes.json();
-                console.log(buy)
+
                 if (buy?.data && sell?.data) {
                     setCurrency1(buy.data[0]);
                     setCurrency2(sell.data[0]);

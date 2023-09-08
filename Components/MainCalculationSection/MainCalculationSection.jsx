@@ -152,7 +152,7 @@ const MainCalculationSection = ({
             },
         })
             .then(res => res.json().then(res => {
-                    // console.log(res,"RESS")
+
                     setValueCurrency2(res.cost);
                     setShowButton(false);
                     setToggle(false);
@@ -223,6 +223,7 @@ const MainCalculationSection = ({
     }
     const toBuy = (e) => {
         setSelected(e);
+
         if (currency1.type !== "buy") {
             changeCurrency()
         }
@@ -276,7 +277,7 @@ const MainCalculationSection = ({
         setMinValue1(minMaxData1?.min);
         setValueCurrency1(minMaxData1?.min);
         setMaxValue1(minMaxData1?.max);
-        console.log(valueCurrency1)
+
         const cur2Res = await fetch(`${APICallUrl}/api/v1/get-currency-exchange?symbol=${currency1?.type === "sell" ? currency1?.code.toUpperCase() : c?.code.toUpperCase()}&convert=${c?.type === "buy" ? c?.code.toUpperCase() : currency1?.code.toUpperCase()}&price=${valueCurrency1 || 0}&type=${currency1?.type}`)
         const minMaxRes2 = await fetch(`${APICallUrl}/api/v1/get-exchange-limit?currency=${c.code.toUpperCase()}&symbol=${currency1.code.toUpperCase()}`, {
             headers: {
@@ -315,7 +316,7 @@ const MainCalculationSection = ({
                     setValueCurrency1(Number(valueCurrency1) < minMaxData1?.min ? minMaxData1?.min : Number(valueCurrency1));
                     setMaxValue1(minMaxData1?.max);
 
-                    const cur2Res = await fetch(`${APICallUrl}/api/v1/get-currency-exchange?symbol=${currency2?.type === "sell" ? currency2?.code.toUpperCase() : currency1?.code.toUpperCase()}&convert=${currency1?.type === "buy" ? currency1?.code.toUpperCase() : currency2?.code.toUpperCase()}&price=${Number(valueCurrency1) < minMaxData1?.min ? minMaxData1?.min : Number(valueCurrency1) }&type=${currency1?.type}`);
+                    const cur2Res = await fetch(`${APICallUrl}/api/v1/get-currency-exchange?symbol=${currency2?.type === "sell" ? currency2?.code.toUpperCase() : currency1?.code.toUpperCase()}&convert=${currency1?.type === "buy" ? currency1?.code.toUpperCase() : currency2?.code.toUpperCase()}&price=${Number(valueCurrency1) < minMaxData1?.min ? minMaxData1?.min : Number(valueCurrency1)}&type=${currency1?.type}`);
                     const minMaxRes2 = await fetch(`${APICallUrl}/api/v1/get-exchange-limit?currency=${currency2.code.toUpperCase()}&symbol=${currency1.code.toUpperCase()}`, {
                         headers: {
                             "Content-Type": "application/json;charset=UTF-8",
@@ -323,7 +324,7 @@ const MainCalculationSection = ({
                     });
                     const cur = await cur2Res.json();
                     const minMaxData2 = await minMaxRes2.json();
-                    console.log(cur)
+
                     setMinValue2(cur?.cost);
                     setValueCurrency2(cur?.cost);
                     setMaxValue2(minMaxData2?.max);
@@ -356,21 +357,21 @@ const MainCalculationSection = ({
                                         <div
                                             className={`button-area left-button-area ${selected === 1 ? 'selected' : ''}`}
                                             onClick={() => {
-                                                setSelected(1);
-                                                // toBuy(1)
+                                                // setSelected(1);
+                                                toBuy(1)
                                             }}>
                                             <p className="text text-uppercase">{t('trade')}</p>
                                         </div>
                                     </div>
-                                    <div className="custom-button center-div">
-                                        <div className={`button-area ${selected === 2 ? 'selected' : ''}`}
-                                             onClick={() => {
-                                                 // setSelected(2);
-                                                 toBuy(2);
-                                             }}>
-                                            <p className="text text-uppercase">{t('buy')}</p>
-                                        </div>
-                                    </div>
+                                    {/*<div className="custom-button center-div">*/}
+                                    {/*    <div className={`button-area ${selected === 2 ? 'selected' : ''}`}*/}
+                                    {/*         onClick={() => {*/}
+                                    {/*             // setSelected(2);*/}
+                                    {/*             toBuy(2);*/}
+                                    {/*         }}>*/}
+                                    {/*        <p className="text text-uppercase">{t('buy')}</p>*/}
+                                    {/*    </div>*/}
+                                    {/*</div>*/}
                                     <div className="custom-button">
                                         <div
                                             className={`button-area right-button-area ${selected === 3 ? 'selected' : ''}`}
@@ -391,6 +392,12 @@ const MainCalculationSection = ({
                                         <img onClick={() => {
                                             changeCurrency();
                                             setSelected(1);
+                                            if (currency1.type !== "buy") {
+                                                setSelected(1);
+                                            } else {
+                                                setSelected(3);
+
+                                            }
                                         }} className="change-img" src="/assets/images/change.svg"/>
                                     }
 
