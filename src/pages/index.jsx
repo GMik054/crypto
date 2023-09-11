@@ -11,6 +11,7 @@ import {selectIsLoading, selectLanguage} from "../features/Slices/LoginSlice"
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import {useEffect, useState} from "react";
 import FadeInSection from "../../Components/FadeInSection";
+import {useTranslation} from "next-i18next";
 
 
 // export async function getServerSideProps({locale}) {
@@ -105,8 +106,9 @@ export default function IndexPage({data}) {
 
         fetchData();
     }, []);
+    const {t} = useTranslation(); // Initialize the translation hook
 
-
+    const faqs2 = t('faq2', {returnObjects: true});
     return (
         <>
             <Head>
@@ -131,7 +133,7 @@ export default function IndexPage({data}) {
                     />
                     <ExchangeSteps/>
 
-                    <HomeFaq/>
+                    <HomeFaq faqs2={faqs2}/>
                     {/*<Partners/>*/}
                     {isLoading && (
                         <Backdrop sx={{

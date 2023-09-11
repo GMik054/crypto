@@ -74,6 +74,16 @@
       "description": "You don't need to register on our site to make exchanges."
     }
   ],
+  "faq2": [
+    {
+      "title": "How to buy",
+      "description": "1․ You make contact and approach the office․ 2․ You send crypto currency to the provided wallet address․ 3․ After successfully completing the transaction, you get the money․"
+    },
+    {
+      "title": "How to sell",
+      "description": "1․ You make contact and approach the office․ 2․ You transfer the money and provide your wallet address․ 3․ After successfully completing the transaction, you get the Crypto․"
+    }
+  ],
   "gallery": "Gallery",
   "contact": "<h3><span>Contact</span> Us</h3>",
   "contact1": "105/1 Teryan street, 0005, Yerevan, Armenia",

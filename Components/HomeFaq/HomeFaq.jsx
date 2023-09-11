@@ -4,7 +4,7 @@ import {Col, Container, Row} from "reactstrap";
 import {useTranslation} from "next-i18next";
 import FadeInSection from "../FadeInSection";
 
-const HomeFaq = ({background, title}) => {
+const HomeFaq = ({background, title, faqs2}) => {
     const {t} = useTranslation(); // Initialize the translation hook
     const faqs = t('faq', {returnObjects: true});
 
@@ -21,7 +21,7 @@ const HomeFaq = ({background, title}) => {
                             }
                             <Accordion className="accordion-div">
                                 {
-                                    faqs.map((el, i) => {
+                                    [...faqs2 || [], ...faqs].map((el, i) => {
                                         return (
                                             <Accordion.Item key={i} eventKey={i} className="card card-div">
                                                 <Accordion.Header><h5>{el.title}</h5></Accordion.Header>

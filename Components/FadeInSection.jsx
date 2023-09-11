@@ -1,14 +1,31 @@
 import React from 'react';
 
 function FadeInSection(props) {
+
     const [isVisible, setVisible] = React.useState(false);
     const domRef = React.useRef();
+
+    const observerRef = React.useRef(null);
+
     React.useEffect(() => {
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => setVisible(entry.isIntersecting));
+        observerRef.current = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (!isVisible && entry.isIntersecting) {
+                    setVisible(true);
+                    // Unobserve the target element when it becomes visible
+                    observerRef.current.unobserve(domRef.current);
+                }
+            });
         });
-        observer.observe(domRef.current);
-    }, []);
+
+        observerRef.current.observe(domRef.current);
+
+        return () => {
+            // Cleanup: Disconnect the observer when the component unmounts
+            observerRef.current.disconnect();
+        };
+    }, [isVisible]);
+
     return (
         <div
             className={`fade-in-section ${isVisible ? 'is-visible' : ''}`}
@@ -18,7 +35,6 @@ function FadeInSection(props) {
         </div>
     );
 }
-
 
 export default FadeInSection;
 
