@@ -1676,8 +1676,9 @@ $light-white: rgba(244, 244, 244, 0.8);
     }
 
     .line-text-section {
-      //gap: 0 10px;
-      display: block;
+      display: grid;
+      gap: 10px;
+
 
       .line-text {
         //display: block;
