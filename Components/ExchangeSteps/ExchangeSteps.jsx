@@ -1,12 +1,14 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Col, Container, Row} from "reactstrap";
 import Slider from "react-slick";
 import {useTranslation} from "next-i18next";
 import FadeInSection from "../FadeInSection";
 import Steps from "./Steps";
+import {APICallUrl} from "../../halpers/useWindowDimensions";
 
 const ExchangeSteps = () => {
     const {t} = useTranslation();
+    const [coins, setCoins] = useState();
 
     const settings = {
         dots: false,
@@ -47,6 +49,23 @@ const ExchangeSteps = () => {
         ],
     };
 
+    useEffect(() => {
+        fetch(`${APICallUrl}/api/v1/get-list`, {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json;charset=UTF-8"
+            },
+        })
+            .then((res) => res.json()).then((res) => {
+            setCoins(res);
+        })
+            .catch((error) => {
+                console.error('Failed to get Coins', error);
+            });
+
+    }, []);
+
+
     return (
         <section className="exchange-steps-section">
 
@@ -57,49 +76,58 @@ const ExchangeSteps = () => {
                     <FadeInSection>
                         <Col lg="12" style={{marginTop: "calc(70px + (220 - 120) * ((100vw - 320px) / (1920 - 320)))"}}>
                             <Row>
-
                                 <Slider {...settings}>
-                                    <div className="slider-coins">
-                                        <img src="/assets/coins/Litecoin.png"/>
-                                        <h5>Litecoin LTC</h5>
-                                        <p>90.90469748 USD</p>
-                                    </div>
-                                    <div className="slider-coins">
-                                        <img src="/assets/coins/Bitcoin.png"/>
-                                        <h5>Bitcoin BTC</h5>
-                                        <p>15000.90461 USD</p>
-                                    </div>
-                                    <div className="slider-coins">
-                                        <img src="/assets/coins/Zcash.png"/>
-                                        <h5>Zcash ZEC</h5>
-                                        <p>90.90469748 USD</p>
-                                    </div>
-                                    <div className="slider-coins">
-                                        <img src="/assets/coins/TRON.png"/>
+                                    {
+                                        coins?.map((el, i) => {
 
-                                        <h5>TRON TRX</h5>
-                                        <p>5000.469748 USD</p>
-                                    </div>
-                                    <div className="slider-coins">
-                                        <img src="/assets/coins/Ethereum.png"/>
+                                            return(
+                                                <div className="slider-coins" key={i}>
+                                                    <img src={el.image}/>
+                                                    <h5>{el?.code}</h5>
+                                                    <p>{el?.price?.toFixed(2)} USD</p>
+                                                </div>
+                                            )
+                                        })
+                                    }
+                                    {/*<div className="slider-coins">*/}
+                                    {/*    <img src="/assets/coins/Litecoin.png"/>*/}
+                                    {/*    <h5>Litecoin LTC</h5>*/}
+                                    {/*    <p>90.90469748 USD</p>*/}
+                                    {/*</div>*/}
+                                    {/*<div className="slider-coins">*/}
+                                    {/*    <img src="/assets/coins/Bitcoin.png"/>*/}
+                                    {/*    <h5>Bitcoin BTC</h5>*/}
+                                    {/*    <p>15000.90461 USD</p>*/}
+                                    {/*</div>*/}
+                                    {/*<div className="slider-coins">*/}
+                                    {/*    <img src="/assets/coins/Zcash.png"/>*/}
+                                    {/*    <h5>Zcash ZEC</h5>*/}
+                                    {/*    <p>90.90469748 USD</p>*/}
+                                    {/*</div>*/}
+                                    {/*<div className="slider-coins">*/}
+                                    {/*    <img src="/assets/coins/TRON.png"/>*/}
 
-                                        <h5>Ethereum ETH</h5>
-                                        <p>3214.69748 USD</p>
-                                    </div>
-                                    <div className="slider-coins">
-                                        <img src="/assets/coins/Zcash.png"/>
-                                        <h5>Zcash ZEC</h5>
-                                        <p>90.90469748 USD</p>
-                                    </div>
-                                    <div className="slider-coins">
-                                        <img src="/assets/coins/TRON.png"/>
-                                        <h5>TRON TRX</h5>
-                                        <p>5000.469748 USD</p>
-                                    </div>
+                                    {/*    <h5>TRON TRX</h5>*/}
+                                    {/*    <p>5000.469748 USD</p>*/}
+                                    {/*</div>*/}
+                                    {/*<div className="slider-coins">*/}
+                                    {/*    <img src="/assets/coins/Ethereum.png"/>*/}
+
+                                    {/*    <h5>Ethereum ETH</h5>*/}
+                                    {/*    <p>3214.69748 USD</p>*/}
+                                    {/*</div>*/}
+                                    {/*<div className="slider-coins">*/}
+                                    {/*    <img src="/assets/coins/Zcash.png"/>*/}
+                                    {/*    <h5>Zcash ZEC</h5>*/}
+                                    {/*    <p>90.90469748 USD</p>*/}
+                                    {/*</div>*/}
+                                    {/*<div className="slider-coins">*/}
+                                    {/*    <img src="/assets/coins/TRON.png"/>*/}
+                                    {/*    <h5>TRON TRX</h5>*/}
+                                    {/*    <p>5000.469748 USD</p>*/}
+                                    {/*</div>*/}
                                 </Slider>
-
                             </Row>
-
                         </Col>
                     </FadeInSection>
                     <FadeInSection>

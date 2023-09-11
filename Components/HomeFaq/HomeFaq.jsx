@@ -22,11 +22,13 @@ const HomeFaq = ({background, title, faqs2}) => {
                             <Accordion className="accordion-div">
                                 {
                                     [...faqs2 || [], ...faqs].map((el, i) => {
+                                        const descriptionWithLineBreaks = el.description.replace(/\n/g, "<br />");
+
                                         return (
                                             <Accordion.Item key={i} eventKey={i} className="card card-div">
                                                 <Accordion.Header><h5>{el.title}</h5></Accordion.Header>
                                                 <Accordion.Body style={{paddingLeft: "0", paddingRight: "0"}}>
-                                                    <p className="text-accardion-part">{el.description}</p>
+                                                    <p className="text-accardion-part"  dangerouslySetInnerHTML={{ __html: descriptionWithLineBreaks }}/>
                                                 </Accordion.Body>
                                             </Accordion.Item>
                                         )

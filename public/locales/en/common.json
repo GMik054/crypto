@@ -58,16 +58,16 @@
   "headerTitle": "<h2>Buy, Sell and Trade with <span>Crypto.am</span></h2>",
   "headerDescription": "Our most significant asset is our strong reputation and the trust of our customers, \nbacked by over 2000 positive reviews.",
   "mainTextTitle": "<h3>Welcome to <span>Crypto.am</span></h3>",
-  "mainTextDescription": "Your ultimate guide for all about cryptocurrency. We \nprovide seamless and secure ways to buy, sell, and cash your cryptocurrencies with \nease. Whether you’re a seasoned crypto enthusiast or just starting to explore the \nexciting world of digital currencies, our company will provide you with \ncomprehensive information, resources and tools to navigate into the ever-evolving \nlandscape of cryptocurrencies. \nWe prioritize the security of your digital assets above anything else. Our ultra-\nmodern security measures, combined with the best practices of the industry, \nguarantee a safe and risk-free experience for all our customers.\n Crypto.am - where innovation and financial freedom meet!",
+  "mainTextDescription": "Your ultimate guide for all about cryptocurrency. We provide seamless and secure ways to buy, sell, and cash your cryptocurrencies with \nease. Whether you’re a seasoned crypto enthusiast or just starting to explore the exciting world of digital currencies, our company will provide you with comprehensive information, resources and tools to navigate into the ever-evolving \nlandscape of cryptocurrencies. \nWe prioritize the security of your digital assets above anything else. Our ultra-\nmodern security measures, combined with the best practices of the industry, \nguarantee a safe and risk-free experience for all our customers.\n Crypto.am - where innovation and financial freedom meet!",
   "faqTitle": "FAQ",
   "faq": [
     {
       "title": "Are crypto transactions reversible?",
-      "description": "Most crypto transactions are irreversible. Once a transaction is initiated on the \nblockchain network, it cannot be canceled or reversed. Users should exercise \ncaution when sending cryptocurrencies and ensure they double-check the \nrecipient's address."
+      "description": "Most crypto transactions are irreversible. Once a transaction is initiated on the blockchain network, it cannot be canceled or reversed. Users should exercise caution when sending cryptocurrencies and ensure they double-check the recipient's address."
     },
     {
       "title": "What is a digital wallet?",
-      "description": "A digital wallet, also known as a cryptocurrency wallet, is a software application that\nallows users to store, send, and receive cryptocurrencies securely. It stores the \nuser's private keys, which are essential for accessing and managing their crypto \nholdings."
+      "description": "A digital wallet, also known as a cryptocurrency wallet, is a software application that allows users to store, send, and receive cryptocurrencies securely. It stores the user's private keys, which are essential for accessing and managing their crypto holdings."
     },
     {
       "title": "Is registration required?",
@@ -77,11 +77,11 @@
   "faq2": [
     {
       "title": "How to buy",
-      "description": "1․ You make contact and approach the office․ 2․ You send crypto currency to the provided wallet address․ 3․ After successfully completing the transaction, you get the money․"
+      "description": "1․ You make contact and approach the office․ \n2․ You send crypto currency to the provided wallet address․ \n3․ After successfully completing the transaction, you get the money․"
     },
     {
       "title": "How to sell",
-      "description": "1․ You make contact and approach the office․ 2․ You transfer the money and provide your wallet address․ 3․ After successfully completing the transaction, you get the Crypto․"
+      "description": "1․ You make contact and approach the office․ \n2․ You transfer the money and provide your wallet address․ \n3․ After successfully completing the transaction, you get the Crypto․"
     }
   ],
   "gallery": "Gallery",
