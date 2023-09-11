@@ -1676,11 +1676,12 @@ $light-white: rgba(244, 244, 244, 0.8);
     }
 
     .line-text-section {
-      gap: 0 10px;
+      //gap: 0 10px;
+      display: block;
 
       .line-text {
-        display: block;
-        text-align: left;
+        //display: block;
+        //text-align: left;
         left: 0 !important;
 
         .dot {
