@@ -750,6 +750,7 @@ $light-white: rgba(244, 244, 244, 0.8);
   }
 
   h3 {
+    font-family: 'Montserrat';
     color: $yellow-project !important;
     margin-bottom: 24px !important;
   }
@@ -1071,10 +1072,10 @@ $light-white: rgba(244, 244, 244, 0.8);
 }
 
 .faq-single {
-  background-image: url(/assets/images/2.png);
-  background-size: 100%;
-  background-position: center;
-  background-repeat: no-repeat;
+  //background-image: url(/assets/images/2.png);
+  //background-size: 100%;
+  //background-position: center;
+  //background-repeat: no-repeat;
   display: block;
   padding: calc(20px + (220 - 120) * ((100vw - 320px) / (1920 - 320))) 0 calc(32px + (260 - 120) * ((100vw - 320px) / (1920 - 320))) 0;
 }
@@ -1341,6 +1342,7 @@ $light-white: rgba(244, 244, 244, 0.8);
             //max-width: 87px;
             max-width: 131px;
             height: 30px;
+
             .button-area {
               p {
                 font-size: 14px;
@@ -1674,9 +1676,15 @@ $light-white: rgba(244, 244, 244, 0.8);
     }
 
     .line-text-section {
+      gap: 0 10px;
 
       .line-text {
+        display: block;
+        text-align: left;
+        left: 0 !important;
+
         .dot {
+          text-align: center;
           height: 20px;
           max-width: 20px;
           font-size: 13px !important;
