@@ -1678,6 +1678,7 @@ $light-white: rgba(244, 244, 244, 0.8);
     .line-text-section {
       display: grid;
       gap: 10px;
+      justify-content: inherit;
 
 
       .line-text {
