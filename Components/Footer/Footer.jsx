@@ -7,7 +7,7 @@ import {useTranslation} from "next-i18next";
 const Footer = ({links}) => {
 
     const router = useRouter();
-    const { t } = useTranslation();
+    const {t} = useTranslation();
 
     return (
         <footer className="footer">
@@ -22,14 +22,26 @@ const Footer = ({links}) => {
                                     </Link>
                                     <Row>
                                         <Col lg="3" xs="3">
-                                            <img src="/assets/social/fb.svg"/>
+                                            <a href="https://t.me/cryptoamsupport" target="_blank"
+                                               rel="noopener noreferrer" >
+                                                <img src="/assets/social/fb.svg" alt="Telegram"/>
+                                            </a>
+                                        </Col>
+
+                                        <Col lg="3" xs="3">
+                                            <a href="https://wa.me/37477122223" target="_blank"
+                                               rel="noopener noreferrer">
+                                                <img src="/assets/social/insta.svg" alt="WhatsApp"/>
+                                            </a>
                                         </Col>
                                         <Col lg="3" xs="3">
-                                            <img src="/assets/social/insta.svg"/>
+                                            <a href={`viber://chat?number=${encodeURIComponent('37477122223')}`} target="_blank" rel="noopener noreferrer">
+
+                                                <img src="/assets/social/twitter.svg" alt="Viber"/>
+                                            </a>
                                         </Col>
-                                        <Col lg="3" xs="3"><img src="/assets/social/twitter.svg"/>
-                                        </Col>
-                                        <Col lg="3" xs="3"><img src="/assets/social/tube.svg"/>
+                                        <Col lg="3" xs="3">
+                                            {/*<img src="/assets/social/tube.svg"/>*/}
                                         </Col>
                                     </Row>
                                 </div>
@@ -53,7 +65,7 @@ const Footer = ({links}) => {
                             <Col lg="5" md="5">
                                 <div className="information">
 
-                                    <div dangerouslySetInnerHTML={{ __html: t('contact') }} />
+                                    <div dangerouslySetInnerHTML={{__html: t('contact')}}/>
                                     <div>
                                         <p>{t('contact1')}<span> {t('contact2')}</span></p>
                                         <div className="email-phone">
