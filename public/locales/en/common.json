@@ -56,11 +56,15 @@
   "exchange": "Exchange",
   "exchangeDesc": "Fill in data for exchange",
   "headerTitle": "<h2>Buy, Sell and Trade with <span>Crypto.am</span></h2>",
-  "headerDescription": "Our most significant asset is our strong reputation and the trust of our customers, \nbacked by over 2000 positive reviews.",
+  "headerDescription": "Our most significant asset is our strong reputation and the trust of our customers, backed by over 2000 positive reviews.",
   "mainTextTitle": "<h3>Welcome to <span>Crypto.am</span></h3>",
-  "mainTextDescription": "Your ultimate guide for all about cryptocurrency. We provide seamless and secure ways to buy, sell, and cash your cryptocurrencies with \nease. Whether you’re a seasoned crypto enthusiast or just starting to explore the exciting world of digital currencies, our company will provide you with comprehensive information, resources and tools to navigate into the ever-evolving \nlandscape of cryptocurrencies. \nWe prioritize the security of your digital assets above anything else. Our ultra-\nmodern security measures, combined with the best practices of the industry, \nguarantee a safe and risk-free experience for all our customers.\n Crypto.am - where innovation and financial freedom meet!",
+  "mainTextDescription": "Your ultimate guide for all about cryptocurrency. We provide seamless and secure ways to buy, sell, and cash your cryptocurrencies with ease. Whether you’re a seasoned crypto enthusiast or just starting to explore the exciting world of digital currencies, our company will provide you with comprehensive information, resources and tools to navigate into the ever-evolving landscape of cryptocurrencies. We prioritize the security of your digital assets above anything else. Our ultra-modern security measures, combined with the best practices of the industry, guarantee a safe and risk-free experience for all our customers.\n Crypto.am - where innovation and financial freedom meet!",
   "faqTitle": "FAQ",
   "faq": [
+    {
+      "title": "Is there a minimum money limit for transactions?",
+      "description": "No minimal money limit exists, while for under $1000 transactions commission fee is $20 (fixed amount)."
+    },
     {
       "title": "Are crypto transactions reversible?",
       "description": "Most crypto transactions are irreversible. Once a transaction is initiated on the blockchain network, it cannot be canceled or reversed. Users should exercise caution when sending cryptocurrencies and ensure they double-check the recipient's address."
@@ -76,12 +80,12 @@
   ],
   "faq2": [
     {
-      "title": "How to buy",
-      "description": "1․ You make contact and approach the office․ \n2․ You send crypto currency to the provided wallet address․ \n3․ After successfully completing the transaction, you get the money․"
+      "title": "How to buy cryptocurrency?",
+      "description": "1․ Contact us and approach our office․ \n2․ Pay certain amount of money and provide your wallet address․ \n 3․ Get your cryptocurrency after successfully completing the transaction."
     },
     {
-      "title": "How to sell",
-      "description": "1․ You make contact and approach the office․ \n2․ You transfer the money and provide your wallet address․ \n3․ After successfully completing the transaction, you get the Crypto․"
+      "title": "How to sell cryptocurrency?",
+      "description": "1․ Contact with us and approach to our office․ \n2․ Transfer your cryptocurrency to the provided wallet address․ \n3․ Get your money after successfully completing the transaction․"
     }
   ],
   "gallery": "Gallery",
@@ -114,14 +118,14 @@
   "step1": "Choose the direction of exchange",
   "step2": "Fill in data",
   "step3": "Push the button “Exchange”",
-  "247buy": "<h3>How to <span>buy</span></h3>",
-  "step1buy": "You make contact and approach the office",
-  "step2buy": "You send crypto currency to the provided wallet address",
-  "step3buy": "After successfully completing the transaction, you get the money",
-  "247sell": "<h3>How to <span>sell</span></h3>",
-  "step1sell": "You make contact and approach the office",
-  "step2sell": "You transfer the money and provide your wallet address",
-  "step3sell": "After successfully completing the transaction, you get the Crypto",
+  "247buy": "<h3>How to <span>buy</span> cryptocurrency?</h3>",
+  "step1buy": "Contact us and approach our office",
+  "step2buy": "Pay certain amount of money and provide your wallet address",
+  "step3buy": "Get your cryptocurrency after successfully completing the transaction",
+  "247sell": "<h3>How to <span>sell</span> cryptocurrency?</h3>",
+  "step1sell": "Contact with us and approach to our office",
+  "step2sell": "Transfer your cryptocurrency to the provided wallet address",
+  "step3sell": "Get your money after successfully completing the transaction",
   "thanks": "Thank you!",
   "messageSuccess": "Message sent successfully!",
   "registerSuccess": "Registered successfully!",

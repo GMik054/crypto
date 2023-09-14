@@ -14,7 +14,7 @@ const GallerySection = () => {
                     <Row style={{gap: "32px 0"}}>
                         <Col lg="7">
                             <div className="gallery-img">
-                                <img src='/assets/gallery/1.png'/>
+                                <img src='/assets/gallery/1.JPG'/>
                             </div>
                         </Col>
                         <Col lg="5">
@@ -29,7 +29,7 @@ const GallerySection = () => {
                         </Col>
                         <Col lg="7">
                             <div className="gallery-img">
-                                <img src='/assets/gallery/4.png'/>
+                                <img src='/assets/gallery/2.JPG'/>
                             </div>
                         </Col>
                         <Col lg="12">
@@ -39,12 +39,14 @@ const GallerySection = () => {
                         </Col>
                         <Col lg="7">
                             <div className="gallery-img">
-                                <img src='/assets/gallery/6.png'/>
+                                <img src='/assets/gallery/8.JPG'/>
+
                             </div>
                         </Col>
                         <Col lg="5">
                             <div className="gallery-img">
-                                <img src='/assets/gallery/3.png'/>
+                                {/*<img src='/assets/gallery/7.jpg'/>*/}
+
                             </div>
                         </Col>
                     </Row>

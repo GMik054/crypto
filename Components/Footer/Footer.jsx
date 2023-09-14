@@ -24,20 +24,19 @@ const Footer = ({links}) => {
                                         <Col lg="3" xs="3">
                                             <a href="https://t.me/cryptoamsupport" target="_blank"
                                                rel="noopener noreferrer" >
-                                                <img src="/assets/social/fb.svg" alt="Telegram"/>
+                                                <img src="/assets/social/telegram.svg" width="32"  height="32" alt="Telegram"/>
                                             </a>
                                         </Col>
 
                                         <Col lg="3" xs="3">
                                             <a href="https://wa.me/37477122223" target="_blank"
                                                rel="noopener noreferrer">
-                                                <img src="/assets/social/insta.svg" alt="WhatsApp"/>
+                                                <img src="/assets/social/whatsapp.svg" width="32" height="32" alt="WhatsApp"/>
                                             </a>
                                         </Col>
                                         <Col lg="3" xs="3">
                                             <a href={`viber://chat?number=${encodeURIComponent('37477122223')}`} target="_blank" rel="noopener noreferrer">
-
-                                                <img src="/assets/social/twitter.svg" alt="Viber"/>
+                                                <img src="/assets/social/viber.svg" width="32" height="32" alt="Viber"/>
                                             </a>
                                         </Col>
                                         <Col lg="3" xs="3">

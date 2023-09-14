@@ -65,7 +65,6 @@ const ExchangeSteps = () => {
 
     }, []);
 
-
     return (
         <section className="exchange-steps-section">
 
@@ -140,7 +139,7 @@ const ExchangeSteps = () => {
                                     {/*<h3><span>Lorem Ipsum</span> is simply</h3>*/}
 
                                     <div dangerouslySetInnerHTML={{__html: t('mainTextTitle')}}/>
-                                    <p>{t('mainTextDescription')}</p>
+                                    <p dangerouslySetInnerHTML={{__html: t('mainTextDescription').replace(/\n/g, "<br />")}} />
                                 </Col>
                             </Row>
 
