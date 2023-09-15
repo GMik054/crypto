@@ -14,17 +14,19 @@ const ModalTransactions = () => {
         const [open, setOpen] = useState(false);
         const handleOpen = () => setOpen(true);
         const handleClose = () => setOpen(false);
-
         const user = useSelector(selectAuthUser);
+    console.log(user)
+    function formatDate(inputDate) {
+        const date = new Date(inputDate);
+        const day = date.getUTCDate().toString().padStart(2, '0');
+        const month = (date.getUTCMonth() + 1).toString().padStart(2, '0');
+        const year = date.getUTCFullYear();
+        const hours = date.getUTCHours().toString().padStart(2, '0');
+        const minutes = date.getUTCMinutes().toString().padStart(2, '0');
+        const seconds = date.getUTCSeconds().toString().padStart(2, '0');
 
-        function formatDate(inputDate) {
-            const date = new Date(inputDate);
-            const day = date.getUTCDate().toString().padStart(2, '0');
-            const month = (date.getUTCMonth() + 1).toString().padStart(2, '0');
-            const year = date.getUTCFullYear();
-
-            return `${day}.${month}.${year}`;
-        }
+        return `${day}.${month}.${year} ${hours}:${minutes}:${seconds}`;
+    }
 
         const {t} = useTranslation();
 
@@ -60,11 +62,11 @@ const ModalTransactions = () => {
                                             <Col lg="12" xs="12" key={i}>
                                                 <div className="single-transaction">
                                                     <p># <span>{el.id}</span></p>
-                                                    <p>{t('date')}: <span>{formatDate(el.created_at)}</span></p>
-                                                    <p>{t('name')}: <span>{el.name}</span></p>
-                                                    <p>{t('exchange')}: <span>{el.content}</span></p>
-                                                    <p>{t('phone')}: <span>{el.phone}</span></p>
-                                                    <p>{t('email')}: <span>{el.email}</span></p>
+                                                    <p>{t('date')}: <span>{formatDate(el?.created_at)}</span></p>
+                                                    <p>{t('name')}: <span>{el?.name}</span></p>
+                                                    <p>{t('exchange')}: <span>{el?.content}</span></p>
+                                                    <p>{t('phone')}: <span>{el?.phone}</span></p>
+                                                    <p>{t('email')}: <span>{el?.email}</span></p>
                                                 </div>
                                             </Col>
                                         )

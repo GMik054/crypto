@@ -70,7 +70,7 @@ const ModalExchange = ({valueCurrency1, valueCurrency2, minValue1, maxValue1, cu
             name: `${formik.values.first_name} ${formik.values.last_name}`,
             phone: formik.values.phone,
             email: formik.values.email,
-            content: `To ${valueCurrency1} ${currency1.name} from ${valueCurrency2} ${currency2.name}`
+            content: `From ${valueCurrency1} ${currency1.name} to ${valueCurrency2} ${currency2.name}`
 
         }
         fetch(`${APICallUrl}/api/v1/contact/send`, {

@@ -19,12 +19,12 @@ const GallerySection = () => {
                         </Col>
                         <Col lg="5">
                             <div className="gallery-img">
-                                <img src='/assets/gallery/2.png'/>
+                                {/*<img src='/assets/gallery/2.png'/>*/}
                             </div>
                         </Col>
                         <Col lg="5">
                             <div className="gallery-img">
-                                <img src='/assets/gallery/3.png'/>
+                                {/*<img src='/assets/gallery/3.png'/>*/}
                             </div>
                         </Col>
                         <Col lg="7">
@@ -32,11 +32,11 @@ const GallerySection = () => {
                                 <img src='/assets/gallery/2.JPG'/>
                             </div>
                         </Col>
-                        <Col lg="12">
-                            <div className="gallery-img">
-                                <img src='/assets/gallery/5.png'/>
-                            </div>
-                        </Col>
+                        {/*<Col lg="12">*/}
+                        {/*    <div className="gallery-img">*/}
+                        {/*        <img src='/assets/gallery/5.png'/>*/}
+                        {/*    </div>*/}
+                        {/*</Col>*/}
                         <Col lg="7">
                             <div className="gallery-img">
                                 <img src='/assets/gallery/8.JPG'/>

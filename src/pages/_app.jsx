@@ -35,6 +35,7 @@ function MyApp({Component, pageProps}) {
                 <link
                     href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;700&family=Montserrat:wght@400;600;700&family=Titillium+Web&display=swap"
                     rel="stylesheet"/>
+                <script src="//code.jivosite.com/widget/4AU96YxcyE" async></script>
             </Head>
             <Provider store={store}>
                 <Component {...pageProps} />

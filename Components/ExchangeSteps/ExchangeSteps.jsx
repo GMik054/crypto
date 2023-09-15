@@ -88,43 +88,6 @@ const ExchangeSteps = () => {
                                             )
                                         })
                                     }
-                                    {/*<div className="slider-coins">*/}
-                                    {/*    <img src="/assets/coins/Litecoin.png"/>*/}
-                                    {/*    <h5>Litecoin LTC</h5>*/}
-                                    {/*    <p>90.90469748 USD</p>*/}
-                                    {/*</div>*/}
-                                    {/*<div className="slider-coins">*/}
-                                    {/*    <img src="/assets/coins/Bitcoin.png"/>*/}
-                                    {/*    <h5>Bitcoin BTC</h5>*/}
-                                    {/*    <p>15000.90461 USD</p>*/}
-                                    {/*</div>*/}
-                                    {/*<div className="slider-coins">*/}
-                                    {/*    <img src="/assets/coins/Zcash.png"/>*/}
-                                    {/*    <h5>Zcash ZEC</h5>*/}
-                                    {/*    <p>90.90469748 USD</p>*/}
-                                    {/*</div>*/}
-                                    {/*<div className="slider-coins">*/}
-                                    {/*    <img src="/assets/coins/TRON.png"/>*/}
-
-                                    {/*    <h5>TRON TRX</h5>*/}
-                                    {/*    <p>5000.469748 USD</p>*/}
-                                    {/*</div>*/}
-                                    {/*<div className="slider-coins">*/}
-                                    {/*    <img src="/assets/coins/Ethereum.png"/>*/}
-
-                                    {/*    <h5>Ethereum ETH</h5>*/}
-                                    {/*    <p>3214.69748 USD</p>*/}
-                                    {/*</div>*/}
-                                    {/*<div className="slider-coins">*/}
-                                    {/*    <img src="/assets/coins/Zcash.png"/>*/}
-                                    {/*    <h5>Zcash ZEC</h5>*/}
-                                    {/*    <p>90.90469748 USD</p>*/}
-                                    {/*</div>*/}
-                                    {/*<div className="slider-coins">*/}
-                                    {/*    <img src="/assets/coins/TRON.png"/>*/}
-                                    {/*    <h5>TRON TRX</h5>*/}
-                                    {/*    <p>5000.469748 USD</p>*/}
-                                    {/*</div>*/}
                                 </Slider>
                             </Row>
                         </Col>

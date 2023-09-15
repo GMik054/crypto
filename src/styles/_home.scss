@@ -706,8 +706,19 @@ $light-white: rgba(244, 244, 244, 0.8);
   color: $yellow-project;
 }
 
+.background-image{
+  //background-image: url(/assets/images/2.png);
+  background-size: 100%;
+  width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: $black-project;
+  img{
+    width: 100%;
+  }
+}
 .faq-section {
-  background-image: url(/assets/images/2.png);
+  //background-image: url(/assets/images/2.png);
   background-size: 100%;
   background-position: center;
   background-repeat: no-repeat;

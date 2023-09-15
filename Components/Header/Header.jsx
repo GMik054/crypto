@@ -29,14 +29,11 @@ import {useTranslation} from "next-i18next";
 
 
 const Header = ({links}) => {
-    const {t} = useTranslation(); // Initialize the translation hook
-    const options = t('options', {returnObjects: true});
-        // const [selectedOption, setSelectedOption] = useState(options[0]);
+        const {t} = useTranslation();
 
+        const options = t('options', {returnObjects: true});
         const [toggle, setToggle] = useState(false);
-
         const router = useRouter();
-
         const {pathname, asPath, query} = router;
 
         const divRef = useRef();
@@ -48,27 +45,6 @@ const Header = ({links}) => {
         const loginToken = useSelector(selectLoginToken);
         const isLoading = useSelector(selectIsLoading);
 
-
-        // useEffect(() => {
-        //     if (language) {
-        //         if(Object.keys(language).length === 0){
-        //             dispatch(setLanguage(options[0]))
-        //         }
-        //     }
-        //     // setSelectedOption()
-        //
-        // }, []);
-        // useEffect(()=>{
-        //     if (router.locale === "en") {
-        //         router.push({pathname, query}, asPath, {locale: "en"})
-        //     } else if (router.locale === "ru") {
-        //         router.push({pathname, query}, asPath, {locale: "ru"})
-        //     } else if (router.locale  === "am") {
-        //         router.push({pathname, query}, asPath, {locale: "am"})
-        //     } else {
-        //         router.push({pathname, query}, asPath, {locale: "en"})
-        //     }
-        // },[])
 
         useEffect(() => {
             if (!auth) {
@@ -212,19 +188,19 @@ const Header = ({links}) => {
             } else if (language.value === "arm") {
                 router.push({pathname, query}, asPath, {locale: "am"})
             } else {
-                    if (router.locale === "en") {
-                        dispatch(setLanguage(options[0]))
-                        router.push({pathname, query}, asPath, {locale: "en"})
-                    } else if (router.locale === "ru") {
-                        dispatch(setLanguage(options[2]))
-                        router.push({pathname, query}, asPath, {locale: "ru"})
-                    } else if (router.locale  === "am") {
-                        dispatch(setLanguage(options[1]))
-                        router.push({pathname, query}, asPath, {locale: "am"})
-                    } else {
-                        dispatch(setLanguage(options[0]))
-                        router.push({pathname, query}, asPath, {locale: "en"})
-                    }
+                if (router.locale === "en") {
+                    dispatch(setLanguage(options[0]))
+                    router.push({pathname, query}, asPath, {locale: "en"})
+                } else if (router.locale === "ru") {
+                    dispatch(setLanguage(options[2]))
+                    router.push({pathname, query}, asPath, {locale: "ru"})
+                } else if (router.locale === "am") {
+                    dispatch(setLanguage(options[1]))
+                    router.push({pathname, query}, asPath, {locale: "am"})
+                } else {
+                    dispatch(setLanguage(options[0]))
+                    router.push({pathname, query}, asPath, {locale: "en"})
+                }
             }
         }, [language]);
 
