@@ -248,6 +248,7 @@ const ModalExchange = ({valueCurrency1, valueCurrency2, minValue1, maxValue1, cu
                             color: 'white'
                         }}>{t('successInfoModalIMPORTANT')}</p>
                         <p style={{paddingBottom: "30px"}}>{t('successInfoModalIMPORTANTDesc')}</p>
+                        <p style={{paddingBottom: "30px", color: 'white'}}>{t('time')}</p>
 
                         <FaCheckCircle color="#FFE500" size={100}/>
                     </div>

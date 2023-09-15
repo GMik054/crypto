@@ -649,6 +649,7 @@ const MainCalculationSection = ({
                             {/*<h2>Buy, Sell and Trade with <span>Crypto.am</span></h2>*/}
                             <div dangerouslySetInnerHTML={{__html: t('headerTitle')}}/>
                             <p>{t('headerDescription')}</p>
+                            <p>{t('time')}</p>
                         </div>
                     </Col>
                 </Row>
