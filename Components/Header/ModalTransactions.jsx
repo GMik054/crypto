@@ -15,7 +15,7 @@ const ModalTransactions = () => {
         const handleOpen = () => setOpen(true);
         const handleClose = () => setOpen(false);
         const user = useSelector(selectAuthUser);
-    console.log(user)
+
     function formatDate(inputDate) {
         const date = new Date(inputDate);
         const day = date.getUTCDate().toString().padStart(2, '0');

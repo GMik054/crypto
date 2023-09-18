@@ -146,6 +146,7 @@ const MainCalculationSection = ({
 
 
     let change = (e) => {
+        setShowButton(true);
         fetch(`${APICallUrl}/api/v1/get-currency-exchange?symbol=${currency1?.type === "sell" ? currency1?.code.toUpperCase() : currency2?.code.toUpperCase()}&convert=${currency2?.type === "buy" ? currency2?.code.toUpperCase() : currency1?.code.toUpperCase()}&price=${e || 0}&type=${currency1?.type}`, {
             headers: {
                 "Content-Type": "application/json;charset=UTF-8"
@@ -303,31 +304,30 @@ const MainCalculationSection = ({
             const intervalId = setInterval(async () => {
                 try {
 
-                    const minMaxRes1 = await fetch(`${APICallUrl}/api/v1/get-exchange-limit?currency=${currency1.code.toUpperCase()}&symbol=${currency2.code.toUpperCase()}`, {
-                        headers: {
-                            "Content-Type": "application/json;charset=UTF-8",
-                        },
-                    });
+                    // const minMaxRes1 = await fetch(`${APICallUrl}/api/v1/get-exchange-limit?currency=${currency1.code.toUpperCase()}&symbol=${currency2.code.toUpperCase()}`, {
+                    //     headers: {
+                    //         "Content-Type": "application/json;charset=UTF-8",
+                    //     },
+                    // });
+                    //
+                    // const minMaxData1 = await minMaxRes1.json();
 
-                    const minMaxData1 = await minMaxRes1.json();
 
+                    // setMinValue1(Number(valueCurrency1) < minMaxData1?.min ? minMaxData1?.min : Number(valueCurrency1));
+                    // setValueCurrency1(Number(valueCurrency1) < minMaxData1?.min ? minMaxData1?.min : Number(valueCurrency1));
+                    // setMaxValue1(minMaxData1?.max);
 
-                    setMinValue1(Number(valueCurrency1) < minMaxData1?.min ? minMaxData1?.min : Number(valueCurrency1));
-                    setValueCurrency1(Number(valueCurrency1) < minMaxData1?.min ? minMaxData1?.min : Number(valueCurrency1));
-                    setMaxValue1(minMaxData1?.max);
-
-                    const cur2Res = await fetch(`${APICallUrl}/api/v1/get-currency-exchange?symbol=${currency2?.type === "sell" ? currency2?.code.toUpperCase() : currency1?.code.toUpperCase()}&convert=${currency1?.type === "buy" ? currency1?.code.toUpperCase() : currency2?.code.toUpperCase()}&price=${Number(valueCurrency1) < minMaxData1?.min ? minMaxData1?.min : Number(valueCurrency1)}&type=${currency1?.type}`);
-                    const minMaxRes2 = await fetch(`${APICallUrl}/api/v1/get-exchange-limit?currency=${currency2.code.toUpperCase()}&symbol=${currency1.code.toUpperCase()}`, {
-                        headers: {
-                            "Content-Type": "application/json;charset=UTF-8",
-                        },
-                    });
+                    const cur2Res = await fetch(`${APICallUrl}/api/v1/get-currency-exchange?symbol=${currency2?.type === "sell" ? currency2?.code.toUpperCase() : currency1?.code.toUpperCase()}&convert=${currency1?.type === "buy" ? currency1?.code.toUpperCase() : currency2?.code.toUpperCase()}&price=${Number(valueCurrency1)}&type=${currency1?.type}`);
+                    // const minMaxRes2 = await fetch(`${APICallUrl}/api/v1/get-exchange-limit?currency=${currency2.code.toUpperCase()}&symbol=${currency1.code.toUpperCase()}`, {
+                    //     headers: {
+                    //         "Content-Type": "application/json;charset=UTF-8",
+                    //     },
+                    // });
                     const cur = await cur2Res.json();
-                    const minMaxData2 = await minMaxRes2.json();
 
-                    setMinValue2(cur?.cost);
+                    // setMinValue2(cur?.cost);
                     setValueCurrency2(cur?.cost);
-                    setMaxValue2(minMaxData2?.max);
+                    // setMaxValue2(minMaxData2?.max);
                     // Do something with the data
                 } catch (error) {
                     // Handle errors
@@ -341,7 +341,7 @@ const MainCalculationSection = ({
 
 
     const {t} = useTranslation();
-
+    console.log(showButton,"showButton")
     return (
         <section className="calculation-section">
             <Container>
